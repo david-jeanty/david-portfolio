@@ -1,0 +1,644 @@
+.menuBar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid #c8c8c8;
+  border-bottom: 0;
+  background: #f7f7f7;
+  font-size: 12px;
+}
+
+.menuItem {
+  color: #111;
+}
+
+.surface {
+  border: 1px solid #b9b9b9;
+  background: #ffffff;
+}
+
+.statusBar {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  border: 1px solid #b9b9b9;
+  border-top: 0;
+  background: #efefef;
+  font-size: 11px;
+  color: #3a3a3a;
+  gap: 10px;
+}
+
+.notepadArea {
+  min-height: 180px;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: 1px solid #c8c8c8;
+  border-bottom: 0;
+  background: #f2f2f2;
+  font-size: 12px;
+}
+
+.addressLabel {
+  color: #444;
+}
+
+.addressBox {
+  flex: 1;
+  min-height: 22px;
+  border: 1px solid #b5b5b5;
+  background: #fff;
+  padding: 2px 6px;
+}
+
+.explorerLayout {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  min-height: 280px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
+}
+
+.folderPane {
+  border-right: 1px solid #d1d1d1;
+  background: #f8f8f8;
+  overflow: auto;
+}
+
+.folderButton {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.folderButton:hover {
+  background: #e9f1ff;
+}
+
+.folderButtonActive {
+  background: #dce9ff;
+  font-weight: 700;
+}
+
+.detailPane {
+  padding: 10px 12px;
+  overflow: auto;
+}
+
+.detailSectionIntro {
+  margin-bottom: 12px;
+}
+
+.workbenchHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.featuredFlag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  border: 1px solid #7fa4d4;
+  background: linear-gradient(180deg, #f6fbff 0%, #e4efff 100%);
+  color: #18437d;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.metaLine {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: #333;
+}
+
+.detailHeader {
+  font-size: 15px;
+  margin: 0 0 8px;
+}
+
+.sectionLabel {
+  font-weight: 700;
+  margin: 10px 0 6px;
+}
+
+.rowList {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.folderTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.folderTable th,
+.folderTable td {
+  border: 1px solid #d7d7d7;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.folderTable th {
+  background: #f2f2f2;
+  font-weight: 700;
+}
+
+.dialogCard {
+  border: 1px solid #b9b9b9;
+  background: #fff;
+}
+
+.dialogHeader {
+  padding: 10px 12px;
+  border-bottom: 1px solid #d7d7d7;
+  background: #f5f5f5;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dialogBody {
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tabRow {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #cfd7e2;
+}
+
+.tabButton {
+  border: 1px solid #bcc8d8;
+  border-bottom: 0;
+  background: linear-gradient(180deg, #f4f6f9 0%, #e5e9ef 100%);
+  padding: 7px 12px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1d365a;
+}
+
+.tabButtonActive {
+  position: relative;
+  top: 1px;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px 12px;
+  margin-top: 10px;
+}
+
+.aboutGrid {
+  align-items: start;
+}
+
+.fieldLabel {
+  color: #555;
+  font-weight: 700;
+}
+
+.fieldValue {
+  color: #111;
+}
+
+.infoPanel {
+  border: 1px solid #d7dce4;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 8px 10px;
+}
+
+.simpleListSurface {
+  border: 1px solid #b9b9b9;
+  background: #fff;
+  padding: 10px 12px;
+}
+
+.workbenchList {
+  display: grid;
+  gap: 10px;
+}
+
+.workbenchCard {
+  border: 1px solid #cfd8e6;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+  padding: 10px 12px;
+}
+
+.workbenchCardFeatured {
+  border-color: #8aa8d8;
+  box-shadow: inset 0 0 0 1px rgba(74, 129, 208, 0.1);
+}
+
+.workbenchCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.workbenchItemTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.workbenchBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid #aec4e1;
+  background: #edf4ff;
+  color: #234a81;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.noticeCard {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #d6c48d;
+  background: linear-gradient(180deg, #fffaf0 0%, #fff3cf 100%);
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #ffffff 0%, #ececec 100%);
+  color: #141414;
+  font-weight: 800;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.actionButton:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #e1ebfa 100%);
+}
+
+.actionButton:active {
+  transform: translateY(1px);
+}
+
+.actionButtonPrimary {
+  background: linear-gradient(180deg, #54bf45 0%, #2e9f26 100%);
+  color: #fff;
+  border-color: rgba(20, 95, 18, 0.75);
+}
+
+.actionButtonPrimary:hover {
+  background: linear-gradient(180deg, #61cc53 0%, #319d29 100%);
+}
+
+.actionButtonDisabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+
+.mobileDocumentHint {
+  display: none;
+}
+
+.documentToolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #d4d8df;
+  background: linear-gradient(180deg, #f9fafc 0%, #eef2f7 100%);
+}
+
+.documentTitle {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.documentSubtitle {
+  margin: 0;
+  color: #4b5563;
+  font-size: 12px;
+}
+
+.documentActionRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.documentCanvas {
+  padding: 12px;
+  background:
+    linear-gradient(180deg, rgba(240, 244, 250, 0.95) 0%, rgba(230, 236, 244, 0.95) 100%);
+}
+
+.documentMetaRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 12px 0;
+}
+
+.documentMetaChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid #ccd6e2;
+  background: #f8fbff;
+  color: #3b4b62;
+  font-size: 11px;
+}
+
+.resumeFrame {
+  width: 100%;
+  height: 440px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: #fff;
+}
+
+.resumeFallbackCard {
+  min-height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.resumeSheet {
+  width: min(100%, 520px);
+  min-height: 320px;
+  border: 1px solid #cfd5dd;
+  background: #fff;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  padding: 20px 22px;
+}
+
+.resumeSheetHeader {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e4e7ec;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.resumeFallbackText {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.previewPlaceholder {
+  min-height: 320px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(239, 239, 239, 0.9) 100%),
+    repeating-linear-gradient(180deg, transparent 0, transparent 27px, rgba(0, 0, 0, 0.04) 28px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+  color: #4a4a4a;
+  font-size: 13px;
+}
+
+.warningPanel {
+  border: 1px solid #cdbf8f;
+  background: linear-gradient(180deg, #fffdf5 0%, #fff1ca 100%);
+  padding: 14px 16px;
+}
+
+.internalWarningPanel {
+  max-width: 420px;
+  margin: 0 auto;
+  border-color: #bda163;
+  background: linear-gradient(180deg, #fffdf4 0%, #ffeab0 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.38);
+}
+
+.warningHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.warningIcon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #a7822a;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 30%, #fff8c9 0%, #f0c547 70%, #c09018 100%);
+  color: #6b4300;
+  font-weight: 900;
+  font-size: 15px;
+  flex: 0 0 auto;
+}
+
+.warningPanelTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.warningActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.contactList {
+  margin-bottom: 14px;
+}
+
+.contactLine {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .menuBar {
+    gap: 12px;
+    height: auto;
+    min-height: 30px;
+    padding: 6px 8px;
+    flex-wrap: wrap;
+  }
+
+  .toolbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .addressBox {
+    width: 100%;
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  .explorerLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .folderPane {
+    border-right: 0;
+    border-bottom: 1px solid #d1d1d1;
+    max-height: 168px;
+  }
+
+  .folderButton {
+    min-height: 40px;
+    padding: 9px 10px;
+  }
+
+  .workbenchHeader,
+  .workbenchCardTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .featuredFlag,
+  .workbenchBadge,
+  .documentMetaChip {
+    white-space: normal;
+  }
+
+  .tabRow {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tabButton {
+    min-height: 38px;
+    padding: 8px 12px;
+  }
+
+  .fieldGrid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .fieldLabel {
+    margin-top: 6px;
+  }
+
+  .documentToolbar {
+    flex-direction: column;
+  }
+
+  .documentActionRow {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .actionButton {
+    min-height: 40px;
+  }
+
+  .resumeFrame {
+    height: 260px;
+  }
+
+  .resumeFallbackCard {
+    min-height: 260px;
+    padding: 12px;
+  }
+
+  .resumeSheet {
+    min-height: 0;
+    padding: 14px 14px 16px;
+  }
+
+  .mobileDocumentHint {
+    display: block;
+    margin: 0 0 10px;
+    color: #4b5563;
+    font-size: 12px;
+  }
+
+  .contactLine {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .statusBar {
+    height: auto;
+    min-height: 24px;
+    flex-wrap: wrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+@media (max-width: 420px) {
+  .notepadArea {
+    min-height: 0;
+    padding: 9px;
+    font-size: 12px;
+  }
+
+  .dialogBody,
+  .detailPane,
+  .simpleListSurface,
+  .documentCanvas {
+    padding: 9px;
+  }
+
+  .workbenchCard {
+    padding: 9px 10px;
+  }
+
+  .infoPanel {
+    padding: 7px 8px;
+  }
+
+  .resumeFrame {
+    height: 220px;
+  }
+
+  .resumeFallbackCard {
+    padding: 8px;
+  }
+}

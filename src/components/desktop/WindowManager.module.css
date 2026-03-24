@@ -1,0 +1,7 @@
+.windowLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none; /* each window enables pointer events */
+}
+
