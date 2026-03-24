@@ -30,7 +30,8 @@ const EXPERIENCE_ITEMS: ExperienceNode[] = [
   },
   {
     id: "stranexus",
-    org: "StraNexus",
+    org: "StraNexus Inc.",
+    role: "Intake Revamp and Process Optimization",
     bullets: [
       "mapped 38 target programs across 31 universities in 3 regions, prioritizing 16 high-fit programs",
       "expanded sourcing beyond industrial engineering into 6 discipline categories",
@@ -58,7 +59,8 @@ const EXPERIENCE_ITEMS: ExperienceNode[] = [
   },
   {
     id: "student-ambassador",
-    org: "Student Ambassador",
+    org: "University of Ottawa",
+    role: "Student Ambassador",
     bullets: [
       "delivered 75+ campus tours",
       "engaged 2,500+ prospective students",
@@ -71,10 +73,11 @@ const EXPERIENCE_ITEMS: ExperienceNode[] = [
   {
     id: "tbta",
     org: "Telfer Business Technology Association",
+    role: "First Year Representative & VP Internal Affairs",
     bullets: [
-      "managed 100+ student inquiries",
-      "hired/onboarded 20 members",
-      "organized 10+ events/year",
+      "managed 100+ student inquiries and served as liaison between MIS professors, Telfer administration, and the Career Centre to align stakeholders and resolve issues quickly",
+      "hired and onboarded 20 members by coordinating internal operations, role assignments, and execution follow-up",
+      "planned and delivered 10+ events/year by coordinating venues, vendors, and logistics while aligning communications and budgets",
     ],
     translation:
       "internal operations, hiring coordination, team support, stakeholder alignment",
@@ -165,4 +168,3 @@ export default function ExperienceWindowContent() {
     </div>
   );
 }
-

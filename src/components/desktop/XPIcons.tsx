@@ -182,20 +182,6 @@ export function SmallFolderIcon({ size = 15 }: { size?: number }) {
   return <FolderIcon size={size} />;
 }
 
-/** Plain document page — Projects table rows */
-export function SmallFileIcon({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <rect x="2" y="1" width="8" height="11" rx="0.5"
-        fill="white" stroke="#b0b8c4" strokeWidth="0.7" />
-      <path d="M8 1 L10 3 L8 3 Z" fill="#cce0f8" stroke="#a8bcd0" strokeWidth="0.5" />
-      <line x1="3.5" y1="5" x2="8.5" y2="5" stroke="#c4cdd8" strokeWidth="0.7" />
-      <line x1="3.5" y1="7" x2="8.5" y2="7" stroke="#c4cdd8" strokeWidth="0.7" />
-      <line x1="3.5" y1="9" x2="7"   y2="9" stroke="#c4cdd8" strokeWidth="0.7" />
-    </svg>
-  );
-}
-
 /** Envelope — Contact email field */
 export function SmallEnvelopeIcon({ size = 13 }: { size?: number }) {
   return <EnvelopeIcon size={size} />;
