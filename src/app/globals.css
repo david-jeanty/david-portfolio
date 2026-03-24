@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-@theme {
-  --font-body: var(--font-dm-sans);
-}
-
 html {
   height: 100%;
 }
@@ -11,5 +7,5 @@ html {
 body {
   height: 100%;
   margin: 0;
-  font-family: var(--font-dm-sans), sans-serif;
+  font-family: "Tahoma", "Verdana", sans-serif;
 }

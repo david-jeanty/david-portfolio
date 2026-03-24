@@ -152,6 +152,7 @@ export function DesktopIconArt({ id, size = 38 }: { id: DesktopIconId; size?: nu
     case "experience":         return <BriefcaseIcon size={size} />;
     case "workbench":          return <WrenchIcon size={size} />;
     case "contact":            return <EnvelopeIcon size={size} />;
+    case "games":              return <FolderIcon size={size} />;
     case "internal-only":      return <FolderIcon size={size} />;
   }
 }
@@ -167,6 +168,7 @@ export function TitleBarIcon({ id }: { id: DesktopIconId }) {
     case "experience":         return <BriefcaseIcon size={14} white />;
     case "workbench":          return <WrenchIcon size={14} white />;
     case "contact":            return <EnvelopeIcon size={14} white />;
+    case "games":              return <FolderIcon size={14} white />;
     case "internal-only":      return <FolderIcon size={14} white />;
   }
 }

@@ -5,6 +5,7 @@ export type DesktopIconId =
   | "experience"
   | "workbench"
   | "contact"
+  | "games"
   | "internal-only";
 
 export interface ExperienceItem {
@@ -38,8 +39,7 @@ export interface PortfolioData {
     personal: {
       summary: string;
       hobbies: string[];
-      spotifyUrl?: string;
-      spotifyPlaceholder: string;
+      askMeAbout: string;
     };
   };
   experience: ExperienceItem[];
@@ -107,9 +107,10 @@ export const portfolioData: PortfolioData = {
     ],
     personal: {
       summary:
-        "Outside of work and school, I like hobbies that reward consistency, patience, and gradual improvement. They keep me grounded and remind me that progress usually comes from repetition more than hype.",
-      hobbies: ["Guitar", "Rock climbing", "Running"],
-      spotifyPlaceholder: "Add Spotify playlist link in portfolio data when ready.",
+        "Outside of work and school, I usually gravitate toward hobbies and interests that reward patience, consistency, curiosity, and gradual improvement. They help me slow down, stay grounded, and enjoy the process.",
+      hobbies: ["Guitar", "Baking", "Running", "Travel"],
+      askMeAbout:
+        "Baking has probably become the most fun one to talk about lately - ask me about my brown butter ube cookies.",
     },
   },
   experience: [
@@ -306,6 +307,7 @@ export const portfolioData: PortfolioData = {
       { id: "experience", label: "Experience" },
       { id: "workbench", label: "Workbench" },
       { id: "contact", label: "Contact" },
+      { id: "games", label: "Games", hidden: true },
       { id: "internal-only", label: "Internal Only", hidden: true },
     ],
   },

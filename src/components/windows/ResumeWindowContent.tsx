@@ -68,7 +68,7 @@ export default function ResumeWindowContent() {
                   className={`${styles.actionButton} ${styles.actionButtonPrimary}`}
                   aria-label="Download Resume.pdf"
                 >
-                  Download PDF
+                  Download Resume
                 </a>
 
                 <a
@@ -78,7 +78,7 @@ export default function ResumeWindowContent() {
                   className={styles.actionButton}
                   aria-label="Open Resume.pdf in a new tab"
                 >
-                  Open in New Tab
+                  Open Resume
                 </a>
               </>
             ) : (
@@ -110,8 +110,8 @@ export default function ResumeWindowContent() {
         <div className={styles.documentCanvas}>
           {resumeState === "ready" ? (
             <p className={styles.mobileDocumentHint}>
-              On smaller screens, using Download PDF or Open in New Tab may be
-              easier than scrolling the inline preview.
+              On smaller screens, Open Resume or Download Resume usually feels
+              better than scrolling the inline preview.
             </p>
           ) : null}
           {resumeState === "ready" ? (

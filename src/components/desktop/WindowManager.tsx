@@ -19,6 +19,7 @@ import ExperienceContent from "@/components/windows/ExperienceWindowContent";
 import WorkbenchContent from "@/components/windows/WorkbenchWindowContent";
 import ResumeContent from "@/components/windows/ResumeWindowContent";
 import ContactContent from "@/components/windows/ContactWindowContent";
+import GamesContent from "@/components/windows/GamesWindowContent";
 import InternalOnlyContent from "@/components/windows/InternalOnlyWindowContent";
 
 export type WindowId = DesktopIconId;
@@ -58,19 +59,20 @@ function getInitialGeometry(params: {
   isMobile: boolean;
   existingCount: number;
 }): WindowGeometry {
-  const { isMobile, existingCount } = params;
+  const { id, isMobile, existingCount } = params;
   const taskbarH = isMobile ? 48 : 42;
 
-  const wDesktop = 560;
-  const hDesktop = 420;
-  const wMobile = Math.min(820, window.innerWidth - 16);
-  const hMobile = Math.min(560, window.innerHeight - taskbarH - 16);
+  const wDesktop = id === "games" ? 400 : 560;
+  const hDesktop = id === "games" ? 320 : 420;
+  const mobileMargin = 6;
+  const wMobile = Math.max(280, window.innerWidth - mobileMargin * 2);
+  const hMobile = Math.max(220, window.innerHeight - taskbarH - mobileMargin * 2);
 
   const w = isMobile ? wMobile : wDesktop;
   const h = isMobile ? hMobile : hDesktop;
 
-  const offsetX = 22 + existingCount * 16;
-  const offsetY = 22 + existingCount * 14;
+  const offsetX = isMobile ? mobileMargin : 22 + existingCount * 16;
+  const offsetY = isMobile ? mobileMargin : 22 + existingCount * 14;
 
   const maxLeft = Math.max(8, window.innerWidth - w - 8);
   const maxTop = Math.max(8, window.innerHeight - taskbarH - h - 8);
@@ -137,6 +139,8 @@ function WindowContentById({ id }: { id: WindowId }) {
       return <WorkbenchContent />;
     case "contact":
       return <ContactContent />;
+    case "games":
+      return <GamesContent />;
     case "internal-only":
       return <InternalOnlyContent />;
     default:

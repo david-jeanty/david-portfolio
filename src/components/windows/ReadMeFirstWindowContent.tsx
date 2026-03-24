@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import styles from "./WindowApps.module.css";
 
 export default function ReadMeFirstWindowContent() {
@@ -15,15 +16,31 @@ export default function ReadMeFirstWindowContent() {
 
       <div className={styles.surface}>
         <div className={styles.notepadArea}>
-          Hi - I&apos;m David.
+          <div className={styles.notepadIntro}>
+            <div className={styles.notepadPhotoFrame}>
+              <Image
+                src="/david-headshot.JPG"
+                alt="David Jeanty"
+                width={110}
+                height={110}
+                className={styles.notepadPhoto}
+              />
+            </div>
 
-          I built this portfolio like a small desktop because I like systems
-          that are organized, interactive, and easy to explore.
+            <div className={styles.notepadCopy}>
+              Hi - I&apos;m David.
 
-          I&apos;m currently looking for Fall 2026 internship opportunities in
-          business analysis, product operations, and tech consulting.
+              {"\n\n"}I built this portfolio like a small desktop because I
+              like systems that are organized, interactive, and easy to
+              explore.
 
-          Start with Experience or Resume.pdf.
+              {"\n\n"}I&apos;m currently looking for Fall 2026 internship
+              opportunities in business analysis, product operations, and tech
+              consulting.
+
+              {"\n\n"}Start with Experience or Resume.pdf.
+            </div>
+          </div>
         </div>
       </div>
 

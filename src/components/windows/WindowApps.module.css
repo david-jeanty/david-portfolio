@@ -41,6 +41,39 @@
   white-space: pre-wrap;
 }
 
+.notepadIntro {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: start;
+  gap: 18px;
+}
+
+.notepadPhotoFrame {
+  width: 96px;
+  height: 96px;
+  padding: 6px;
+  justify-self: start;
+  border: 1px solid #7b92b7;
+  background: linear-gradient(180deg, #ffffff 0%, #dfeaf9 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+    1px 1px 0 rgba(104, 123, 160, 0.3);
+}
+
+.notepadPhoto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 26%;
+  border: 1px solid #9ba9bb;
+  background: #dfe3e8;
+}
+
+.notepadCopy {
+  min-width: 0;
+}
+
 .toolbar {
   display: flex;
   align-items: center;
@@ -496,6 +529,222 @@
   line-height: 1.4;
 }
 
+.gamePanel {
+  border: 1px solid #b9b9b9;
+  background: linear-gradient(180deg, #ffffff 0%, #f2f6fc 100%);
+  padding: 12px;
+}
+
+.gameHeader {
+  margin-bottom: 12px;
+}
+
+.gameEyebrow {
+  margin: 0 0 4px;
+  color: #365b92;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.gameTitle {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.gameInstruction {
+  margin: 0;
+  color: #334155;
+  font-size: 12px;
+}
+
+.gameOptionList {
+  display: grid;
+  gap: 8px;
+}
+
+.gameOption {
+  width: 100%;
+  border: 1px solid #b8c7db;
+  background: linear-gradient(180deg, #ffffff 0%, #edf3fb 100%);
+  padding: 10px 12px;
+  display: grid;
+  gap: 10px;
+  text-align: left;
+  font-size: 13px;
+  color: #13253f;
+}
+
+.gameOption:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #e1ecfb 100%);
+}
+
+.gameOptionSelected {
+  border-color: #6f98d0;
+  box-shadow: inset 0 0 0 1px rgba(77, 121, 186, 0.12);
+}
+
+.gameOptionTruth {
+  border-color: #6ea06a;
+  background: linear-gradient(180deg, #f7fff7 0%, #dff3df 100%);
+}
+
+.gameOptionLie {
+  border-color: #c58c8c;
+  background: linear-gradient(180deg, #fff8f8 0%, #f7dddd 100%);
+}
+
+.gameOptionText {
+  line-height: 1.35;
+}
+
+.gameChoiceRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gameChoiceButton {
+  min-width: 72px;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid #aebdce;
+  background: linear-gradient(180deg, #ffffff 0%, #edf2f8 100%);
+  color: #20406b;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.gameChoiceButton:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #e1ebfa 100%);
+}
+
+.gameChoiceButton:active {
+  transform: translateY(1px);
+}
+
+.gameChoiceButtonTruthActive {
+  border-color: #376d2a;
+  background: linear-gradient(180deg, #d4f7c8 0%, #89d06d 52%, #68b34f 100%);
+  color: #0b2f0f;
+  box-shadow:
+    inset 0 2px 4px rgba(49, 97, 39, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(48, 106, 36, 0.18);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  transform: translateY(1px);
+}
+
+.gameChoiceButtonLieActive {
+  border-color: #8d3737;
+  background: linear-gradient(180deg, #ffd2d2 0%, #ee8b8b 52%, #d45d5d 100%);
+  color: #4a1010;
+  box-shadow:
+    inset 0 2px 4px rgba(130, 45, 45, 0.34),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 0 0 1px rgba(141, 55, 55, 0.18);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.34);
+  transform: translateY(1px);
+}
+
+.gameFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.gameHint,
+.gameFeedback {
+  margin: 0;
+  font-size: 12px;
+  color: #334155;
+}
+
+.gameFeedback {
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.gameFeedbackSuccess {
+  color: #1d6a2d;
+  letter-spacing: 0.04em;
+}
+
+.gameFeedbackFail {
+  color: #8b1e1e;
+}
+
+.gameResultBlock {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+}
+
+.gameConfetti {
+  display: flex;
+  gap: 4px;
+  height: 12px;
+}
+
+.gameConfetti span {
+  width: 5px;
+  border-radius: 999px;
+  animation: confettiBounce 800ms ease-in-out infinite alternate;
+}
+
+.gameConfetti span:nth-child(1) {
+  height: 10px;
+  background: #f0c547;
+}
+
+.gameConfetti span:nth-child(2) {
+  height: 12px;
+  background: #5b9ef2;
+  animation-delay: 80ms;
+}
+
+.gameConfetti span:nth-child(3) {
+  height: 8px;
+  background: #56b65a;
+  animation-delay: 160ms;
+}
+
+.gameConfetti span:nth-child(4) {
+  height: 12px;
+  background: #e87aa4;
+  animation-delay: 240ms;
+}
+
+.gameConfetti span:nth-child(5) {
+  height: 9px;
+  background: #8a7ce8;
+  animation-delay: 320ms;
+}
+
+.gameConfetti span:nth-child(6) {
+  height: 11px;
+  background: #ff9356;
+  animation-delay: 400ms;
+}
+
+@keyframes confettiBounce {
+  from {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+
+  to {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
 @media (max-width: 768px) {
   .menuBar {
     gap: 12px;
@@ -559,25 +808,43 @@
     gap: 6px;
   }
 
+  .notepadIntro {
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+  }
+
+  .notepadPhotoFrame {
+    width: 80px;
+    height: 80px;
+    padding: 4px;
+  }
+
   .fieldLabel {
     margin-top: 6px;
   }
 
   .documentToolbar {
     flex-direction: column;
+    gap: 12px;
   }
 
   .documentActionRow {
     justify-content: flex-start;
     width: 100%;
+    gap: 8px;
   }
 
   .actionButton {
     min-height: 40px;
+    justify-content: center;
+  }
+
+  .warningActions .actionButton {
+    width: 100%;
   }
 
   .resumeFrame {
-    height: 260px;
+    height: 220px;
   }
 
   .resumeFallbackCard {
@@ -597,10 +864,60 @@
     font-size: 12px;
   }
 
+  .detailPane {
+    padding: 10px;
+  }
+
+  .detailHeader {
+    font-size: 14px;
+  }
+
+  .rowList {
+    padding-left: 16px;
+  }
+
+  .simpleListSurface {
+    padding: 10px;
+  }
+
+  .contactList {
+    padding-left: 18px;
+  }
+
   .contactLine {
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
+    row-gap: 2px;
+    column-gap: 6px;
+  }
+
+  .gamePanel {
+    padding: 10px;
+  }
+
+  .gameOption {
+    padding: 10px;
+  }
+
+  .gameChoiceButton {
+    flex: 1 1 0;
+    min-height: 40px;
+    justify-content: center;
+  }
+
+  .gameFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gameResultBlock {
+    width: 100%;
+    justify-items: start;
+  }
+
+  .gameConfetti {
+    justify-content: flex-start;
   }
 
   .statusBar {
@@ -619,6 +936,17 @@
     font-size: 12px;
   }
 
+  .notepadIntro {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .notepadPhotoFrame {
+    width: 74px;
+    height: 74px;
+    justify-self: center;
+  }
+
   .dialogBody,
   .detailPane,
   .simpleListSurface,
@@ -634,11 +962,46 @@
     padding: 7px 8px;
   }
 
+  .documentToolbar {
+    padding: 9px;
+  }
+
+  .documentTitle {
+    font-size: 14px;
+  }
+
+  .documentSubtitle {
+    font-size: 11px;
+  }
+
+  .documentMetaRow {
+    padding: 8px 9px 0;
+  }
+
+  .documentActionRow {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .actionButton {
+    width: 100%;
+    padding: 10px 12px;
+  }
+
+  .gameChoiceRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
   .resumeFrame {
-    height: 220px;
+    height: 180px;
   }
 
   .resumeFallbackCard {
     padding: 8px;
+  }
+
+  .folderPane {
+    max-height: 144px;
   }
 }

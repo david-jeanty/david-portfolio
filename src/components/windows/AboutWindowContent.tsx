@@ -99,24 +99,15 @@ export default function AboutWindowContent() {
                 {portfolioData.about.personal.summary}
               </div>
 
-              <div className={styles.fieldLabel}>Hobbies</div>
+              <div className={styles.fieldLabel}>Top interests right now</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                {portfolioData.about.personal.hobbies.join(", ")}
+                Lately, the ones I come back to most are{" "}
+                {portfolioData.about.personal.hobbies.join(", ").toLowerCase()}.
               </div>
 
-              <div className={styles.fieldLabel}>Spotify</div>
+              <div className={styles.fieldLabel}>Baking note</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                {portfolioData.about.personal.spotifyUrl ? (
-                  <a
-                    href={portfolioData.about.personal.spotifyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Open playlist
-                  </a>
-                ) : (
-                  portfolioData.about.personal.spotifyPlaceholder
-                )}
+                {portfolioData.about.personal.askMeAbout}
               </div>
             </div>
           )}
