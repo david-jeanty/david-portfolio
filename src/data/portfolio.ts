@@ -1,5 +1,4 @@
 export type DesktopIconId =
-  | "readme"
   | "resume"
   | "about"
   | "experience"
@@ -65,9 +64,7 @@ export interface PortfolioData {
     availability: string;
   };
   desktop: {
-    readMeFileName: string;
     resumeFileName: string;
-    readMeText: string;
     icons: Array<{
       id: DesktopIconId;
       label: string;
@@ -296,12 +293,8 @@ export const portfolioData: PortfolioData = {
       "Open to BA, product operations, and tech consulting opportunities in the Kanata North ecosystem and beyond.",
   },
   desktop: {
-    readMeFileName: "Read Me First.txt",
     resumeFileName: "Resume.pdf",
-    readMeText:
-      "Welcome. This desktop portfolio is designed for structured exploration. Start with About, Experience, Resume, and Workbench.",
     icons: [
-      { id: "readme", label: "Read Me First.txt" },
       { id: "resume", label: "Resume.pdf" },
       { id: "about", label: "About Me" },
       { id: "experience", label: "Experience" },

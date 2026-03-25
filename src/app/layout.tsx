@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "David Jeanty — Business Analyst & Tech Consultant",
+  title: "David Jeanty | Portfolio",
   description:
-    "Bilingual BCom student at uOttawa specializing in Business Technology Management. Bridging operational problems and technical solutions.",
+    "Business Technology Management student at uOttawa pursuing Fall 2026 internship opportunities in business analysis, product operations, and tech consulting.",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+  },
   keywords: [
     "David Jeanty",
     "Business Analyst",

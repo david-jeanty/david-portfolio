@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { portfolioData } from "@/data/portfolio";
 import styles from "./WindowApps.module.css";
@@ -20,6 +21,39 @@ export default function AboutWindowContent() {
       <section className={styles.dialogCard}>
         <div className={styles.dialogHeader}>Profile Properties</div>
         <div className={styles.dialogBody}>
+          <section className={styles.onboardingNote} aria-label="Navigation guidance">
+            <div className={styles.onboardingIntro}>
+              <div className={styles.onboardingPhotoFrame}>
+                <Image
+                  src="/david-headshot.JPG"
+                  alt="David Jeanty"
+                  width={104}
+                  height={104}
+                  className={styles.onboardingPhoto}
+                />
+              </div>
+
+              <div className={styles.onboardingCopy}>
+                <p className={styles.onboardingTitle}>Welcome</p>
+                <p>
+                  Hi, I&apos;m David. I built this portfolio like a small desktop
+                  because I like systems that feel organized, interactive, and
+                  easy to explore.
+                </p>
+                <p>
+                  I&apos;m currently looking for Fall 2026 internship
+                  opportunities in business analysis, product operations, and
+                  tech consulting.
+                </p>
+                <p>
+                  Windows can be opened, moved, resized, minimized, and
+                  restored. Good places to start are Experience, Resume.pdf,
+                  Workbench, and Contact.
+                </p>
+              </div>
+            </div>
+          </section>
+
           <div className={styles.tabRow} role="tablist" aria-label="About tabs">
             <button
               type="button"
@@ -87,9 +121,9 @@ export default function AboutWindowContent() {
             <div className={`${styles.fieldGrid} ${styles.aboutGrid}`}>
               <div className={styles.fieldLabel}>How I think</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                Structured before flashy
+                Thoughtful before flashy
                 <br />
-                Curious about process and people
+                Curious about systems and people
                 <br />
                 Focused on practical, usable solutions
               </div>
@@ -101,8 +135,8 @@ export default function AboutWindowContent() {
 
               <div className={styles.fieldLabel}>Top interests right now</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                Lately, the ones I come back to most are{" "}
-                {portfolioData.about.personal.hobbies.join(", ").toLowerCase()}.
+                Lately, the ones I come back to most are guitar, baking,
+                running, and travel.
               </div>
 
               <div className={styles.fieldLabel}>Baking note</div>

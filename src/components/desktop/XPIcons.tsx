@@ -4,32 +4,6 @@ import { type DesktopIconId } from "@/data/portfolio";
 
 type IP = { size?: number; white?: boolean };
 
-/* ── Notepad / TXT ───────────────────────────────────────────────────────── */
-function NotepadIcon({ size = 38, white = false }: IP) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <rect x="4" y="2" width="19" height="25" rx="1"
-        fill={white ? "rgba(255,255,255,0.9)" : "#ffffff"}
-        stroke={white ? "rgba(255,255,255,0.55)" : "#b4bec8"} strokeWidth="0.8" />
-      <path d="M19 2 L23 6 L19 6 Z"
-        fill={white ? "rgba(200,220,255,0.5)" : "#ccdff5"}
-        stroke={white ? "rgba(255,255,255,0.45)" : "#a8bcd0"} strokeWidth="0.7" />
-      {!white && (
-        <>
-          <line x1="7" y1="11" x2="19" y2="11" stroke="#c4cdd8" strokeWidth="1" />
-          <line x1="7" y1="15" x2="19" y2="15" stroke="#c4cdd8" strokeWidth="1" />
-          <line x1="7" y1="19" x2="19" y2="19" stroke="#c4cdd8" strokeWidth="1" />
-          <line x1="7" y1="23" x2="15" y2="23" stroke="#c4cdd8" strokeWidth="1" />
-          {/* Pencil diagonal */}
-          <rect x="17" y="17" width="3" height="11" rx="1.2"
-            fill="#fdd835" stroke="#c8a200" strokeWidth="0.5"
-            transform="rotate(-40 18.5 22.5)" />
-        </>
-      )}
-    </svg>
-  );
-}
-
 /* ── PDF Document ────────────────────────────────────────────────────────── */
 function PDFDocIcon({ size = 38, white = false }: IP) {
   return (
@@ -146,7 +120,6 @@ function EnvelopeIcon({ size = 38, white = false }: IP) {
 ══════════════════════════════════════════════════════════════════════════ */
 export function DesktopIconArt({ id, size = 38 }: { id: DesktopIconId; size?: number }) {
   switch (id) {
-    case "readme":             return <NotepadIcon size={size} />;
     case "resume":             return <PDFDocIcon size={size} />;
     case "about":              return <PersonIcon size={size} />;
     case "experience":         return <BriefcaseIcon size={size} />;
@@ -162,7 +135,6 @@ export function DesktopIconArt({ id, size = 38 }: { id: DesktopIconId; size?: nu
 ══════════════════════════════════════════════════════════════════════════ */
 export function TitleBarIcon({ id }: { id: DesktopIconId }) {
   switch (id) {
-    case "readme":             return <NotepadIcon size={14} white />;
     case "resume":             return <PDFDocIcon size={14} white />;
     case "about":              return <PersonIcon size={14} white />;
     case "experience":         return <BriefcaseIcon size={14} white />;

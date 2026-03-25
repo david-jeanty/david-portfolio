@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(grep -n \"import.*from\" /Users/davidjeanty/david-portfolio/src/components/windows/*.tsx)",
+      "Bash(identify /Users/davidjeanty/david-portfolio/public/david-headshot.JPG)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }

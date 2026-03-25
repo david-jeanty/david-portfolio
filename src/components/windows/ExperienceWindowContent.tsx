@@ -129,10 +129,12 @@ export default function ExperienceWindowContent() {
 
         <article className={styles.detailPane} aria-label="Selected experience details">
           <h3 className={styles.detailHeader}>{selected.org}</h3>
-          <p className={styles.metaLine}>
-            {selected.role ? `${selected.role}` : "Organization profile"}
-            {selected.period ? ` · ${selected.period}` : ""}
-          </p>
+          {selected.role || selected.period ? (
+            <p className={styles.metaLine}>
+              {selected.role ?? ""}
+              {selected.period ? `${selected.role ? " · " : ""}${selected.period}` : ""}
+            </p>
+          ) : null}
 
           {selected.positioning && (
             <>

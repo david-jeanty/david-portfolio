@@ -13,7 +13,6 @@ import {
 import DesktopWindow, { type WindowGeometry } from "./DesktopWindow";
 import styles from "./WindowManager.module.css";
 import { portfolioData, type DesktopIconId, type PortfolioData } from "@/data/portfolio";
-import ReadMeFirstContent from "@/components/windows/ReadMeFirstWindowContent";
 import AboutContent from "@/components/windows/AboutWindowContent";
 import ExperienceContent from "@/components/windows/ExperienceWindowContent";
 import WorkbenchContent from "@/components/windows/WorkbenchWindowContent";
@@ -33,8 +32,12 @@ type WindowState = {
   restoreGeometry: WindowGeometry | null;
 };
 
+type OpenWindowOptions = {
+  centered?: boolean;
+};
+
 type WindowManagerApi = {
-  openWindow: (id: WindowId) => void;
+  openWindow: (id: WindowId, options?: OpenWindowOptions) => void;
   closeWindow: (id: WindowId) => void;
   minimizeWindow: (id: WindowId) => void;
   restoreWindow: (id: WindowId) => void;
@@ -83,6 +86,36 @@ function getInitialGeometry(params: {
   return { x, y, w, h };
 }
 
+function getCenteredGeometry(params: {
+  id: WindowId;
+  isMobile: boolean;
+}): WindowGeometry {
+  const { id, isMobile } = params;
+  const taskbarH = getTaskbarHeight(isMobile);
+
+  if (isMobile) {
+    return getInitialGeometry({ id, isMobile, existingCount: 0 });
+  }
+
+  const geometry = clampWindowGeometry(
+    {
+      x: 0,
+      y: 0,
+      w: id === "about" ? 620 : 560,
+      h: id === "about" ? 460 : 420,
+    },
+    isMobile
+  );
+
+  const visibleDesktopHeight = window.innerHeight - taskbarH;
+
+  return {
+    ...geometry,
+    x: Math.max(0, Math.round((window.innerWidth - geometry.w) / 2)),
+    y: Math.max(0, Math.round((visibleDesktopHeight - geometry.h) / 2)),
+  };
+}
+
 function getTaskbarHeight(isMobile: boolean) {
   return isMobile ? 48 : 42;
 }
@@ -125,10 +158,29 @@ function getWindowTitle(id: WindowId, data: PortfolioData) {
   return icon?.label ?? id;
 }
 
+function createWindowState(params: {
+  id: WindowId;
+  isMobile: boolean;
+  existingCount: number;
+  zIndex: number;
+  centered?: boolean;
+}): WindowState {
+  const { id, isMobile, existingCount, zIndex, centered = false } = params;
+
+  return {
+    id,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex,
+    geometry: centered
+      ? getCenteredGeometry({ id, isMobile })
+      : getInitialGeometry({ id, isMobile, existingCount }),
+    restoreGeometry: null,
+  };
+}
+
 function WindowContentById({ id }: { id: WindowId }) {
   switch (id) {
-    case "readme":
-      return <ReadMeFirstContent />;
     case "resume":
       return <ResumeContent />;
     case "about":
@@ -187,7 +239,7 @@ export default function WindowManager({ children }: { children: ReactNode }) {
   );
 
   const openWindow = useCallback(
-    (id: WindowId) => {
+    (id: WindowId, options?: OpenWindowOptions) => {
       setWindows((prev) => {
         const existing = prev.find((w) => w.id === id);
         if (existing) {
@@ -201,22 +253,17 @@ export default function WindowManager({ children }: { children: ReactNode }) {
           );
         }
 
-        const geometry = getInitialGeometry({
-          id,
-          isMobile,
-          existingCount: prev.length,
-        });
-        nextZRef.current = nextZRef.current + 1;
+        const nextZ = nextZRef.current + 1;
+        nextZRef.current = nextZ;
         return [
           ...prev,
-          {
+          createWindowState({
             id,
-            isMinimized: false,
-            isMaximized: false,
-            zIndex: nextZRef.current,
-            geometry,
-            restoreGeometry: null,
-          },
+            isMobile,
+            existingCount: prev.length,
+            zIndex: nextZ,
+            centered: options?.centered,
+          }),
         ];
       });
       setActiveWindowId(id);
@@ -360,6 +407,34 @@ export default function WindowManager({ children }: { children: ReactNode }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
+
+  useEffect(() => {
+    const sessionKey = "portfolio-about-autoloaded";
+
+    if (sessionStorage.getItem(sessionKey)) return;
+
+    sessionStorage.setItem(sessionKey, "true");
+
+    const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
+    const nextZ = nextZRef.current + 1;
+    nextZRef.current = nextZ;
+
+    setWindows((prev) => {
+      if (prev.some((w) => w.id === "about")) return prev;
+
+      return [
+        ...prev,
+        createWindowState({
+          id: "about",
+          isMobile: isMobileViewport,
+          existingCount: prev.length,
+          zIndex: nextZ,
+          centered: true,
+        }),
+      ];
+    });
+    setActiveWindowId("about");
+  }, []);
 
   return (
     <WindowManagerContext.Provider value={api}>

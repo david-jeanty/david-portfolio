@@ -65,7 +65,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 26%;
+  object-position: 50% 20%;
   border: 1px solid #9ba9bb;
   background: #dfe3e8;
 }
@@ -215,6 +215,69 @@
   padding: 12px;
   font-size: 13px;
   line-height: 1.45;
+}
+
+.onboardingNote {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid #c4d5ee;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.onboardingIntro {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  align-items: start;
+  gap: 14px;
+}
+
+.onboardingPhotoFrame {
+  width: 104px;
+  height: 104px;
+  padding: 6px;
+  justify-self: start;
+  border: 1px solid #7b92b7;
+  background: linear-gradient(180deg, #ffffff 0%, #dfeaf9 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+    1px 1px 0 rgba(104, 123, 160, 0.3);
+}
+
+.onboardingPhoto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  border: 1px solid #9ba9bb;
+  background: #dfe3e8;
+}
+
+.onboardingCopy {
+  min-width: 0;
+}
+
+.onboardingTitle {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1d365a;
+}
+
+.onboardingNote p {
+  margin: 0;
+}
+
+.onboardingNote p + p {
+  margin-top: 6px;
+}
+
+@media (max-width: 560px) {
+  .onboardingIntro {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
 .tabRow {
@@ -819,6 +882,10 @@
     padding: 4px;
   }
 
+  .notepadPhoto {
+    object-position: 50% 18%;
+  }
+
   .fieldLabel {
     margin-top: 6px;
   }
@@ -945,6 +1012,10 @@
     width: 74px;
     height: 74px;
     justify-self: center;
+  }
+
+  .notepadPhoto {
+    object-position: 50% 16%;
   }
 
   .dialogBody,
