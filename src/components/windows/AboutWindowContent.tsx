@@ -41,11 +41,6 @@ export default function AboutWindowContent() {
                   easy to explore.
                 </p>
                 <p>
-                  I&apos;m currently looking for Fall 2026 internship
-                  opportunities in business analysis, product operations, and
-                  tech consulting.
-                </p>
-                <p>
                   Windows can be opened, moved, resized, minimized, and
                   restored. Good places to start are Experience, Resume.pdf,
                   Workbench, and Contact.

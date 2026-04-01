@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 export const metadata: Metadata = {
   title: "David Jeanty | Portfolio",
   description:
-    "Business Technology Management student at uOttawa pursuing Fall 2026 internship opportunities in business analysis, product operations, and tech consulting.",
+    "Business Technology Management student at uOttawa with interests in business analysis, product operations, and tech consulting.",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
