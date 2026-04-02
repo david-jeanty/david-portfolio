@@ -112,22 +112,21 @@ export const portfolioData: PortfolioData = {
   },
   experience: [
     {
-      company: "CIBC Wood Gundy",
-      role: "Incoming Student Wealth Associate",
-      period: "Summer 2026",
+      company: "StraNexus Inc.",
+      role: "Strategy & Operations Intern",
+      period: "Jan. 2026 - Apr. 2026",
       metric: {
-        value: 1,
-        prefix: "#",
-        suffix: " role incoming",
-        label: "Private Wealth Operations",
+        value: 16,
+        suffix: " pipelines mapped",
+        label: "Academic Recruitment Strategy",
       },
       summary:
-        "Navigating regulated financial environments where precision and compliance are not optional.",
+        "Redesigned campus recruitment strategy, built new outreach channels across Ontario programs, and delivered a structured engagement framework aligned to firm practice areas and client sectors.",
     },
     {
       company: "Aritzia",
       role: "Risk Associate",
-      period: "Apr 2024 - Aug 2025",
+      period: "Apr. 2024 - Aug. 2025",
       metric: {
         value: 50,
         prefix: "$",
@@ -135,19 +134,31 @@ export const portfolioData: PortfolioData = {
         label: "Shrinkage Reduction",
       },
       summary:
-        "KPI dashboards, anomaly detection, and operational analytics at scale, directly transferable to BA and product operations.",
+        "Built Excel-based loss tracking models, monitored daily KPIs in a 1,000+ weekly client environment, and turned risk findings into operational follow-up that helped reduce shrink by $50K+.",
+    },
+    {
+      company: "University of Ottawa",
+      role: "Student Ambassador",
+      period: "Sep. 2023 - Apr. 2024",
+      metric: {
+        value: 2500,
+        suffix: "+ students engaged",
+        label: "Campus Outreach",
+      },
+      summary:
+        "Delivered 75+ campus tours, supported 2,500+ prospective students, and handled 2,000+ CRM inquiries with clear communication and reliable follow-through.",
     },
     {
       company: "Telfer Business Technology Association",
-      role: "VP Internal Affairs",
-      period: "2023 - Present",
+      role: "Vice President, Internal Affairs",
+      period: "Apr. 2024 - Apr. 2025",
       metric: {
         value: 20,
         suffix: " hired",
         label: "Team Members Recruited",
       },
       summary:
-        "End-to-end stakeholder management: hiring, onboarding, and running 10+ events per year for a 100+ member student organization.",
+        "Progressed from First Year Representative to Vice President, Internal Affairs, managing 100+ student inquiries, hiring and onboarding 20 members, and helping deliver 10+ events per year.",
     },
   ],
   workbench: {

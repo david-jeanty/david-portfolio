@@ -9,6 +9,7 @@ type ExperienceNode = {
   org: string;
   role?: string;
   period?: string;
+  secondaryRoleLine?: string;
   positioning?: string[];
   bullets: string[];
   translation: string;
@@ -16,43 +17,27 @@ type ExperienceNode = {
 
 const EXPERIENCE_ITEMS: ExperienceNode[] = [
   {
-    id: "cibc",
-    org: "CIBC Wood Gundy",
-    role: "Incoming Student Wealth Associate",
-    period: "Summer 2026",
-    positioning: [
-      "selected for a private wealth internship",
-      "supporting client service and operational execution in a regulated financial environment",
-    ],
-    bullets: [],
-    translation:
-      "trust, precision, regulated operations, client-facing execution",
-  },
-  {
     id: "stranexus",
     org: "StraNexus Inc.",
-    role: "Intake Revamp and Process Optimization",
+    role: "Strategy & Operations Intern",
+    period: "Jan. 2026 - Apr. 2026",
     bullets: [
-      "mapped 38 target programs across 31 universities in 3 regions, prioritizing 16 high-fit programs",
-      "expanded sourcing beyond industrial engineering into 6 discipline categories",
-      "built an Ontario-first campus recruiting plan covering 15 programs and 4 outreach channels",
-      "designed a 13-field outreach tracker",
-      "structured a 30-minute value-added presentation format",
-      "aligned outreach to 4 practice areas and 17 client sectors",
+      "assessed StraNexus's existing recruitment approach, identified structural gaps in program targeting and outreach, and developed a replacement strategy mapped to 16 high-fit academic pipelines across 31 universities",
+      "executed stakeholder outreach to faculty contacts and student organizations across 15 Ontario programs, establishing new recruitment channels and building relationships to support the firm's Apprentice Consultant pipeline",
+      "delivered a structured campus engagement framework including contact mapping, follow-up protocols, and program prioritization criteria aligned to StraNexus's 4 practice areas and 17 client sectors",
     ],
     translation:
-      "market mapping, process design, outreach systems, stakeholder operations, implementation-oriented thinking",
+      "strategy, stakeholder outreach, recruitment operations, process design, structured execution",
   },
   {
     id: "aritzia",
     org: "Aritzia",
     role: "Risk Associate",
-    period: "Apr 2024 to Aug 2025",
+    period: "Apr. 2024 - Aug. 2025",
     bullets: [
-      "reduced shrink by $50K+",
-      "tracked KPIs in a high-volume environment serving 1,000+ weekly clients",
-      "flagged anomalies and recommended process adjustments",
-      "partnered across a 50+ person team",
+      "built and maintained Excel-based loss tracking models to map transactional data quarter-over-quarter, cross-referencing shrink rates against market trends and accuracy benchmarks to surface systemic vulnerabilities, supporting mitigation actions that reduced shrink by $50K+",
+      "tracked daily KPIs across a 1,000+ weekly client environment, flagged anomalies in compliance and asset protection metrics, and recommended process adjustments to operational and floor teams",
+      "partnered with managers and a 50+ person team to align on controls execution, translating analytical findings into actionable follow-up and reinforcing consistent outcomes",
     ],
     translation:
       "operational analytics, anomaly detection, risk/compliance thinking, process improvement",
@@ -61,19 +46,20 @@ const EXPERIENCE_ITEMS: ExperienceNode[] = [
     id: "student-ambassador",
     org: "University of Ottawa",
     role: "Student Ambassador",
+    period: "Sep. 2023 - Apr. 2024",
     bullets: [
-      "delivered 75+ campus tours",
-      "engaged 2,500+ prospective students",
-      "handled 2,000+ CRM inquiries",
-      "created content for 20,000+ followers",
+      "delivered 75+ campus tours and engaged 2,500+ prospective students, translating complex programs and processes into clear, persuasive guidance",
+      "responded to 2,000+ student inquiries via uOttawa's CRM platform by gathering context, providing accurate information, and documenting next steps for follow-through",
     ],
     translation:
-      "CRM operations, communication at scale, workflow follow-through, stakeholder guidance",
+      "stakeholder communication, CRM workflow, information triage, clear client-facing guidance",
   },
   {
     id: "tbta",
     org: "Telfer Business Technology Association",
-    role: "First Year Representative & VP Internal Affairs",
+    role: "Vice President, Internal Affairs",
+    period: "Apr. 2024 - Apr. 2025",
+    secondaryRoleLine: "First Year Representative · Sep. 2023 - Apr. 2024",
     bullets: [
       "managed 100+ student inquiries and served as liaison between MIS professors, Telfer administration, and the Career Centre to align stakeholders and resolve issues quickly",
       "hired and onboarded 20 members by coordinating internal operations, role assignments, and execution follow-up",
@@ -130,10 +116,15 @@ export default function ExperienceWindowContent() {
         <article className={styles.detailPane} aria-label="Selected experience details">
           <h3 className={styles.detailHeader}>{selected.org}</h3>
           {selected.role || selected.period ? (
-            <p className={styles.metaLine}>
-              {selected.role ?? ""}
-              {selected.period ? `${selected.role ? " · " : ""}${selected.period}` : ""}
-            </p>
+            <>
+              <p className={styles.metaLine}>
+                {selected.role ?? ""}
+                {selected.period ? `${selected.role ? " · " : ""}${selected.period}` : ""}
+              </p>
+              {selected.secondaryRoleLine ? (
+                <p className={styles.metaLine}>{selected.secondaryRoleLine}</p>
+              ) : null}
+            </>
           ) : null}
 
           {selected.positioning && (
