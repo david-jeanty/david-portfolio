@@ -5,8 +5,9 @@ import { portfolioData } from "@/data/portfolio";
 import styles from "./WindowApps.module.css";
 
 export default function ResumeWindowContent() {
-  const resumeUrl = `/${portfolioData.desktop.resumeFileName}`;
-  const expectedPublicPath = `/public/${portfolioData.desktop.resumeFileName}`;
+  const resumeFileName = portfolioData.desktop.resumeFileName;
+  const resumeUrl = `/${resumeFileName}`;
+  const expectedPublicPath = `/public/${resumeFileName}`;
   const [resumeState, setResumeState] = useState<"checking" | "ready" | "missing">("checking");
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export default function ResumeWindowContent() {
       <section className={styles.surface}>
         <div className={styles.documentToolbar}>
           <div>
-            <p className={styles.documentTitle}>Resume.pdf</p>
+            <p className={styles.documentTitle}>{resumeFileName}</p>
             <p className={styles.documentSubtitle}>
               Quick recruiter view with preview, download, and direct-open access.
             </p>
@@ -66,7 +67,7 @@ export default function ResumeWindowContent() {
                   href={resumeUrl}
                   download
                   className={`${styles.actionButton} ${styles.actionButtonPrimary}`}
-                  aria-label="Download Resume.pdf"
+                  aria-label={`Download ${resumeFileName}`}
                 >
                   Download Resume
                 </a>
@@ -76,7 +77,7 @@ export default function ResumeWindowContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.actionButton}
-                  aria-label="Open Resume.pdf in a new tab"
+                  aria-label={`Open ${resumeFileName} in a new tab`}
                 >
                   Open in New Tab
                 </a>
@@ -101,7 +102,7 @@ export default function ResumeWindowContent() {
         </div>
 
         <div className={styles.documentMetaRow}>
-          <span className={styles.documentMetaChip}>File: {portfolioData.desktop.resumeFileName}</span>
+          <span className={styles.documentMetaChip}>File: {resumeFileName}</span>
           <span className={styles.documentMetaChip}>
             {resumeState === "ready" ? "Status: ready to view" : "Status: waiting for file"}
           </span>
@@ -125,7 +126,7 @@ export default function ResumeWindowContent() {
               <div className={styles.resumeSheet}>
                 <div className={styles.resumeSheetHeader}>Resume Preview</div>
                 {resumeState === "checking" ? (
-                  <p className={styles.resumeFallbackText}>Checking for Resume.pdf...</p>
+                  <p className={styles.resumeFallbackText}>Checking for {resumeFileName}...</p>
                 ) : (
                   <>
                     <p className={styles.resumeFallbackText}>

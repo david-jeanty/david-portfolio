@@ -305,7 +305,7 @@ export const portfolioData: PortfolioData = {
       "Open to BA, product operations, and tech consulting opportunities in the Kanata North ecosystem and beyond.",
   },
   desktop: {
-    resumeFileName: "Resume.pdf",
+    resumeFileName: "David_Jeanty_Portfolio_Resume_2026.pdf",
     icons: [
       { id: "resume", label: "Resume.pdf" },
       { id: "experience", label: "Experience" },
