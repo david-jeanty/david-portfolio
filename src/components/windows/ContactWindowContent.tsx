@@ -45,24 +45,24 @@ export default function ContactWindowContent() {
           </li>
         </ul>
 
-        <h3>Coffee chat / networking</h3>
+        <h3>Professional contact</h3>
         <p style={{ marginBottom: 14 }}>
-          Open to recruiter conversations and quick networking chats. If you
-          want to connect, send a note and I’ll respond.
+          Open to recruiter outreach and conversations about relevant roles.
+          Email is the fastest way to reach me.
         </p>
 
         <a
-          href={`mailto:${portfolioData.contact.email}?subject=Coffee%20chat&body=Hi%20David%2C%0A%0AI%E2%80%99d%20love%20to%20chat%20about%20opportunities.%0A%0AThanks!`}
+          href={`mailto:${portfolioData.contact.email}?subject=Opportunity%20Inquiry&body=Hi%20David%2C%0A%0AI%E2%80%99d%20like%20to%20connect%20about%20a%20role%20or%20opportunity.%0A%0AThanks!`}
           className={`${styles.actionButton} ${styles.actionButtonPrimary}`}
-          aria-label="Email for a coffee chat"
+          aria-label="Email about opportunities"
         >
-          Email for a coffee chat
+          Email about opportunities
         </a>
       </section>
 
       <div className={styles.statusBar}>
         <span>3 contact fields</span>
-        <span>Networking open</span>
+        <span>Professional contact open</span>
       </div>
     </div>
   );

@@ -1,8 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import { type DesktopIconId } from "@/data/portfolio";
 
 type IP = { size?: number; white?: boolean };
+
+function RasterIcon({ src, size = 38 }: { src: string; size?: number }) {
+  return (
+    <Image
+      src={src}
+      alt=""
+      aria-hidden="true"
+      width={size}
+      height={size}
+      unoptimized
+      style={{ display: "block", objectFit: "contain" }}
+    />
+  );
+}
 
 /* ── PDF Document ────────────────────────────────────────────────────────── */
 function PDFDocIcon({ size = 38, white = false }: IP) {
@@ -82,18 +97,37 @@ function FolderIcon({ size = 38, white = false }: IP) {
   );
 }
 
-/* ── Wrench / Currently Building ─────────────────────────────────────────── */
-function WrenchIcon({ size = 38, white = false }: IP) {
-  const f = white ? "rgba(255,255,255,0.85)" : "#4878c0";
+/* ── Gear / Workbench ───────────────────────────────────────────────────── */
+function GearIcon({ size = 38, white = false }: IP) {
+  const fill = white ? "rgba(255,255,255,0.9)" : "#f2c84b";
+  const edge = white ? "rgba(255,255,255,0.65)" : "#9c6e0d";
+  const core = white ? "rgba(255,255,255,0.25)" : "#5d97da";
+  const shine = white ? "rgba(255,255,255,0.32)" : "#ffe798";
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      {/* C-shaped open-end wrench head */}
-      <rect x="3" y="4" width="5" height="22" rx="2.5" fill={f} />
-      <rect x="3" y="4" width="16" height="5" rx="2.5" fill={f} />
-      <rect x="3" y="21" width="16" height="5" rx="2.5" fill={f} />
-      {/* Handle (angled) */}
-      <rect x="14" y="12" width="5" height="18" rx="2.5"
-        fill={f} transform="rotate(28 16.5 21)" />
+      <path
+        d="M16 4.8 L18 4.8 L18.7 7.1 C19.5 7.3 20.2 7.6 20.9 8 L23 6.8 L24.4 8.2
+           L23.2 10.3 C23.6 11 23.9 11.7 24.1 12.5 L26.4 13.2 L26.4 15.2 L24.1 15.9
+           C23.9 16.7 23.6 17.4 23.2 18.1 L24.4 20.2 L23 21.6 L20.9 20.4
+           C20.2 20.8 19.5 21.1 18.7 21.3 L18 23.6 L16 23.6 L15.3 21.3
+           C14.5 21.1 13.8 20.8 13.1 20.4 L11 21.6 L9.6 20.2 L10.8 18.1
+           C10.4 17.4 10.1 16.7 9.9 15.9 L7.6 15.2 L7.6 13.2 L9.9 12.5
+           C10.1 11.7 10.4 11 10.8 10.3 L9.6 8.2 L11 6.8 L13.1 8
+           C13.8 7.6 14.5 7.3 15.3 7.1 Z"
+        fill={fill}
+        stroke={edge}
+        strokeWidth="0.65"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.2 8.9 C15.4 7.6 18.3 7.3 20.9 8.3"
+        stroke={shine}
+        strokeWidth="1"
+        strokeLinecap="round"
+        opacity={white ? 0.75 : 0.95}
+      />
+      <circle cx="17" cy="14.2" r="4.2" fill={core} stroke={edge} strokeWidth="0.7" />
+      <circle cx="17" cy="14.2" r="1.8" fill={white ? "rgba(255,255,255,0.88)" : "#d8ebff"} />
     </svg>
   );
 }
@@ -120,13 +154,14 @@ function EnvelopeIcon({ size = 38, white = false }: IP) {
 ══════════════════════════════════════════════════════════════════════════ */
 export function DesktopIconArt({ id, size = 38 }: { id: DesktopIconId; size?: number }) {
   switch (id) {
-    case "resume":             return <PDFDocIcon size={size} />;
-    case "about":              return <PersonIcon size={size} />;
-    case "experience":         return <BriefcaseIcon size={size} />;
-    case "workbench":          return <WrenchIcon size={size} />;
-    case "contact":            return <EnvelopeIcon size={size} />;
-    case "games":              return <FolderIcon size={size} />;
-    case "internal-only":      return <FolderIcon size={size} />;
+    case "resume":             return <RasterIcon src="/resume-icon.png" size={size} />;
+    case "about":              return <RasterIcon src="/about-icon.png" size={size} />;
+    case "experience":         return <RasterIcon src="/experience-icon.png" size={size} />;
+    case "workbench":          return <RasterIcon src="/workbench-icon.png" size={size} />;
+    case "contact":            return <RasterIcon src="/contact-icon.png" size={size} />;
+    case "games":              return <RasterIcon src="/games-icon.png" size={size} />;
+    case "internal-only":      return <RasterIcon src="/internal-alert-icon.png" size={size} />;
+    case "internal-media":     return <RasterIcon src="/internal-alert-icon.png" size={size} />;
   }
 }
 
@@ -135,13 +170,14 @@ export function DesktopIconArt({ id, size = 38 }: { id: DesktopIconId; size?: nu
 ══════════════════════════════════════════════════════════════════════════ */
 export function TitleBarIcon({ id }: { id: DesktopIconId }) {
   switch (id) {
-    case "resume":             return <PDFDocIcon size={14} white />;
-    case "about":              return <PersonIcon size={14} white />;
-    case "experience":         return <BriefcaseIcon size={14} white />;
-    case "workbench":          return <WrenchIcon size={14} white />;
-    case "contact":            return <EnvelopeIcon size={14} white />;
-    case "games":              return <FolderIcon size={14} white />;
-    case "internal-only":      return <FolderIcon size={14} white />;
+    case "resume":             return <RasterIcon src="/resume-icon.png" size={14} />;
+    case "about":              return <RasterIcon src="/about-icon.png" size={14} />;
+    case "experience":         return <RasterIcon src="/experience-icon.png" size={14} />;
+    case "workbench":          return <RasterIcon src="/workbench-icon.png" size={14} />;
+    case "contact":            return <RasterIcon src="/contact-icon.png" size={14} />;
+    case "games":              return <RasterIcon src="/games-icon.png" size={14} />;
+    case "internal-only":      return <RasterIcon src="/internal-alert-icon.png" size={14} />;
+    case "internal-media":     return <RasterIcon src="/internal-alert-icon.png" size={14} />;
   }
 }
 
@@ -184,5 +220,5 @@ export function SmallPinIcon({ size = 13 }: { size?: number }) {
 
 /** Wrench — Currently Building in-window header */
 export function SmallWrenchIcon({ size = 16 }: { size?: number }) {
-  return <WrenchIcon size={size} />;
+  return <GearIcon size={size} />;
 }

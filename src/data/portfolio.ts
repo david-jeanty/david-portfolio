@@ -5,7 +5,8 @@ export type DesktopIconId =
   | "workbench"
   | "contact"
   | "games"
-  | "internal-only";
+  | "internal-only"
+  | "internal-media";
 
 export interface ExperienceItem {
   company: string;
@@ -78,7 +79,7 @@ export const portfolioData: PortfolioData = {
     name: "David Jeanty",
     title: "Business Analyst & Tech Consultant",
     tagline:
-      "I close the gap between operational problems and technical solutions.",
+      "I like making messy operations easier to run.",
     location: "Ottawa, ON",
     languages: ["English", "French"],
     degree: "BCom, Business Technology Management",
@@ -86,20 +87,20 @@ export const portfolioData: PortfolioData = {
   },
   about: {
     headlineLines: [
-      "Most business students learn to analyze problems.",
-      "Most tech students learn to build solutions.",
-      "I've spent three years doing both.",
+      "Reporting, follow-up, and fewer dropped balls.",
+      "CRM workflows, clean handoff, and communication that actually helps.",
+      "A BTM student learning by doing.",
     ],
     paragraph:
-      "Tracking KPIs in high-volume operations, managing stakeholders in regulated financial environments, and studying the systems that connect them.",
+      "I am a Business Technology Management student at the University of Ottawa with experience in KPI tracking, CRM-based follow-through, stakeholder communication, and structured work in fast-paced environments.",
     professionalGoals: [
-      "Build a strong foundation in business analysis, product operations, or tech consulting.",
-      "Work on teams where analytical thinking and stakeholder communication both matter.",
-      "Keep building practical systems that make operations clearer and easier to improve.",
+      "Build a strong early-career foundation in operations, business systems, or customer-facing process work.",
+      "Work on teams where reporting, CRM workflows, and stakeholder communication all matter.",
+      "Keep getting better at turning messy workflows into clearer, more reliable execution.",
     ],
     extracurriculars: [
-      "VP Internal Affairs, Telfer Business Technology Association",
-      "Student Ambassador and campus-facing student support work",
+      "Vice President, Internal Affairs at the Telfer Business Technology Association",
+      "Student Ambassador supporting campus tours and CRM-based student follow-up",
       "Claude Builder Club @ uOttawa initiative",
     ],
     personal: {
@@ -121,7 +122,7 @@ export const portfolioData: PortfolioData = {
         label: "Academic Recruitment Strategy",
       },
       summary:
-        "Redesigned campus recruitment strategy, built new outreach channels across Ontario programs, and delivered a structured engagement framework aligned to firm practice areas and client sectors.",
+        "Built and managed the workflow side of StraNexus's outreach effort, keeping contact data, follow-up, and reporting organized across 31 universities and 15 Ontario programs.",
     },
     {
       company: "Aritzia",
@@ -134,7 +135,7 @@ export const portfolioData: PortfolioData = {
         label: "Shrinkage Reduction",
       },
       summary:
-        "Built Excel-based loss tracking models, monitored daily KPIs in a 1,000+ weekly client environment, and turned risk findings into operational follow-up that helped reduce shrink by $50K+.",
+        "Worked in a high-volume retail environment where I tracked KPIs, reviewed trends, and followed up on operational issues before they became bigger problems.",
     },
     {
       company: "University of Ottawa",
@@ -146,7 +147,7 @@ export const portfolioData: PortfolioData = {
         label: "Campus Outreach",
       },
       summary:
-        "Delivered 75+ campus tours, supported 2,500+ prospective students, and handled 2,000+ CRM inquiries with clear communication and reliable follow-through.",
+        "Served as a front-line point of contact for uOttawa, helping prospective students and families make sense of programs, services, and next steps.",
     },
     {
       company: "Telfer Business Technology Association",
@@ -158,7 +159,7 @@ export const portfolioData: PortfolioData = {
         label: "Team Members Recruited",
       },
       summary:
-        "Progressed from First Year Representative to Vice President, Internal Affairs, managing 100+ student inquiries, hiring and onboarding 20 members, and helping deliver 10+ events per year.",
+        "Helped run the internal side of a 100+ member student association, supporting communication, coordination, and follow-through across the team.",
     },
   ],
   workbench: {
@@ -171,37 +172,44 @@ export const portfolioData: PortfolioData = {
           {
             name: "Excel",
             status: "using",
-            summary: "Daily spreadsheet analysis, KPI tracking, and structured problem solving.",
-            rationale: "It is still the fastest tool for operational analysis and clean stakeholder handoff.",
-            roleConnection: "Directly supports BA and product operations work where clarity, speed, and business context matter.",
+            summary: "Used for KPI tracking, report review, and structured analysis with tools like PivotTables, VLOOKUP/XLOOKUP, and conditional formatting.",
+            rationale: "It is still my clearest tool for turning operational activity into something measurable, organized, and easy to review.",
+            roleConnection: "Supports reporting, visibility, and cleaner follow-through when there are a lot of moving parts.",
           },
           {
-            name: "Python",
+            name: "Google Sheets / Google Workspace",
             status: "using",
-            summary: "Used to think through data, automate repeatable steps, and test analytical ideas.",
-            rationale: "I like tools that reduce manual work and make processes more reliable.",
-            roleConnection: "Useful for tech consulting and ops environments where lightweight automation creates leverage.",
-          },
-          {
-            name: "Google Workspace",
-            status: "using",
-            summary: "Docs, Sheets, Slides, and coordination workflows for team execution.",
-            rationale: "A lot of work depends on organized communication, not just analysis.",
-            roleConnection: "Supports cross-functional collaboration, documentation, and stakeholder-ready output.",
+            summary: "Used for shared reporting, documentation, team coordination, and keeping information visible across day-to-day workflows.",
+            rationale: "A lot of good execution depends on clear handoff, organized notes, and documents people can actually use.",
+            roleConnection: "Useful when work depends on shared visibility, handoffs, and people staying aligned.",
           },
           {
             name: "CRM platforms",
             status: "using",
-            summary: "Experience handling outreach, inquiries, and contact workflows at scale.",
-            rationale: "I care about how systems support real people and follow-through.",
-            roleConnection: "Relevant to product operations, client-facing execution, and service process work.",
+            summary: "Used to manage inquiries, outreach, follow-up, and contact records in a more organized and trackable way.",
+            rationale: "I am interested in systems that help teams stay responsive without losing details or letting next steps slip.",
+            roleConnection: "Helps keep inquiries, follow-up, and contact records from getting messy.",
+          },
+          {
+            name: "Microsoft Outlook",
+            status: "using",
+            summary: "Used for professional communication, calendar coordination, and keeping email-based follow-up organized.",
+            rationale: "It is a simple but important part of how communication, timing, and next steps stay on track.",
+            roleConnection: "Supports day-to-day communication, timing, and follow-up when a lot of coordination happens by email.",
+          },
+          {
+            name: "Pipeline / follow-up tracking",
+            status: "using",
+            summary: "Used to keep status updates, outreach sequencing, and next actions clear across multiple contacts and moving parts.",
+            rationale: "I like workflows that make progress visible and make follow-through easier to maintain.",
+            roleConnection: "Supports cleaner sequencing, clearer next steps, and better visibility across moving work.",
           },
           {
             name: "English / French",
             status: "using",
-            summary: "Bilingual communication across customer-facing and team environments.",
-            rationale: "Clear communication is part of the work, not a soft extra.",
-            roleConnection: "Useful in stakeholder-heavy BA, consulting, and operations roles.",
+            summary: "Used in both customer-facing and team settings where clear communication affects trust, accuracy, and follow-through.",
+            rationale: "I see communication as part of execution, not something separate from it.",
+            roleConnection: "Helps when the work depends on clarity, trust, and people staying on the same page.",
           },
         ],
       },
@@ -210,32 +218,25 @@ export const portfolioData: PortfolioData = {
         label: "Currently Learning",
         items: [
           {
+            name: "Salesforce",
+            status: "learning",
+            summary: "Salesforce certification is in progress as I build stronger familiarity with CRM structure, workflows, and reporting habits.",
+            rationale: "It is one of the clearest platforms to learn for roles centered on pipeline visibility, follow-up, and customer-facing process work.",
+            roleConnection: "Supports cleaner CRM structure, better visibility, and more reliable follow-up habits.",
+          },
+          {
             name: "SQL",
             status: "learning",
-            summary: "Building stronger query fluency for structured analysis and reporting.",
-            rationale: "I want to move from spreadsheet logic into more scalable data work.",
-            roleConnection: "Core for BA, analytics-adjacent product ops, and data-informed consulting work.",
+            summary: "Building stronger query fluency so I can move from spreadsheet-based analysis into more scalable reporting workflows.",
+            rationale: "I want to get better at pulling the right information directly and using it to answer practical business questions.",
+            roleConnection: "Useful when reporting needs to scale beyond spreadsheets without losing clarity.",
           },
           {
             name: "Power BI",
             status: "learning",
-            summary: "Learning dashboard design and business-facing reporting workflows.",
-            rationale: "I want analysis to be easier for other people to understand and act on.",
-            roleConnection: "Supports recruiter-facing proof of business storytelling and decision support.",
-          },
-          {
-            name: "Tableau",
-            status: "learning",
-            summary: "Exploring visual analytics and presentation-ready dashboard habits.",
-            rationale: "I am comparing how different BI tools shape analysis and communication.",
-            roleConnection: "Useful for consulting-style presentation and translating raw data into decisions.",
-          },
-          {
-            name: "Claude API projects",
-            status: "learning",
-            summary: "Using API-based projects to understand AI-native workflows, not just prompting.",
-            rationale: "I learn fastest by building simple systems around new tools.",
-            roleConnection: "Relevant to product ops and consulting work where experimentation and implementation meet.",
+            summary: "Learning dashboard design and reporting habits that make performance easier to understand at a glance.",
+            rationale: "I want information to be easier for other people to use, not just accurate in the background.",
+            roleConnection: "Supports clearer reporting when people need to spot issues and act quickly.",
           },
         ],
       },
@@ -246,17 +247,17 @@ export const portfolioData: PortfolioData = {
           {
             name: "Claude Builder Club @ uOttawa",
             status: "in-progress",
-            summary: "Featured initiative: co-founding uOttawa's first Anthropic-affiliated AI builder club, launching Fall 2026.",
-            rationale: "It is a way to turn curiosity into community, momentum, and real builder experience.",
-            roleConnection: "Signals initiative, stakeholder coordination, and product-minded leadership.",
+            summary: "Co-founding an Anthropic-supported student builder community focused on AI workshops, demos, and giving more students a place to build and share projects on campus.",
+            rationale: "I like the community side of AI just as much as the tools themselves, especially when it creates momentum for people who want to make things together.",
+            roleConnection: "Supports community building, event coordination, and turning interest into something tangible on campus.",
             featured: true,
           },
           {
-            name: "Claude API / campus AI tool",
+            name: "University workflow / grade tracker",
             status: "in-progress",
-            summary: "An applied AI build direction focused on a useful student or campus workflow.",
-            rationale: "I want my learning to produce something concrete, practical, and testable.",
-            roleConnection: "Shows product thinking, experimentation, and implementation interest.",
+            summary: "A side project for keeping courses, deadlines, grades, and academic progress easier to track in one place.",
+            rationale: "It comes from the same habit I bring to work: if a system feels messy, I usually want to make it clearer and easier to use.",
+            roleConnection: "Supports personal organization, clearer visibility, and less friction in everyday planning.",
           },
         ],
       },
@@ -265,32 +266,32 @@ export const portfolioData: PortfolioData = {
         label: "Next Builds",
         items: [
           {
-            name: "Wealth management dashboard",
+            name: "Sales / ops reporting dashboard",
             status: "planned",
-            summary: "A planned dashboard concept aligned with private wealth and business reporting contexts.",
-            rationale: "It connects my finance-facing experience with dashboard and decision-support skills.",
-            roleConnection: "High-signal for BA and consulting roles tied to financial operations.",
+            summary: "A dashboard concept focused on making pipeline or operational performance easier to review, share, and act on.",
+            rationale: "It would connect reporting practice with the kind of visibility teams need to prioritize follow-up.",
+            roleConnection: "Supports shared visibility, easier review, and clearer performance follow-up.",
           },
           {
-            name: "SQL analytics project",
+            name: "Data hygiene / audit workflow project",
             status: "planned",
-            summary: "A structured analytics build to practice querying, reporting, and business framing.",
-            rationale: "I want a project that proves SQL growth through a realistic use case.",
-            roleConnection: "Direct proof of analytical development for BA and product ops paths.",
+            summary: "A workflow-focused project centered on cleaning records, flagging inconsistencies, and improving reporting reliability.",
+            rationale: "I want one project that shows how small process improvements can make data easier to trust and use.",
+            roleConnection: "Supports cleaner records, more reliable reporting, and fewer avoidable errors downstream.",
           },
           {
-            name: "Power BI dashboard",
+            name: "Salesforce reporting workflow",
             status: "planned",
-            summary: "A dashboard-focused build centered on communicating metrics clearly.",
-            rationale: "I want to pair analysis with polished stakeholder-facing presentation.",
-            roleConnection: "Useful for recruiter review because it shows both technical growth and communication.",
+            summary: "A planned build focused on CRM reporting, status tracking, and cleaner follow-up visibility inside a Salesforce-style workflow.",
+            rationale: "It would let me connect certification learning to a process that feels realistic and business-facing.",
+            roleConnection: "Supports CRM visibility, status tracking, and cleaner follow-up across a shared process.",
           },
           {
-            name: "Workflow automation concept",
+            name: "Process handoff tracker",
             status: "planned",
-            summary: "A lightweight automation idea focused on reducing repetitive manual work.",
-            rationale: "I am interested in systems that make teams faster and more consistent.",
-            roleConnection: "Fits product ops and consulting work where process improvement matters.",
+            summary: "A lightweight tracker concept for making ownership, follow-up, and next actions clearer across a shared workflow.",
+            rationale: "I am interested in tools that reduce confusion and make execution more consistent without adding complexity.",
+            roleConnection: "Supports cleaner handoff, clearer ownership, and fewer missed next steps.",
           },
         ],
       },
@@ -307,12 +308,13 @@ export const portfolioData: PortfolioData = {
     resumeFileName: "Resume.pdf",
     icons: [
       { id: "resume", label: "Resume.pdf" },
-      { id: "about", label: "About Me" },
       { id: "experience", label: "Experience" },
-      { id: "workbench", label: "Workbench" },
+      { id: "about", label: "About Me" },
       { id: "contact", label: "Contact" },
-      { id: "games", label: "Games", hidden: true },
-      { id: "internal-only", label: "Internal Only", hidden: true },
+      { id: "workbench", label: "Workbench" },
+      { id: "games", label: "Games" },
+      { id: "internal-only", label: "Internal" },
+      { id: "internal-media", label: "Internal Media", hidden: true },
     ],
   },
 };

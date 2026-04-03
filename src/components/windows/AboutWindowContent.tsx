@@ -36,14 +36,16 @@ export default function AboutWindowContent() {
               <div className={styles.onboardingCopy}>
                 <p className={styles.onboardingTitle}>Welcome</p>
                 <p>
-                  Hi, I&apos;m David. I built this portfolio like a small desktop
-                  because I like systems that feel organized, interactive, and
-                  easy to explore.
+                  Hi, I&apos;m David. I built this portfolio like a desktop
+                  because I like work that feels organized, easy to navigate,
+                  and a little tactile. I&apos;m a BTM student at uOttawa, and
+                  I&apos;m usually most useful where there are moving parts,
+                  unclear follow-up, or reporting that needs to be cleaned up.
                 </p>
                 <p>
-                  Windows can be opened, moved, resized, minimized, and
-                  restored. Good places to start are Experience, Resume.pdf,
-                  Workbench, and Contact.
+                  You can open, move, resize, minimize, and restore each
+                  window. Good places to start are Resume, Experience, About
+                  Me, and Contact.
                 </p>
               </div>
             </div>
@@ -59,7 +61,7 @@ export default function AboutWindowContent() {
               role="tab"
               aria-selected={activeTab === "academia"}
             >
-              Academia
+              Background
             </button>
             <button
               type="button"
@@ -75,10 +77,9 @@ export default function AboutWindowContent() {
           </div>
 
           <p>
-            I built this portfolio like a desktop because that is how I like to
-            work: structured, curious, and easy to navigate. I am usually the
-            person who wants to understand how a system works, where it breaks,
-            and how to make it clearer for everyone using it.
+            I tend to do my best work in the middle of moving parts: keeping
+            workflows clear, noticing what needs attention, and making the
+            next step obvious to the people involved.
           </p>
 
           {activeTab === "academia" ? (
@@ -98,12 +99,12 @@ export default function AboutWindowContent() {
                 {portfolioData.identity.languages.join(" / ")}
               </div>
 
-              <div className={styles.fieldLabel}>Leadership</div>
+              <div className={styles.fieldLabel}>Involvement</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
                 {portfolioData.about.extracurriculars.join(", ")}
               </div>
 
-              <div className={styles.fieldLabel}>What I am aiming for</div>
+              <div className={styles.fieldLabel}>Where I’m most interested in contributing</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
                 <ul className={styles.rowList}>
                   {portfolioData.about.professionalGoals.map((goal) => (
@@ -116,11 +117,11 @@ export default function AboutWindowContent() {
             <div className={`${styles.fieldGrid} ${styles.aboutGrid}`}>
               <div className={styles.fieldLabel}>How I think</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                Thoughtful before flashy
+                Structured in fast-paced environments
                 <br />
-                Curious about systems and people
+                Curious about systems, workflows, and people
                 <br />
-                Focused on practical, usable solutions
+                Focused on practical communication and follow-through
               </div>
 
               <div className={styles.fieldLabel}>Outside of work</div>
@@ -130,8 +131,8 @@ export default function AboutWindowContent() {
 
               <div className={styles.fieldLabel}>Top interests right now</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                Lately, the ones I come back to most are guitar, baking,
-                running, and travel.
+                Outside of school and work, I still like hobbies that reward
+                patience and consistency: guitar, baking, running, and travel.
               </div>
 
               <div className={styles.fieldLabel}>Baking note</div>

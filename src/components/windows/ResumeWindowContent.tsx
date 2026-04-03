@@ -55,7 +55,7 @@ export default function ResumeWindowContent() {
           <div>
             <p className={styles.documentTitle}>Resume.pdf</p>
             <p className={styles.documentSubtitle}>
-              Recruiter view with preview, download, and direct-open actions.
+              Quick recruiter view with preview, download, and direct-open access.
             </p>
           </div>
 
@@ -78,7 +78,7 @@ export default function ResumeWindowContent() {
                   className={styles.actionButton}
                   aria-label="Open Resume.pdf in a new tab"
                 >
-                  Open Resume
+                  Open in New Tab
                 </a>
               </>
             ) : (
@@ -101,17 +101,17 @@ export default function ResumeWindowContent() {
         </div>
 
         <div className={styles.documentMetaRow}>
-          <span className={styles.documentMetaChip}>Path: {resumeUrl}</span>
+          <span className={styles.documentMetaChip}>File: {portfolioData.desktop.resumeFileName}</span>
           <span className={styles.documentMetaChip}>
-            {resumeState === "ready" ? "Status: loaded" : "Status: waiting for file"}
+            {resumeState === "ready" ? "Status: ready to view" : "Status: waiting for file"}
           </span>
         </div>
 
         <div className={styles.documentCanvas}>
           {resumeState === "ready" ? (
             <p className={styles.mobileDocumentHint}>
-              On smaller screens, Open Resume or Download Resume usually feels
-              better than scrolling the inline preview.
+              On smaller screens, opening in a new tab or downloading is usually
+              easier than scrolling the preview.
             </p>
           ) : null}
           {resumeState === "ready" ? (

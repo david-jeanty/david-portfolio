@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useWindowManager } from "@/components/desktop/WindowManager";
 import styles from "./WindowApps.module.css";
 
-const RICKROLL_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-
 export default function InternalOnlyWindowContent() {
+  const { closeWindow, openWindow } = useWindowManager();
   const [confirmStage, setConfirmStage] = useState<"warning" | "final">("warning");
 
   return (
@@ -54,9 +54,12 @@ export default function InternalOnlyWindowContent() {
             <button
               type="button"
               className={`${styles.actionButton} ${styles.actionButtonPrimary}`}
-              onClick={() => window.open(RICKROLL_URL, "_blank", "noopener,noreferrer")}
+              onClick={() => {
+                openWindow("internal-media", { centered: true });
+                closeWindow("internal-only");
+              }}
             >
-              Proceed Anyway
+              Open Internal Media
             </button>
           </div>
         </section>

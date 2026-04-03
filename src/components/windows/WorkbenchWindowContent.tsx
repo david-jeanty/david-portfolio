@@ -59,8 +59,9 @@ export default function WorkbenchWindowContent() {
             <div>
               <h3 className={styles.detailHeader}>{selectedSection.label}</h3>
               <p className={styles.metaLine}>
-                A focused view of what I can already use, what I am learning,
-                and what I am building next.
+                This is the part of the portfolio that shows how I like to
+                work: clear reporting, organized follow-up, and systems that
+                make the next step easier to see.
               </p>
             </div>
 
@@ -84,17 +85,19 @@ export default function WorkbenchWindowContent() {
                 </div>
 
                 <div className={styles.infoPanel}>
-                  <p className={styles.sectionLabel}>What it is</p>
+                  <p className={styles.sectionLabel}>
+                    {selectedSection.id === "currently-learning" ? "What I’m learning" : "Current use"}
+                  </p>
                   <p>{item.summary}</p>
                 </div>
 
                 <div className={styles.infoPanel}>
-                  <p className={styles.sectionLabel}>Why this matters to me</p>
+                  <p className={styles.sectionLabel}>Why it matters</p>
                   <p>{item.rationale}</p>
                 </div>
 
                 <div className={styles.infoPanel}>
-                  <p className={styles.sectionLabel}>Role connection</p>
+                  <p className={styles.sectionLabel}>What it supports</p>
                   <p>{item.roleConnection}</p>
                 </div>
               </section>

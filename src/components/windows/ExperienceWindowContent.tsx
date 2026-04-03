@@ -10,6 +10,7 @@ type ExperienceNode = {
   role?: string;
   period?: string;
   secondaryRoleLine?: string;
+  summary: string;
   positioning?: string[];
   bullets: string[];
   translation: string;
@@ -21,10 +22,11 @@ const EXPERIENCE_ITEMS: ExperienceNode[] = [
     org: "StraNexus Inc.",
     role: "Strategy & Operations Intern",
     period: "Jan. 2026 - Apr. 2026",
+    summary:
+      "Built and managed the workflow side of StraNexus's outreach effort, keeping contact data, follow-up, and reporting organized across 31 universities and 15 Ontario programs.",
     bullets: [
-      "assessed StraNexus's existing recruitment approach, identified structural gaps in program targeting and outreach, and developed a replacement strategy mapped to 16 high-fit academic pipelines across 31 universities",
-      "executed stakeholder outreach to faculty contacts and student organizations across 15 Ontario programs, establishing new recruitment channels and building relationships to support the firm's Apprentice Consultant pipeline",
-      "delivered a structured campus engagement framework including contact mapping, follow-up protocols, and program prioritization criteria aligned to StraNexus's 4 practice areas and 17 client sectors",
+      "Mapped faculty and program stakeholders to support more targeted outreach and cleaner sequencing.",
+      "Built reporting that clarified pipeline gaps, priorities, and next steps across 4 practice areas and 17 client sectors.",
     ],
     translation:
       "strategy, stakeholder outreach, recruitment operations, process design, structured execution",
@@ -34,10 +36,11 @@ const EXPERIENCE_ITEMS: ExperienceNode[] = [
     org: "Aritzia",
     role: "Risk Associate",
     period: "Apr. 2024 - Aug. 2025",
+    summary:
+      "Worked in a high-volume retail environment where I tracked KPIs, reviewed trends, and followed up on operational issues before they became bigger problems.",
     bullets: [
-      "built and maintained Excel-based loss tracking models to map transactional data quarter-over-quarter, cross-referencing shrink rates against market trends and accuracy benchmarks to surface systemic vulnerabilities, supporting mitigation actions that reduced shrink by $50K+",
-      "tracked daily KPIs across a 1,000+ weekly client environment, flagged anomalies in compliance and asset protection metrics, and recommended process adjustments to operational and floor teams",
-      "partnered with managers and a 50+ person team to align on controls execution, translating analytical findings into actionable follow-up and reinforcing consistent outcomes",
+      "Used Excel-based reporting tools to compare results against benchmarks, surface anomalies, and support faster action.",
+      "Contributed to a $50K+ reduction in shrink while supporting consistency across a 1,000+ weekly-client operation and a 50+ person team.",
     ],
     translation:
       "operational analytics, anomaly detection, risk/compliance thinking, process improvement",
@@ -47,9 +50,11 @@ const EXPERIENCE_ITEMS: ExperienceNode[] = [
     org: "University of Ottawa",
     role: "Student Ambassador",
     period: "Sep. 2023 - Apr. 2024",
+    summary:
+      "Served as a front-line point of contact for uOttawa, helping prospective students and families make sense of programs, services, and next steps.",
     bullets: [
-      "delivered 75+ campus tours and engaged 2,500+ prospective students, translating complex programs and processes into clear, persuasive guidance",
-      "responded to 2,000+ student inquiries via uOttawa's CRM platform by gathering context, providing accurate information, and documenting next steps for follow-through",
+      "Delivered 75+ information sessions and managed high-volume follow-up through the university's CRM with organized, accurate communication.",
+      "Worked in a role where clarity, responsiveness, and keeping details from slipping through the cracks mattered every day.",
     ],
     translation:
       "stakeholder communication, CRM workflow, information triage, clear client-facing guidance",
@@ -60,10 +65,11 @@ const EXPERIENCE_ITEMS: ExperienceNode[] = [
     role: "Vice President, Internal Affairs",
     period: "Apr. 2024 - Apr. 2025",
     secondaryRoleLine: "First Year Representative · Sep. 2023 - Apr. 2024",
+    summary:
+      "Helped run the internal side of a 100+ member student association, supporting communication, coordination, and follow-through across the team.",
     bullets: [
-      "managed 100+ student inquiries and served as liaison between MIS professors, Telfer administration, and the Career Centre to align stakeholders and resolve issues quickly",
-      "hired and onboarded 20 members by coordinating internal operations, role assignments, and execution follow-up",
-      "planned and delivered 10+ events/year by coordinating venues, vendors, and logistics while aligning communications and budgets",
+      "Worked with professors, administration, and the Career Centre while helping keep internal processes organized.",
+      "Supported the delivery of 10+ events annually through planning, logistics, and execution follow-up.",
     ],
     translation:
       "internal operations, hiring coordination, team support, stakeholder alignment",
@@ -127,6 +133,10 @@ export default function ExperienceWindowContent() {
             </>
           ) : null}
 
+          <p style={{ margin: "4px 0 10px", lineHeight: 1.4 }}>
+            <span style={{ fontWeight: 600 }}>{selected.summary}</span>
+          </p>
+
           {selected.positioning && (
             <>
               <p className={styles.sectionLabel}>Positioning</p>
@@ -140,7 +150,7 @@ export default function ExperienceWindowContent() {
 
           {selected.bullets.length > 0 && (
             <>
-              <p className={styles.sectionLabel}>Key points</p>
+              <p className={styles.sectionLabel}>Selected examples</p>
               <ul className={styles.rowList}>
                 {selected.bullets.map((line) => (
                   <li key={line}>{line}</li>
@@ -149,7 +159,7 @@ export default function ExperienceWindowContent() {
             </>
           )}
 
-          <p className={styles.sectionLabel}>Translation</p>
+          <p className={styles.sectionLabel}>What this involved</p>
           <p>{selected.translation}</p>
         </article>
       </section>

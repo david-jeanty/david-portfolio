@@ -20,6 +20,7 @@ import ResumeContent from "@/components/windows/ResumeWindowContent";
 import ContactContent from "@/components/windows/ContactWindowContent";
 import GamesContent from "@/components/windows/GamesWindowContent";
 import InternalOnlyContent from "@/components/windows/InternalOnlyWindowContent";
+import InternalMediaContent from "@/components/windows/InternalMediaWindowContent";
 
 export type WindowId = DesktopIconId;
 
@@ -65,8 +66,8 @@ function getInitialGeometry(params: {
   const { id, isMobile, existingCount } = params;
   const taskbarH = isMobile ? 48 : 42;
 
-  const wDesktop = id === "games" ? 400 : 560;
-  const hDesktop = id === "games" ? 320 : 420;
+  const wDesktop = id === "games" ? 400 : id === "internal-media" ? 640 : 560;
+  const hDesktop = id === "games" ? 320 : id === "internal-media" ? 460 : 420;
   const mobileMargin = 6;
   const wMobile = Math.max(280, window.innerWidth - mobileMargin * 2);
   const hMobile = Math.max(220, window.innerHeight - taskbarH - mobileMargin * 2);
@@ -101,8 +102,8 @@ function getCenteredGeometry(params: {
     {
       x: 0,
       y: 0,
-      w: id === "about" ? 620 : 560,
-      h: id === "about" ? 460 : 420,
+      w: id === "about" ? 620 : id === "internal-media" ? 640 : 560,
+      h: id === "about" ? 460 : id === "internal-media" ? 460 : 420,
     },
     isMobile
   );
@@ -195,6 +196,8 @@ function WindowContentById({ id }: { id: WindowId }) {
       return <GamesContent />;
     case "internal-only":
       return <InternalOnlyContent />;
+    case "internal-media":
+      return <InternalMediaContent />;
     default:
       return <div>Unknown window</div>;
   }

@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100dvh;
   background-color: #2f80ef; /* fallback while image loads / if it fails */
-  background-image: url("/xp-wallpaper.jpg");
+  background-image: url("/desktop-wallpaper.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -111,38 +111,58 @@
 .startButton {
   position: relative;
   height: 34px;
-  min-width: 94px;
-  border: 1px solid rgba(20, 95, 18, 0.95);
-  border-radius: 999px 12px 12px 999px;
+  min-width: 102px;
+  margin-right: 10px;
+  border: 1px solid rgba(25, 93, 21, 0.96);
+  border-radius: 18px 9px 9px 18px / 18px 9px 9px 18px;
   color: #fff;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 0 14px 0 11px;
+  gap: 8px;
+  padding: 0 15px 0 9px;
   font-size: 17px;
   font-style: italic;
   font-weight: 700;
   letter-spacing: 0.01em;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(180deg, #5ac746 0%, #2e9f26 100%);
+  background:
+    radial-gradient(circle at 18% 26%, rgba(162, 240, 126, 0.92) 0%, rgba(162, 240, 126, 0.38) 22%, transparent 42%),
+    linear-gradient(180deg, #6fd84e 0%, #44b834 42%, #2d9f26 58%, #248619 100%);
   box-shadow:
-    inset 1px 1px 0 rgba(255, 255, 255, 0.35),
-    1px 1px 2px rgba(0, 0, 0, 0.35);
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset -1px -1px 0 rgba(27, 89, 21, 0.35),
+    1px 1px 2px rgba(0, 0, 0, 0.34);
 }
 
 .startButton:active {
   filter: brightness(0.94);
 }
 
+.startButton::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  bottom: 3px;
+  width: 28px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.03) 100%);
+  pointer-events: none;
+}
+
 .startOrb {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  background: radial-gradient(circle at 28% 28%, #f4ffca 0%, #7bcf56 58%, #2f8327 100%);
+  position: relative;
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  background: url("/start-button-logo.png") center center / contain no-repeat;
+  transform: rotate(-9deg);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.22));
 }
 
 .startText {
+  position: relative;
   transform: translateY(-0.5px);
 }
 
@@ -233,49 +253,94 @@ button.systemTray {
   position: absolute;
   left: 6px;
   bottom: 44px;
-  width: min(360px, calc(100vw - 12px));
-  height: 420px;
+  width: min(390px, calc(100vw - 12px));
+  height: 430px;
   display: grid;
-  grid-template-columns: 62px 1fr;
-  border: 1px solid #0d4ea6;
+  grid-template-rows: 68px 1fr;
+  border: 1px solid #0c4ea3;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
-  background: linear-gradient(180deg, #3477d4 0%, #1d59b6 100%);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+  background: linear-gradient(180deg, #3d84dc 0%, #215fb8 100%);
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
   z-index: 80;
 }
 
-.startMenuSidebar {
+.startMenuHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, #4f97ea 0%, #2b67c2 52%, #1e54ad 100%);
+  border-bottom: 1px solid rgba(8, 57, 127, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.startMenuUserFrame {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  padding: 3px;
+  background: linear-gradient(180deg, #fefefe 0%, #dbe9fb 100%);
+  border: 1px solid rgba(12, 65, 140, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(0, 0, 0, 0.22);
+}
+
+.startMenuUserImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.startMenuUserMeta {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 16px 10px;
-  background: linear-gradient(180deg, #2a5fb3 0%, #18418a 100%);
-  color: #fff;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  min-width: 0;
 }
 
 .startMenuBrand {
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 700;
-  letter-spacing: 0.03em;
+  line-height: 1;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.45);
 }
 
 .startMenuSubtitle {
   font-size: 12px;
-  opacity: 0.82;
+  margin-top: 4px;
+  opacity: 0.9;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 .startMenuPanel {
   display: grid;
-  grid-template-rows: 1fr auto 140px;
-  background: linear-gradient(180deg, #ffffff 0%, #eef5ff 100%);
+  grid-template-columns: minmax(0, 1fr) 144px;
+  min-height: 0;
+  background: #ffffff;
+}
+
+.startMenuPrimaryColumn {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  min-height: 0;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+}
+
+.startMenuSecondaryColumn {
+  border-left: 1px solid #c4d5ee;
+  background: linear-gradient(180deg, #eef5ff 0%, #dfeaf9 100%);
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.72);
 }
 
 .startMenuSection {
-  padding: 10px 8px;
+  padding: 10px 8px 8px;
   overflow: auto;
 }
 
@@ -287,32 +352,47 @@ button.systemTray {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 10px;
-  border-radius: 4px;
+  padding: 8px 10px;
+  border-radius: 3px;
   color: #0c1f3f;
   font-size: 13px;
+  line-height: 1.2;
   text-align: left;
   text-decoration: none;
+}
+
+.startMenuItem {
+  font-weight: 700;
+}
+
+.startMenuAction {
+  min-height: 34px;
+  font-weight: 600;
 }
 
 .startMenuItem:hover,
 .startMenuAction:hover,
 .startMenuItem:focus-visible,
 .startMenuAction:focus-visible {
-  background: linear-gradient(180deg, #3d8cff 0%, #276acf 100%);
+  background: linear-gradient(180deg, #3f8ff7 0%, #2d6fce 100%);
   color: #fff;
   outline: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(18, 63, 136, 0.26);
 }
 
 .startMenuItemIcon {
   width: 22px;
   display: inline-flex;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .startMenuDivider {
   height: 1px;
-  background: linear-gradient(90deg, rgba(19, 86, 170, 0) 0%, rgba(19, 86, 170, 0.45) 50%, rgba(19, 86, 170, 0) 100%);
+  margin: 0 8px;
+  background: linear-gradient(90deg, rgba(84, 126, 188, 0) 0%, rgba(84, 126, 188, 0.55) 50%, rgba(84, 126, 188, 0) 100%);
 }
 
 .clockPopover {
@@ -383,9 +463,10 @@ button.systemTray {
   }
 
   .startButton {
-    min-width: 84px;
+    min-width: 92px;
     height: 38px;
-    padding: 0 10px 0 9px;
+    margin-right: 8px;
+    padding: 0 11px 0 8px;
     font-size: 15px;
   }
 
@@ -413,17 +494,25 @@ button.systemTray {
     right: 0;
     bottom: 48px;
     width: auto;
-    height: min(72vh, 420px);
-    grid-template-columns: 46px 1fr;
+    height: min(76vh, 430px);
     border-radius: 10px 10px 0 0;
   }
 
-  .startMenuSidebar {
-    padding: 12px 7px;
+  .startMenuHeader {
+    padding: 9px 12px;
   }
 
   .startMenuBrand {
-    font-size: 18px;
+    font-size: 19px;
+  }
+
+  .startMenuUserFrame {
+    width: 44px;
+    height: 44px;
+  }
+
+  .startMenuPanel {
+    grid-template-columns: minmax(0, 1fr) 132px;
   }
 
   .startMenuItem,

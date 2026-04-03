@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import styles from "./WindowApps.module.css";
 
@@ -57,8 +58,27 @@ export default function GamesWindowContent() {
       </div>
 
       <section className={styles.gamePanel}>
+        <div className={styles.gameLaunchCard}>
+          <div className={styles.gameLaunchCopy}>
+            <p className={styles.gameEyebrow}>Featured game</p>
+            <h3 className={styles.gameTitle}>3D Pinball</h3>
+            <p className={styles.gameInstruction}>
+              Opens in a dedicated game view so the full table has enough room, with a back-to-desktop action built in.
+            </p>
+          </div>
+
+          <Link
+            href="/games/pinball"
+            className={`${styles.actionButton} ${styles.actionButtonPrimary} ${styles.gameLaunchAction}`}
+          >
+            Open 3D Pinball
+          </Link>
+        </div>
+
+        <div className={styles.gameDivider} aria-hidden="true" />
+
         <div className={styles.gameHeader}>
-          <p className={styles.gameEyebrow}>Games</p>
+          <p className={styles.gameEyebrow}>Bonus desk game</p>
           <h3 className={styles.gameTitle}>2 Truths, 1 Lie</h3>
           <p className={styles.gameInstruction}>
             Mark each statement as either Truth or Lie, then check your answer.
@@ -132,7 +152,7 @@ export default function GamesWindowContent() {
                     <span />
                   </div>
                   <p className={`${styles.gameFeedback} ${styles.gameFeedbackSuccess}`}>
-                    CONGRATULATIONS?
+                    CONGRATULATIONS!!!
                   </p>
                 </>
               ) : (

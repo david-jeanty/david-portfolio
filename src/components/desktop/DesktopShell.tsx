@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { portfolioData, type DesktopIconId } from "@/data/portfolio";
 import WindowManager, { useWindowManager } from "@/components/desktop/WindowManager";
@@ -19,7 +20,7 @@ function DesktopIcons({
   onSelectIcon: (id: DesktopIconId) => void;
   onClearSelection: () => void;
 }) {
-  const { openWindow, isMobile } = useWindowManager();
+  const { openWindow } = useWindowManager();
 
   return (
     <div
@@ -29,24 +30,23 @@ function DesktopIcons({
       }}
     >
       <ul className={styles.iconGrid} aria-label="Desktop icons">
-        {portfolioData.desktop.icons.map((icon) => {
+        {portfolioData.desktop.icons.filter((icon) => !icon.hidden).map((icon) => {
           const isSelected = icon.id === selectedIconId;
+          const handleIconActivate = () => {
+            onSelectIcon(icon.id);
+            openWindow(icon.id);
+          };
+
           return (
             <li key={icon.id} className={styles.iconItem}>
               <button
                 className={`${styles.iconButton} ${isSelected ? styles.iconButtonSelected : ""}`}
                 type="button"
-                onClick={() => {
-                  if (isMobile) openWindow(icon.id);
-                  else onSelectIcon(icon.id);
-                }}
-                onDoubleClick={() => {
-                  if (!isMobile) openWindow(icon.id);
-                }}
+                onClick={handleIconActivate}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
-                    openWindow(icon.id);
+                    handleIconActivate();
                   }
                 }}
                 aria-label={`Open ${icon.label}`}
@@ -72,7 +72,21 @@ function StartMenu({
   onOpenWindow: (id: DesktopIconId) => void;
   onClose: () => void;
 }) {
-  const primaryItems = portfolioData.desktop.icons.filter((item) => !item.hidden);
+  const publicItems = portfolioData.desktop.icons.filter((item) => !item.hidden);
+  const primaryItems = publicItems.filter(
+    (item) => item.id !== "games" && item.id !== "internal-only"
+  );
+  const secondaryItems = publicItems.filter(
+    (item) => item.id === "games" || item.id === "internal-only"
+  );
+  const handleWindowLaunch = (id: DesktopIconId) => () => {
+    onClose();
+    onOpenWindow(id);
+  };
+
+  const handleMenuActionClick = () => {
+    onClose();
+  };
 
   return (
     <div
@@ -81,59 +95,95 @@ function StartMenu({
       aria-label="Start menu"
       data-shell-popover="start-menu"
     >
-      <div className={styles.startMenuSidebar}>
-        <span className={styles.startMenuBrand}>David Jeanty</span>
-        <span className={styles.startMenuSubtitle}>Portfolio</span>
+      <div className={styles.startMenuHeader}>
+        <div className={styles.startMenuUserFrame} aria-hidden="true">
+          <Image
+            src="/start-menu-user.jpg"
+            alt=""
+            width={48}
+            height={48}
+            className={styles.startMenuUserImage}
+            unoptimized
+          />
+        </div>
+        <div className={styles.startMenuUserMeta}>
+          <span className={styles.startMenuBrand}>David Jeanty</span>
+          <span className={styles.startMenuSubtitle}>Portfolio</span>
+        </div>
       </div>
 
       <div className={styles.startMenuPanel}>
-        <div className={styles.startMenuSection}>
-          {primaryItems.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={styles.startMenuItem}
-              onClick={() => {
-                onOpenWindow(item.id);
-                onClose();
-              }}
-              role="menuitem"
-            >
-              <span className={styles.startMenuItemIcon} aria-hidden="true">
-                <DesktopIconArt id={item.id} size={20} />
-              </span>
-              <span>{item.label.replace(".pdf", "")}</span>
-            </button>
-          ))}
+        <div className={styles.startMenuPrimaryColumn}>
+          <div className={styles.startMenuSection}>
+            {primaryItems.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={styles.startMenuItem}
+                onClick={handleWindowLaunch(item.id)}
+                role="menuitem"
+              >
+                <span className={styles.startMenuItemIcon} aria-hidden="true">
+                  <DesktopIconArt id={item.id} size={20} />
+                </span>
+                <span>{item.label.replace(".pdf", "")}</span>
+              </button>
+            ))}
+          </div>
+
+          {secondaryItems.length > 0 ? (
+            <>
+              <div className={styles.startMenuDivider} />
+              <div className={styles.startMenuSection}>
+                {secondaryItems.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={styles.startMenuItem}
+                    onClick={handleWindowLaunch(item.id)}
+                    role="menuitem"
+                  >
+                    <span className={styles.startMenuItemIcon} aria-hidden="true">
+                      <DesktopIconArt id={item.id} size={20} />
+                    </span>
+                    <span>{item.label.replace(".pdf", "")}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
 
-        <div className={styles.startMenuDivider} />
-
-        <div className={styles.startMenuSection}>
-          <a
-            href={`/${portfolioData.desktop.resumeFileName}`}
-            download
-            className={styles.startMenuAction}
-            role="menuitem"
-          >
-            Download Resume
-          </a>
-          <a
-            href={`https://${portfolioData.contact.linkedin}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.startMenuAction}
-            role="menuitem"
-          >
-            LinkedIn
-          </a>
-          <a
-            href={`mailto:${portfolioData.contact.email}`}
-            className={styles.startMenuAction}
-            role="menuitem"
-          >
-            Email
-          </a>
+        <div className={styles.startMenuSecondaryColumn}>
+          <div className={styles.startMenuSection}>
+            <a
+              href={`/${portfolioData.desktop.resumeFileName}`}
+              download
+              className={styles.startMenuAction}
+              role="menuitem"
+              onClick={handleMenuActionClick}
+            >
+              Download Resume
+            </a>
+            <a
+              href={`https://${portfolioData.contact.linkedin}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.startMenuAction}
+              role="menuitem"
+              onClick={handleMenuActionClick}
+            >
+              LinkedIn
+            </a>
+            <a
+              href={`mailto:${portfolioData.contact.email}`}
+              className={styles.startMenuAction}
+              role="menuitem"
+              onClick={handleMenuActionClick}
+            >
+              Email
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -231,7 +281,7 @@ function DesktopTaskbar({
             openWindow(id);
             onAfterWindowOpen(id);
           }}
-          onClose={onToggleStartMenu}
+          onClose={() => onTaskbarInteract()}
         />
       ) : null}
 
