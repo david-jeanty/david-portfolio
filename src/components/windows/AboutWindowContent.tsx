@@ -131,13 +131,18 @@ export default function AboutWindowContent() {
 
               <div className={styles.fieldLabel}>Top interests right now</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                Outside of school and work, I still like hobbies that reward
-                patience and consistency: guitar, baking, running, and travel.
+                Outside of school and work, I&apos;m into guitar, baking,
+                running, travel, and eating delicious food. If you have a
+                place to eat I should try, a song I should learn, something I
+                should bake next, or advice on how to get faster at running
+                (I&apos;m a slowpoke), send it my way :)
               </div>
 
               <div className={styles.fieldLabel}>Baking note</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                {portfolioData.about.personal.askMeAbout}
+                I recently bought the Sweet Tooth dessert book from Broma
+                Bakery, so I&apos;m especially open to dessert recommendations
+                right now.
               </div>
             </div>
           )}

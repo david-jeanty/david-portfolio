@@ -48,7 +48,998 @@
 			function getBooleanSetting(settingName){try{var name = "pinballspacecadet" + settingName;var nameEQ = name + "=";var ca = document.cookie.split(";");for(var i=0;i < ca.length;i++){var c = ca[i];while (c.charAt(0)==" "){c = c.substring(1,c.length);}if (c.indexOf(nameEQ) == 0){if (c.substring(nameEQ.length,c.length)=="true"){return true;}else{return false;}}}}catch(err){}return true;}
 			function setBooleanSetting(settingName,settingValue){try{var name = "pinballspacecadet" + settingName;var value = String(settingValue);var days = 999;var expires = "";if (days){var date = new Date();date.setTime(date.getTime() + (days*24*60*60*1000));expires = "; expires=" + date.toUTCString() + "; SameSite=Lax";}document.cookie = name + "=" + (value || "")  + expires + "; Secure; path=/";}catch(err){}}
 
-			var Module={preRun:[],postRun:[],print:function(){}(),printErr:function(e){},canvas:function(){var e=document.getElementById("canvas");return e.addEventListener("webglcontextlost",(function(e){}),!1),e}(),setStatus:function(e){},totalDependencies:0,monitorRunDependencies:function(e){}};
+			var TRACKER_EVENT_READY = "PINBALL_TRACKER_READY";
+			var TRACKER_EVENT_DEBUG = "PINBALL_TRACKER_DEBUG";
+			var TRACKER_EVENT_ERROR = "PINBALL_TRACKER_ERROR";
+			var TRACKER_EVENT_SCORE = "PINBALL_SCORE";
+			var TRACKER_QUERY = new URLSearchParams(window.location.search);
+			var TRACKER_AUTO_START = TRACKER_QUERY.get("pinballAutostart") === "1" || TRACKER_QUERY.get("pinballAutotest") === "1";
+			var TRACKER_AUTO_TEST = TRACKER_QUERY.get("pinballAutotest") === "1";
+
+			function postPinballMessage(payload)
+				{
+				try
+					{
+					if (window.parent && window.parent !== window)
+						{
+						window.parent.postMessage(payload, window.location.origin);
+						}
+					}
+				catch (err)
+					{
+					}
+				}
+
+			function emitTrackerReady(stage, detail)
+				{
+				postPinballMessage({
+					type: TRACKER_EVENT_READY,
+					stage: stage,
+					href: window.location.href,
+					origin: window.location.origin,
+					detail: detail || null,
+				});
+				}
+
+			function emitTrackerDebug(stage, detail)
+				{
+				postPinballMessage({
+					type: TRACKER_EVENT_DEBUG,
+					stage: stage,
+					href: window.location.href,
+					origin: window.location.origin,
+					detail: detail || null,
+				});
+				}
+
+			function emitTrackerError(stage, error, detail)
+				{
+				postPinballMessage({
+					type: TRACKER_EVENT_ERROR,
+					stage: stage,
+					href: window.location.href,
+					origin: window.location.origin,
+					message: error && error.message ? error.message : String(error),
+					detail: detail || null,
+				});
+				}
+
+			function createKeyboardEvent(type, key)
+				{
+				var init = {
+					key: key,
+					bubbles: true,
+					cancelable: true,
+				};
+
+				if (key === " ")
+					{
+					init.code = "Space";
+					init.which = 32;
+					init.keyCode = 32;
+					}
+				else if (key.length === 1 && /[a-z]/i.test(key))
+					{
+					var upperKey = key.toUpperCase();
+					init.code = "Key" + upperKey;
+					init.which = upperKey.charCodeAt(0);
+					init.keyCode = upperKey.charCodeAt(0);
+					}
+				else
+					{
+					init.code = key;
+					init.which = 0;
+					init.keyCode = 0;
+					}
+
+				return new KeyboardEvent(type, init);
+				}
+
+			function dispatchGameKey(key)
+				{
+				try
+					{
+					var canvas = document.getElementById("canvas");
+					var targets = [document, window];
+
+					if (canvas)
+						{
+						targets.push(canvas);
+						}
+
+					for (var index = 0; index < targets.length; index++)
+						{
+						targets[index].dispatchEvent(createKeyboardEvent("keydown", key));
+						targets[index].dispatchEvent(createKeyboardEvent("keyup", key));
+						}
+					}
+				catch (err)
+					{
+					emitTrackerError("dispatch-game-key", err, { key: key });
+					}
+				}
+
+			function queueAutoTestSequence()
+				{
+				if (!TRACKER_AUTO_TEST)
+					{
+					return;
+					}
+
+				emitTrackerDebug("autotest-queued", null);
+
+				window.setTimeout(function()
+					{
+					dispatchGameKey("r");
+					}, 1200);
+
+				var cheatSequence = ["h", "i", "d", "d", "e", "n", " ", "t", "e", "s", "t"];
+				for (var index = 0; index < cheatSequence.length; index++)
+					{
+					(function(sequenceIndex)
+						{
+						window.setTimeout(function()
+							{
+							dispatchGameKey(cheatSequence[sequenceIndex]);
+							}, 2200 + sequenceIndex * 80);
+						})(index);
+					}
+
+				window.setTimeout(function()
+					{
+					dispatchGameKey("s");
+					emitTrackerDebug("autotest-score-key-sent", null);
+					}, 3400);
+				}
+
+			emitTrackerReady("boot", { autoStart: TRACKER_AUTO_START, autoTest: TRACKER_AUTO_TEST });
+
+			function createPinballRuntimeTracker()
+				{
+				var TABLE_OFFSETS = {
+					CurScoreStruct: 13,
+					ScoreBallcount: 14,
+					ScorePlayerNumber1: 15,
+					CheatsUsed: 16,
+					CurScore: 21,
+					PlayerScores: 26,
+					PlayerScoreStride: 7,
+					PlayerCount: 54,
+					CurrentPlayer: 55,
+					XOffset: 59,
+					YOffset: 60,
+					Width: 61,
+					Height: 62,
+					BallCount: 80,
+					MaxBallCount: 81,
+					TiltLockFlag: 91,
+				};
+				var TABLE_RTTI_NAME = "13TPinballTable";
+
+				function isPointer(value, byteLength)
+					{
+					return Number.isInteger(value) && value > 1024 && value % 4 === 0 && value + 68 < byteLength;
+					}
+
+				function findAsciiStringAddress(heapU8, text)
+					{
+					var textLength = text.length;
+					var maxAddress = heapU8.length - textLength;
+
+					addressLoop:
+					for (var address = 1024; address < maxAddress; address++)
+						{
+						for (var index = 0; index < textLength; index++)
+							{
+							if (heapU8[address + index] !== text.charCodeAt(index))
+								{
+								continue addressLoop;
+								}
+							}
+
+						return address;
+						}
+
+					return 0;
+					}
+
+				function looksLikeScoreStruct(address, heap32, heapU32, heapU8, byteLength)
+					{
+					if (!isPointer(address, byteLength))
+						{
+						return false;
+						}
+
+					var wordIndex = address >>> 2;
+					var scoreValue = heap32[wordIndex];
+					if (scoreValue < -10000 || scoreValue > 1000000000)
+						{
+						return false;
+						}
+
+					var dirtyFlag = heapU8[address + 4];
+					if (dirtyFlag !== 0 && dirtyFlag !== 1)
+						{
+						return false;
+						}
+
+					var backgroundPtr = heapU32[wordIndex + 2];
+					if (backgroundPtr !== 0 && !isPointer(backgroundPtr, byteLength))
+						{
+						return false;
+						}
+
+					var offsetX = heap32[wordIndex + 3];
+					var offsetY = heap32[wordIndex + 4];
+					var width = heap32[wordIndex + 5];
+					var height = heap32[wordIndex + 6];
+
+					if (offsetX < 0 || offsetX > 4096 || offsetY < 0 || offsetY > 4096)
+						{
+						return false;
+						}
+
+					if (width <= 0 || width > 1024 || height <= 0 || height > 512)
+						{
+						return false;
+						}
+
+					for (var index = 0; index < 10; index++)
+						{
+						if (!isPointer(heapU32[wordIndex + 7 + index], byteLength))
+							{
+							return false;
+							}
+						}
+
+					return true;
+					}
+
+				function inspectTableStateAddress(address, heap32, heapU32, heapU8, byteLength, tracker, suppressInvalidDebug)
+					{
+					if (!isPointer(address, byteLength))
+						{
+						return null;
+						}
+
+					var baseWord = address >>> 2;
+					var playerCount = heap32[baseWord + TABLE_OFFSETS.PlayerCount];
+					var currentPlayer = heap32[baseWord + TABLE_OFFSETS.CurrentPlayer];
+					var ballCount = heap32[baseWord + TABLE_OFFSETS.BallCount];
+					var maxBallCount = heap32[baseWord + TABLE_OFFSETS.MaxBallCount];
+					var width = heap32[baseWord + TABLE_OFFSETS.Width];
+					var height = heap32[baseWord + TABLE_OFFSETS.Height];
+					var cheatsUsed = heap32[baseWord + TABLE_OFFSETS.CheatsUsed] !== 0;
+
+					if (playerCount < 0 || playerCount > 4)
+						{
+						return null;
+						}
+
+					if (currentPlayer < 0 || currentPlayer > 3)
+						{
+						return null;
+						}
+
+					if (maxBallCount < 1 || maxBallCount > 10)
+						{
+						return null;
+						}
+
+					if (ballCount < 0 || ballCount > maxBallCount)
+						{
+						return null;
+						}
+
+					if (width < 200 || width > 2048 || height < 200 || height > 2048)
+						{
+						return null;
+						}
+
+					var curScoreStruct = heapU32[baseWord + TABLE_OFFSETS.CurScoreStruct];
+					var scoreBallcount = heapU32[baseWord + TABLE_OFFSETS.ScoreBallcount];
+					var scorePlayerNumber1 = heapU32[baseWord + TABLE_OFFSETS.ScorePlayerNumber1];
+					if (!looksLikeScoreStruct(curScoreStruct, heap32, heapU32, heapU8, byteLength))
+						{
+						return null;
+						}
+
+					if (!looksLikeScoreStruct(scoreBallcount, heap32, heapU32, heapU8, byteLength))
+						{
+						return null;
+						}
+
+					if (!looksLikeScoreStruct(scorePlayerNumber1, heap32, heapU32, heapU8, byteLength))
+						{
+						return null;
+						}
+
+					var scorePtr0 = heapU32[baseWord + TABLE_OFFSETS.PlayerScores];
+					var scorePtr1 = heapU32[baseWord + TABLE_OFFSETS.PlayerScores + TABLE_OFFSETS.PlayerScoreStride];
+					var scorePtr2 = heapU32[baseWord + TABLE_OFFSETS.PlayerScores + TABLE_OFFSETS.PlayerScoreStride * 2];
+					var scorePtr3 = heapU32[baseWord + TABLE_OFFSETS.PlayerScores + TABLE_OFFSETS.PlayerScoreStride * 3];
+					var scorePtrs = [scorePtr0, scorePtr1, scorePtr2, scorePtr3];
+
+					if (new Set(scorePtrs).size !== 4)
+						{
+						return null;
+						}
+
+					for (var scoreIndex = 0; scoreIndex < scorePtrs.length; scoreIndex++)
+						{
+						if (!looksLikeScoreStruct(scorePtrs[scoreIndex], heap32, heapU32, heapU8, byteLength))
+							{
+							return null;
+							}
+						}
+
+					if (scorePtrs.indexOf(curScoreStruct) === -1)
+						{
+						return null;
+						}
+
+					if (playerCount === 0)
+						{
+						return {
+							address: address,
+							playerCount: 0,
+							currentPlayer: 0,
+							score: -1,
+							scoreFromStruct: -1,
+							scoreFromTable: -1,
+							ballCount: 0,
+							maxBallCount: maxBallCount,
+							remainingBalls: 0,
+							width: width,
+							height: height,
+							cheatsUsed: cheatsUsed,
+							legitimateRun: !cheatsUsed,
+						};
+						}
+
+					if (currentPlayer >= playerCount)
+						{
+						return null;
+						}
+
+					var scoreStructAddress = scorePtrs[currentPlayer];
+					if (!looksLikeScoreStruct(scoreStructAddress, heap32, heapU32, heapU8, byteLength))
+						{
+						if (!suppressInvalidDebug && tracker && tracker.lastInvalidScoreStructAddress !== scoreStructAddress)
+							{
+							tracker.lastInvalidScoreStructAddress = scoreStructAddress;
+							emitTrackerDebug("current-player-score-struct-invalid", {
+								runId: tracker.runId,
+								currentPlayer: currentPlayer,
+								scoreStructAddress: scoreStructAddress,
+								address: address,
+							});
+							}
+						return null;
+						}
+
+					var scoreFromStruct = heap32[scoreStructAddress >>> 2];
+					var scoreFromTable = heap32[baseWord + TABLE_OFFSETS.CurScore];
+					var score = scoreFromTable === scoreFromStruct ? scoreFromTable : scoreFromStruct;
+					var remainingBalls = Math.max(0, ballCount);
+
+					for (var playerIndex = 0; playerIndex < playerCount; playerIndex++)
+						{
+						if (playerIndex === currentPlayer)
+							{
+							continue;
+							}
+
+						var storedBallCount = heap32[baseWord + TABLE_OFFSETS.PlayerScores + playerIndex * TABLE_OFFSETS.PlayerScoreStride + 4];
+						if (storedBallCount > 0)
+							{
+							remainingBalls += storedBallCount;
+							}
+						}
+
+					return {
+						address: address,
+						playerCount: playerCount,
+						currentPlayer: currentPlayer,
+						score: score,
+						scoreFromStruct: scoreFromStruct,
+						scoreFromTable: scoreFromTable,
+						ballCount: ballCount,
+						maxBallCount: maxBallCount,
+						remainingBalls: remainingBalls,
+						width: width,
+						height: height,
+						cheatsUsed: cheatsUsed,
+						legitimateRun: !cheatsUsed,
+					};
+					}
+
+				return {
+					discoveryAttempts: 0,
+					discoveryTimer: 0,
+					pollTimer: 0,
+					stateAddress: 0,
+					runId: 0,
+					runActive: false,
+					finalizedRunId: 0,
+					lastSnapshot: null,
+					lastPayloadKey: "",
+					lastInvalidScoreStructAddress: 0,
+					locatorCache: null,
+					debugStages: null,
+					reset: function()
+						{
+						this.discoveryAttempts = 0;
+						this.stateAddress = 0;
+						this.runId = 0;
+						this.runActive = false;
+						this.finalizedRunId = 0;
+						this.lastSnapshot = null;
+						this.lastPayloadKey = "";
+						this.lastInvalidScoreStructAddress = 0;
+						this.locatorCache = {
+							tableTypeNameAddress: 0,
+							typeInfoCandidates: null,
+							vtableCandidates: null,
+							vtableAddress: 0,
+							objectAddress: 0,
+						};
+						this.debugStages = {};
+						},
+					emitDebugOnce: function(stage, detail)
+						{
+						if (this.debugStages[stage])
+							{
+							return;
+							}
+
+						this.debugStages[stage] = true;
+						emitTrackerDebug(stage, detail);
+						},
+					emitSnapshot: function(snapshot, isGameOver)
+						{
+						if (!snapshot || this.runId <= 0)
+							{
+							return;
+							}
+
+						var payload = {
+							type: TRACKER_EVENT_SCORE,
+							score: snapshot.score,
+							isGameOver: isGameOver,
+							runId: this.runId,
+							legitimateRun: snapshot.legitimateRun,
+							remainingBalls: snapshot.remainingBalls,
+							ballCount: snapshot.ballCount,
+							maxBallCount: snapshot.maxBallCount,
+						};
+
+						var payloadKey = [payload.runId, payload.score, isGameOver ? 1 : 0].join(":");
+						if (payloadKey === this.lastPayloadKey)
+							{
+							return;
+							}
+
+						this.lastPayloadKey = payloadKey;
+						postPinballMessage(payload);
+						},
+					beginRun: function(snapshot)
+						{
+						this.runId += 1;
+						this.runActive = true;
+						this.finalizedRunId = 0;
+						this.lastPayloadKey = "";
+						emitTrackerDebug("run-start-detected", {
+							runId: this.runId,
+							address: snapshot.address,
+							score: snapshot.score,
+							scoreFromStruct: snapshot.scoreFromStruct,
+							scoreFromTable: snapshot.scoreFromTable,
+							ballCount: snapshot.ballCount,
+							maxBallCount: snapshot.maxBallCount,
+							remainingBalls: snapshot.remainingBalls,
+							legitimateRun: snapshot.legitimateRun,
+						});
+						this.emitSnapshot(snapshot, false);
+						},
+					findTableStateAddressByRtti: function(heap32, heapU32, heapU8, byteLength)
+						{
+						var locator = this.locatorCache;
+
+						if (locator.objectAddress)
+							{
+							var cachedSnapshot = inspectTableStateAddress(
+								locator.objectAddress,
+								heap32,
+								heapU32,
+								heapU8,
+								byteLength,
+								this,
+								true
+							);
+
+							if (cachedSnapshot)
+								{
+								return locator.objectAddress;
+								}
+
+							locator.objectAddress = 0;
+							}
+
+						if (!locator.tableTypeNameAddress)
+							{
+							locator.tableTypeNameAddress = findAsciiStringAddress(heapU8, TABLE_RTTI_NAME);
+							if (locator.tableTypeNameAddress)
+								{
+								this.emitDebugOnce("table-type-name-found", {
+									address: locator.tableTypeNameAddress,
+									name: TABLE_RTTI_NAME,
+								});
+								}
+							}
+
+						if (!locator.tableTypeNameAddress)
+							{
+							return 0;
+							}
+
+						if (!locator.typeInfoCandidates)
+							{
+							locator.typeInfoCandidates = [];
+
+							for (var wordIndex = 1; wordIndex < heapU32.length - 2; wordIndex++)
+								{
+								if (heapU32[wordIndex] !== locator.tableTypeNameAddress)
+									{
+									continue;
+									}
+
+								var typeInfoAddress = (wordIndex - 1) << 2;
+								if (!isPointer(heapU32[wordIndex - 1], byteLength))
+									{
+									continue;
+									}
+
+								if (locator.typeInfoCandidates.indexOf(typeInfoAddress) === -1)
+									{
+									locator.typeInfoCandidates.push(typeInfoAddress);
+									}
+								}
+
+							if (locator.typeInfoCandidates.length)
+								{
+								this.emitDebugOnce("table-typeinfo-found", {
+									count: locator.typeInfoCandidates.length,
+									addresses: locator.typeInfoCandidates.slice(0, 4),
+								});
+								}
+							}
+
+						if (!locator.typeInfoCandidates || !locator.typeInfoCandidates.length)
+							{
+							return 0;
+							}
+
+						if (!locator.vtableCandidates)
+							{
+							locator.vtableCandidates = [];
+
+							for (var typeInfoIndex = 0; typeInfoIndex < locator.typeInfoCandidates.length; typeInfoIndex++)
+								{
+								var currentTypeInfoAddress = locator.typeInfoCandidates[typeInfoIndex];
+
+								for (var candidateWord = 1; candidateWord < heapU32.length - 2; candidateWord++)
+									{
+									if (heapU32[candidateWord] !== currentTypeInfoAddress)
+										{
+										continue;
+										}
+
+									if (heap32[candidateWord - 1] !== 0)
+										{
+										continue;
+										}
+
+									var vtableAddress = (candidateWord + 1) << 2;
+									if (locator.vtableCandidates.indexOf(vtableAddress) === -1)
+										{
+										locator.vtableCandidates.push(vtableAddress);
+										}
+									}
+								}
+
+							if (locator.vtableCandidates.length)
+								{
+								this.emitDebugOnce("table-vtable-found", {
+									count: locator.vtableCandidates.length,
+									addresses: locator.vtableCandidates.slice(0, 4),
+								});
+								}
+							}
+
+						if (!locator.vtableCandidates || !locator.vtableCandidates.length)
+							{
+							return 0;
+							}
+
+						for (var vtableIndex = 0; vtableIndex < locator.vtableCandidates.length; vtableIndex++)
+							{
+							var currentVtableAddress = locator.vtableCandidates[vtableIndex];
+							for (var addressPointIndex = 0; addressPointIndex < 12; addressPointIndex++)
+								{
+								var objectVptrAddress = currentVtableAddress + addressPointIndex * 4;
+
+								for (var objectWord = 1; objectWord < heapU32.length - 120; objectWord++)
+									{
+									if (heapU32[objectWord] !== objectVptrAddress)
+										{
+										continue;
+										}
+
+									var objectAddress = objectWord << 2;
+									var snapshot = inspectTableStateAddress(
+										objectAddress,
+										heap32,
+										heapU32,
+										heapU8,
+										byteLength,
+										this,
+										true
+									);
+
+									if (!snapshot)
+										{
+										continue;
+										}
+
+									locator.vtableAddress = currentVtableAddress;
+									locator.objectAddress = objectAddress;
+									emitTrackerDebug("table-state-found", {
+										address: objectAddress,
+										attempt: this.discoveryAttempts,
+										locator: "rtti-vtable",
+										tableTypeNameAddress: locator.tableTypeNameAddress,
+										vtableAddress: currentVtableAddress,
+										objectVptrAddress: objectVptrAddress,
+										addressPointIndex: addressPointIndex,
+										currentScore: snapshot.score,
+										scoreFromStruct: snapshot.scoreFromStruct,
+										scoreFromTable: snapshot.scoreFromTable,
+										ballCount: snapshot.ballCount,
+										maxBallCount: snapshot.maxBallCount,
+										remainingBalls: snapshot.remainingBalls,
+										legitimateRun: snapshot.legitimateRun,
+									});
+									return objectAddress;
+									}
+								}
+							}
+
+						return 0;
+						},
+					findTableStateAddress: function()
+						{
+						if (!Module.HEAP32 || !Module.HEAPU32 || !Module.HEAPU8)
+							{
+							emitTrackerDebug("heap-unavailable", null);
+							return 0;
+							}
+
+						var heap32 = Module.HEAP32;
+						var heapU32 = Module.HEAPU32;
+						var heapU8 = Module.HEAPU8;
+						var byteLength = heapU8.byteLength;
+
+						this.discoveryAttempts += 1;
+
+						var rttiAddress = this.findTableStateAddressByRtti(heap32, heapU32, heapU8, byteLength);
+						if (rttiAddress)
+							{
+							return rttiAddress;
+							}
+
+						for (var baseWord = 11; baseWord < heap32.length - 120; baseWord++)
+							{
+							var candidateAddress = baseWord << 2;
+							var candidateSnapshot = inspectTableStateAddress(
+								candidateAddress,
+								heap32,
+								heapU32,
+								heapU8,
+								byteLength,
+								this,
+								true
+							);
+
+							if (!candidateSnapshot)
+								{
+								continue;
+								}
+
+							emitTrackerDebug("table-state-found", {
+								address: candidateAddress,
+								attempt: this.discoveryAttempts,
+								locator: "heuristic-fallback",
+								currentScore: candidateSnapshot.score,
+								scoreFromStruct: candidateSnapshot.scoreFromStruct,
+								scoreFromTable: candidateSnapshot.scoreFromTable,
+								playerCount: candidateSnapshot.playerCount,
+								currentPlayer: candidateSnapshot.currentPlayer,
+								ballCount: candidateSnapshot.ballCount,
+								maxBallCount: candidateSnapshot.maxBallCount,
+								remainingBalls: candidateSnapshot.remainingBalls,
+								width: candidateSnapshot.width,
+								height: candidateSnapshot.height,
+								legitimateRun: candidateSnapshot.legitimateRun,
+							});
+							return candidateAddress;
+							}
+
+						if (this.discoveryAttempts <= 5 || this.discoveryAttempts % 10 === 0)
+							{
+							emitTrackerDebug("table-state-not-found", {
+								attempt: this.discoveryAttempts,
+								hasAsm: !!Module.asm,
+								hasHeap32: !!Module.HEAP32,
+								hasHeapU32: !!Module.HEAPU32,
+								hasHeapU8: !!Module.HEAPU8,
+								tableTypeNameAddress: this.locatorCache.tableTypeNameAddress,
+								typeInfoCandidates: this.locatorCache.typeInfoCandidates
+									? this.locatorCache.typeInfoCandidates.length
+									: 0,
+								vtableCandidates: this.locatorCache.vtableCandidates
+									? this.locatorCache.vtableCandidates.length
+									: 0,
+							});
+							}
+
+						return 0;
+						},
+					readSnapshot: function()
+						{
+						if (!this.stateAddress || !Module.HEAP32 || !Module.HEAPU32 || !Module.HEAPU8)
+							{
+							return null;
+							}
+
+						return inspectTableStateAddress(
+							this.stateAddress,
+							Module.HEAP32,
+							Module.HEAPU32,
+							Module.HEAPU8,
+							Module.HEAPU8.byteLength,
+							this,
+							false
+						);
+						},
+					handleSnapshot: function(snapshot)
+						{
+						if (!snapshot)
+							{
+							this.stateAddress = 0;
+							emitTrackerDebug("table-state-lost", null);
+							return;
+							}
+
+						if (!this.lastSnapshot)
+							{
+							emitTrackerDebug("snapshot-read", {
+								runId: this.runId,
+								address: snapshot.address,
+								score: snapshot.score,
+								scoreFromStruct: snapshot.scoreFromStruct,
+								scoreFromTable: snapshot.scoreFromTable,
+								playerCount: snapshot.playerCount,
+								currentPlayer: snapshot.currentPlayer,
+								ballCount: snapshot.ballCount,
+								maxBallCount: snapshot.maxBallCount,
+								remainingBalls: snapshot.remainingBalls,
+								legitimateRun: snapshot.legitimateRun,
+							});
+							}
+
+						var lastSnapshot = this.lastSnapshot;
+						var looksLikeFreshRun =
+							snapshot.playerCount > 0 &&
+							snapshot.currentPlayer === 0 &&
+							snapshot.score === 0 &&
+							snapshot.ballCount === snapshot.maxBallCount;
+
+						var shouldStartRun =
+							looksLikeFreshRun &&
+							(
+								!lastSnapshot ||
+								!this.runActive ||
+								lastSnapshot.score !== 0 ||
+								lastSnapshot.ballCount !== snapshot.maxBallCount ||
+								lastSnapshot.playerCount !== snapshot.playerCount ||
+								this.finalizedRunId === this.runId
+							);
+
+						if (shouldStartRun)
+							{
+							this.beginRun(snapshot);
+							this.lastSnapshot = snapshot;
+							return;
+							}
+
+						if (!this.runActive)
+							{
+							if (snapshot.playerCount > 0 && snapshot.score >= 0 && snapshot.remainingBalls > 0)
+								{
+								this.beginRun(snapshot);
+								}
+							else
+								{
+								this.lastSnapshot = snapshot;
+								return;
+								}
+							}
+
+						if (!lastSnapshot || snapshot.score !== lastSnapshot.score)
+							{
+							emitTrackerDebug("score-change-detected", {
+								runId: this.runId,
+								address: snapshot.address,
+								score: snapshot.score,
+								scoreFromStruct: snapshot.scoreFromStruct,
+								scoreFromTable: snapshot.scoreFromTable,
+								ballCount: snapshot.ballCount,
+								maxBallCount: snapshot.maxBallCount,
+								remainingBalls: snapshot.remainingBalls,
+								legitimateRun: snapshot.legitimateRun,
+							});
+							this.emitSnapshot(snapshot, false);
+							}
+
+						var becameGameOver =
+							this.runActive &&
+							this.finalizedRunId !== this.runId &&
+							snapshot.remainingBalls <= 0 &&
+							lastSnapshot &&
+							lastSnapshot.remainingBalls > 0;
+
+						if (becameGameOver)
+							{
+							emitTrackerDebug("game-over-detected", {
+								runId: this.runId,
+								address: snapshot.address,
+								score: snapshot.score,
+								scoreFromStruct: snapshot.scoreFromStruct,
+								scoreFromTable: snapshot.scoreFromTable,
+								ballCount: snapshot.ballCount,
+								maxBallCount: snapshot.maxBallCount,
+								remainingBalls: snapshot.remainingBalls,
+								legitimateRun: snapshot.legitimateRun,
+							});
+							this.emitSnapshot(snapshot, true);
+							this.finalizedRunId = this.runId;
+							this.runActive = false;
+							}
+
+						this.lastSnapshot = snapshot;
+						},
+					tick: function()
+						{
+						if (!this.stateAddress)
+							{
+							this.stateAddress = this.findTableStateAddress();
+							if (!this.stateAddress)
+								{
+								return;
+								}
+							}
+
+						this.handleSnapshot(this.readSnapshot());
+						},
+						start: function()
+							{
+						var tracker = this;
+
+						window.__pinballTracker = tracker;
+						tracker.reset();
+						emitTrackerReady("runtime-initialized", {
+							hasHeap32: !!Module.HEAP32,
+							hasHeapU32: !!Module.HEAPU32,
+							hasHeapU8: !!Module.HEAPU8,
+							hasAsm: !!Module.asm,
+						});
+						emitTrackerDebug("tracker-start", {
+							hasHeap32: !!Module.HEAP32,
+							hasHeapU32: !!Module.HEAPU32,
+							hasHeapU8: !!Module.HEAPU8,
+							hasAsm: !!Module.asm,
+						});
+
+						if (tracker.discoveryTimer)
+							{
+							window.clearInterval(tracker.discoveryTimer);
+							}
+
+						if (tracker.pollTimer)
+							{
+							window.clearInterval(tracker.pollTimer);
+							}
+
+						try
+							{
+							tracker.stateAddress = tracker.findTableStateAddress();
+							if (tracker.stateAddress)
+								{
+								tracker.handleSnapshot(tracker.readSnapshot());
+								}
+							}
+						catch (err)
+							{
+							emitTrackerError("tracker-initial-scan", err, null);
+							}
+
+						tracker.discoveryTimer = window.setInterval(function()
+							{
+							if (!tracker.stateAddress)
+								{
+								try
+									{
+									tracker.stateAddress = tracker.findTableStateAddress();
+									}
+								catch (err)
+									{
+									emitTrackerError("table-state-scan", err, null);
+									}
+								}
+
+							if (tracker.stateAddress)
+								{
+								window.clearInterval(tracker.discoveryTimer);
+								tracker.discoveryTimer = 0;
+								emitTrackerDebug("poll-started", {
+									address: tracker.stateAddress,
+									runId: tracker.runId,
+								});
+
+								try
+									{
+									tracker.handleSnapshot(tracker.readSnapshot());
+									}
+								catch (err)
+									{
+									emitTrackerError("tracker-initial-handoff", err, {
+										address: tracker.stateAddress,
+									});
+									}
+
+								tracker.pollTimer = window.setInterval(function()
+									{
+									try
+										{
+										tracker.tick();
+										}
+									catch (err)
+										{
+										emitTrackerError("tracker-tick", err, null);
+										}
+									}, 150);
+								}
+							}, 1000);
+
+						queueAutoTestSequence();
+						},
+				};
+				}
+
+			var PinballRuntimeTracker = createPinballRuntimeTracker();
+
+				var Module={
+					preRun:[],
+					postRun:[],
+					print:function(){}(),
+				printErr:function(e){},
+				canvas:function(){var e=document.getElementById("canvas");return e.addEventListener("webglcontextlost",(function(e){}),!1),e}(),
+				setStatus:function(e){},
+				totalDependencies:0,
+				monitorRunDependencies:function(e){},
+				onRuntimeInitialized:function(){PinballRuntimeTracker.start();}
+			};
 
 			var GAME_SOUND_ENABLED = getBooleanSetting("GAME_SOUND_ENABLED");
 
@@ -108,20 +1099,30 @@
 				event.preventDefault();
 				});
 
-			window.addEventListener("load", function()
-				{
-				document.getElementById("canvas").style.height = (window.innerHeight + 20) + "px";
-
-				document.getElementsByClassName("gui_start")[0].addEventListener("click", function(event)
+				window.addEventListener("load", function()
 					{
-					document.getElementsByClassName("gui_container")[0].style.display = "none";
-					document.getElementsByClassName("pleasewait")[0].style.display = "block";
+					document.getElementById("canvas").style.height = (window.innerHeight + 20) + "px";
 
-					const scriptGame = document.createElement("script");
-					scriptGame.src = "3DPinballSpaceCadet.js";
-					document.getElementsByTagName("body")[0].appendChild(scriptGame);
+					document.getElementsByClassName("gui_start")[0].addEventListener("click", function(event)
+						{
+						document.getElementsByClassName("gui_container")[0].style.display = "none";
+						document.getElementsByClassName("pleasewait")[0].style.display = "block";
+						emitTrackerDebug("game-script-loading", null);
+
+						const scriptGame = document.createElement("script");
+						scriptGame.src = "3DPinballSpaceCadet.js";
+						document.getElementsByTagName("body")[0].appendChild(scriptGame);
+						});
+
+					if (TRACKER_AUTO_START)
+						{
+						emitTrackerDebug("autostart-click-scheduled", null);
+						window.setTimeout(function()
+							{
+							document.getElementsByClassName("gui_start")[0].click();
+							}, 50);
+						}
 					});
-				});
 
 			window.addEventListener("resize", function()
 				{

@@ -68,11 +68,17 @@
   white-space: nowrap;
 }
 
+.playArea {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 10px;
+  padding: 8px;
+  background: linear-gradient(180deg, #c7d7ef 0%, #a4b8d9 100%);
+}
+
 .frameWrap {
   height: calc(100svh - 120px);
   min-height: 620px;
-  padding: 8px;
-  background: linear-gradient(180deg, #c7d7ef 0%, #a4b8d9 100%);
 }
 
 .frame {
@@ -81,6 +87,211 @@
   height: 100%;
   border: 1px solid #5e7fb0;
   background: #000;
+}
+
+.framePlaceholder {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  border: 1px solid #5e7fb0;
+  background:
+    radial-gradient(circle at top, rgba(45, 112, 231, 0.38), rgba(4, 13, 35, 0.92)),
+    #000;
+  color: #eef4ff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.scorePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.scoreCard {
+  padding: 12px;
+  border: 1px solid #6f8ebc;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(232, 239, 251, 0.96) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.debugCard {
+  border-color: #8a6b2a;
+  background: linear-gradient(180deg, rgba(255, 249, 232, 0.97) 0%, rgba(245, 234, 205, 0.98) 100%);
+}
+
+.panelEyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #35568c;
+}
+
+.bestScore {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #123b72;
+}
+
+.panelHint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #476180;
+}
+
+.panelMeta {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: #5e738e;
+}
+
+.debugLine {
+  margin: 0 0 4px;
+  font-size: 11px;
+  color: #4f4a35;
+}
+
+.debugPayload {
+  margin: 8px 0 0;
+  padding: 8px;
+  max-height: 220px;
+  overflow: auto;
+  border: 1px solid #c6b27d;
+  background: rgba(255, 255, 255, 0.72);
+  color: #473d24;
+  font-size: 10px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.inputLabel {
+  display: block;
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #34547f;
+}
+
+.input {
+  width: 100%;
+  min-height: 34px;
+  margin: 0 0 10px;
+  padding: 7px 9px;
+  border: 1px solid #7c95bc;
+  background: #fff;
+  color: #163c74;
+  font-size: 13px;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 8px;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.primaryButton {
+  border: 1px solid #0f3770;
+  background: linear-gradient(180deg, #ffffff 0%, #dce7fb 100%);
+  color: #163c74;
+}
+
+.secondaryButton {
+  border: 1px solid #8aa1c5;
+  background: linear-gradient(180deg, #f7f9fd 0%, #d7e0f0 100%);
+  color: #4c617d;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.55;
+}
+
+.scoreList {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.scoreRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  color: #24446d;
+}
+
+.scoreValue {
+  display: block;
+  font-weight: 700;
+}
+
+.scoreNote {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: #5b6f8c;
+}
+
+.scoreDate {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #6b7d96;
+}
+
+.emptyState {
+  margin: 0;
+  font-size: 12px;
+  color: #57708d;
+}
+
+.errorText {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: #8d1f1f;
+}
+
+.leaderboardTable {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  font-size: 11px;
+  color: #24446d;
+}
+
+.leaderboardTable th,
+.leaderboardTable td {
+  padding: 6px 4px;
+  border-bottom: 1px solid rgba(111, 142, 188, 0.35);
+  text-align: left;
+}
+
+.leaderboardTable th:first-child,
+.leaderboardTable td:first-child {
+  width: 26px;
+}
+
+.leaderboardTable th:nth-child(3),
+.leaderboardTable td:nth-child(3) {
+  text-align: right;
+}
+
+.leaderboardTable th:last-child,
+.leaderboardTable td:last-child {
+  white-space: nowrap;
 }
 
 .statusBar {
@@ -107,6 +318,10 @@
 
   .backButton {
     align-self: flex-start;
+  }
+
+  .playArea {
+    grid-template-columns: 1fr;
   }
 
   .frameWrap {
