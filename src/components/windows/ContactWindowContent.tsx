@@ -6,6 +6,7 @@ import { SmallEnvelopeIcon, SmallLinkIcon, SmallPinIcon } from "@/components/des
 
 export default function ContactWindowContent() {
   const linkedinUrl = `https://${portfolioData.contact.linkedin}`;
+  const resumeUrl = `/${portfolioData.desktop.resumeFileName}`;
 
   return (
     <div>
@@ -18,50 +19,85 @@ export default function ContactWindowContent() {
       </div>
 
       <section className={styles.simpleListSurface}>
-        <ul className={styles.contactList}>
-          <li>
-            <span className={styles.contactLine}>
+        <section className={styles.sectionIntroCard}>
+          <div>
+            <p className={styles.sectionIntroEyebrow}>Professional contact</p>
+            <h3 className={styles.sectionIntroTitle}>Easy ways to reach me</h3>
+            <p className={styles.sectionIntroCopy}>{portfolioData.contact.responseNote}</p>
+          </div>
+
+          <div className={styles.contactAvailabilityCard}>
+            <span className={styles.contactAvailabilityLabel}>Availability</span>
+            <strong className={styles.contactAvailabilityValue}>
+              {portfolioData.contact.availability}
+            </strong>
+          </div>
+        </section>
+
+        <div className={styles.contactGrid}>
+          <section className={styles.contactCard}>
+            <p className={styles.contactCardTitle}>
               <SmallEnvelopeIcon />
-              Email:{" "}
-              <a href={`mailto:${portfolioData.contact.email}`}>
-                {portfolioData.contact.email}
-              </a>
-            </span>
-          </li>
-          <li>
-            <span className={styles.contactLine}>
+              Email
+            </p>
+            <p className={styles.contactCardValue}>
+              <a href={`mailto:${portfolioData.contact.email}`}>{portfolioData.contact.email}</a>
+            </p>
+          </section>
+
+          <section className={styles.contactCard}>
+            <p className={styles.contactCardTitle}>
               <SmallLinkIcon />
-              LinkedIn:{" "}
+              LinkedIn
+            </p>
+            <p className={styles.contactCardValue}>
               <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
                 {portfolioData.contact.linkedin}
               </a>
-            </span>
-          </li>
-          <li>
-            <span className={styles.contactLine}>
+            </p>
+          </section>
+
+          <section className={styles.contactCard}>
+            <p className={styles.contactCardTitle}>
               <SmallPinIcon />
-              Location: {portfolioData.contact.location}
-            </span>
-          </li>
-        </ul>
+              Location
+            </p>
+            <p className={styles.contactCardValue}>{portfolioData.contact.location}</p>
+          </section>
 
-        <h3>Professional contact</h3>
-        <p style={{ marginBottom: 14 }}>
-          Open to recruiter outreach and conversations about relevant roles.
-          Email is the fastest way to reach me.
-        </p>
+          <section className={styles.contactCard}>
+            <p className={styles.contactCardTitle}>Best fit</p>
+            <p className={styles.contactCardValue}>{portfolioData.contact.preferredIntro}</p>
+          </section>
+        </div>
 
-        <a
-          href={`mailto:${portfolioData.contact.email}?subject=Opportunity%20Inquiry&body=Hi%20David%2C%0A%0AI%E2%80%99d%20like%20to%20connect%20about%20a%20role%20or%20opportunity.%0A%0AThanks!`}
-          className={`${styles.actionButton} ${styles.actionButtonPrimary}`}
-          aria-label="Email about opportunities"
-        >
-          Email about opportunities
-        </a>
+        <div className={styles.actionRow}>
+          <a
+            href={`mailto:${portfolioData.contact.email}?subject=Opportunity%20Inquiry&body=Hi%20David%2C%0A%0AI'd%20like%20to%20connect%20about%20a%20role%20or%20opportunity.%0A%0AThanks!`}
+            className={`${styles.actionButton} ${styles.actionButtonPrimary}`}
+            aria-label="Email about opportunities"
+          >
+            Email David
+          </a>
+
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.actionButton}
+            aria-label="Open LinkedIn profile"
+          >
+            Open LinkedIn
+          </a>
+
+          <a href={resumeUrl} download className={styles.actionButton} aria-label="Download resume">
+            Download Resume
+          </a>
+        </div>
       </section>
 
       <div className={styles.statusBar}>
-        <span>3 contact fields</span>
+        <span>4 contact fields</span>
         <span>Professional contact open</span>
       </div>
     </div>

@@ -245,7 +245,7 @@ function DesktopTaskbar({
   onTaskbarInteract,
 }: {
   timeLabel: string;
-  now: Date;
+  now: Date | null;
   isStartMenuOpen: boolean;
   isClockOpen: boolean;
   onToggleStartMenu: () => void;
@@ -324,14 +324,14 @@ function DesktopTaskbar({
         <span className={styles.clock}>{timeLabel}</span>
       </button>
 
-      {isClockOpen ? <ClockPopover now={now} /> : null}
+      {isClockOpen && now ? <ClockPopover now={now} /> : null}
     </>
   );
 }
 
 export default function DesktopShell() {
   const shellRef = useRef<HTMLDivElement | null>(null);
-  const [now, setNow] = useState(() => new Date());
+  const [now, setNow] = useState<Date | null>(null);
   const [selectedIconId, setSelectedIconId] = useState<DesktopIconId | null>(null);
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
   const [isClockOpen, setIsClockOpen] = useState(false);
@@ -369,10 +369,12 @@ export default function DesktopShell() {
     };
   }, []);
 
-  const timeLabel = now.toLocaleTimeString([], {
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  const timeLabel = now
+    ? now.toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit",
+      })
+    : "--:--";
 
   return (
     <div ref={shellRef} className={styles.desktop}>

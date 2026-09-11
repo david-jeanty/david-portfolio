@@ -17,6 +17,17 @@ export async function GET(request: NextRequest) {
       limit: Math.max(1, Math.min(limit, GLOBAL_LEADERBOARD_LIMIT)),
     });
   } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message === "Supabase environment variables are not configured."
+    ) {
+      return NextResponse.json({
+        entries: [],
+        limit: Math.max(1, Math.min(limit, GLOBAL_LEADERBOARD_LIMIT)),
+        unavailable: true,
+      });
+    }
+
     return NextResponse.json(
       {
         error:

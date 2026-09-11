@@ -19,65 +19,6 @@ function RasterIcon({ src, size = 38 }: { src: string; size?: number }) {
   );
 }
 
-/* ── PDF Document ────────────────────────────────────────────────────────── */
-function PDFDocIcon({ size = 38, white = false }: IP) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <rect x="4" y="2" width="19" height="25" rx="1"
-        fill={white ? "rgba(255,255,255,0.9)" : "#ffffff"}
-        stroke={white ? "rgba(255,255,255,0.55)" : "#b4bec8"} strokeWidth="0.8" />
-      <path d="M19 2 L23 6 L19 6 Z"
-        fill={white ? "rgba(255,200,200,0.4)" : "#ffe0e0"}
-        stroke={white ? "rgba(255,255,255,0.45)" : "#d4a4a4"} strokeWidth="0.7" />
-      {/* Header band */}
-      <rect x="4" y="2" width="15" height="6.5" rx="1"
-        fill={white ? "rgba(255,255,255,0.35)" : "#d32f2f"} />
-      {!white && (
-        <>
-          <text x="5.5" y="8" fontSize="4" fontWeight="900" fill="white"
-            fontFamily="Tahoma, Verdana, sans-serif">PDF</text>
-          <line x1="7" y1="13" x2="19" y2="13" stroke="#c4cdd8" strokeWidth="1" />
-          <line x1="7" y1="17" x2="19" y2="17" stroke="#c4cdd8" strokeWidth="1" />
-          <line x1="7" y1="21" x2="15" y2="21" stroke="#c4cdd8" strokeWidth="1" />
-        </>
-      )}
-    </svg>
-  );
-}
-
-/* ── Person / About ──────────────────────────────────────────────────────── */
-function PersonIcon({ size = 38, white = false }: IP) {
-  const c = white ? "rgba(255,255,255,0.85)" : "#4a8fe0";
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <circle cx="16" cy="10" r="6" fill={c} />
-      <path d="M5 28 Q5 19 16 19 Q27 19 27 28 Z" fill={c} />
-    </svg>
-  );
-}
-
-/* ── Briefcase / Experience ──────────────────────────────────────────────── */
-function BriefcaseIcon({ size = 38, white = false }: IP) {
-  const body = white ? "rgba(255,255,255,0.85)" : "#c8922a";
-  const edge = white ? "rgba(255,255,255,0.5)" : "#8a5c10";
-  const band = white ? "rgba(255,255,255,0.38)" : "#b07820";
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      {/* Handle */}
-      <path d="M11 13 L11 9 Q11 6 16 6 Q21 6 21 9 L21 13"
-        stroke={edge} strokeWidth="2" fill="none" strokeLinecap="round" />
-      {/* Body */}
-      <rect x="3" y="13" width="26" height="16" rx="2"
-        fill={body} stroke={edge} strokeWidth="0.8" />
-      {/* Center band */}
-      <rect x="3" y="19" width="26" height="3" fill={band} />
-      {/* Clasp */}
-      <rect x="13" y="17" width="6" height="6" rx="1"
-        fill={body} stroke={edge} strokeWidth="0.7" />
-    </svg>
-  );
-}
-
 /* ── Folder / Projects ───────────────────────────────────────────────────── */
 function FolderIcon({ size = 38, white = false }: IP) {
   const body = white ? "rgba(255,255,255,0.85)" : "#f5c842";

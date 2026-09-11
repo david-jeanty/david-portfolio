@@ -37,6 +37,11 @@ type OpenWindowOptions = {
   centered?: boolean;
 };
 
+type WindowSize = {
+  w: number;
+  h: number;
+};
+
 type WindowManagerApi = {
   openWindow: (id: WindowId, options?: OpenWindowOptions) => void;
   closeWindow: (id: WindowId) => void;
@@ -63,17 +68,16 @@ function getInitialGeometry(params: {
   isMobile: boolean;
   existingCount: number;
 }): WindowGeometry {
-  const { id, isMobile, existingCount } = params;
+  const { isMobile, existingCount } = params;
   const taskbarH = isMobile ? 48 : 42;
 
-  const wDesktop = id === "games" ? 400 : id === "internal-media" ? 640 : 560;
-  const hDesktop = id === "games" ? 320 : id === "internal-media" ? 460 : 420;
+  const desktopSize = getPreferredWindowSize(isMobile);
   const mobileMargin = 6;
   const wMobile = Math.max(280, window.innerWidth - mobileMargin * 2);
   const hMobile = Math.max(220, window.innerHeight - taskbarH - mobileMargin * 2);
 
-  const w = isMobile ? wMobile : wDesktop;
-  const h = isMobile ? hMobile : hDesktop;
+  const w = isMobile ? wMobile : desktopSize.w;
+  const h = isMobile ? hMobile : desktopSize.h;
 
   const offsetX = isMobile ? mobileMargin : 22 + existingCount * 16;
   const offsetY = isMobile ? mobileMargin : 22 + existingCount * 14;
@@ -98,15 +102,8 @@ function getCenteredGeometry(params: {
     return getInitialGeometry({ id, isMobile, existingCount: 0 });
   }
 
-  const geometry = clampWindowGeometry(
-    {
-      x: 0,
-      y: 0,
-      w: id === "about" ? 620 : id === "internal-media" ? 640 : 560,
-      h: id === "about" ? 460 : id === "internal-media" ? 460 : 420,
-    },
-    isMobile
-  );
+  const preferredSize = getPreferredWindowSize(isMobile);
+  const geometry = clampWindowGeometry({ x: 0, y: 0, ...preferredSize }, isMobile);
 
   const visibleDesktopHeight = window.innerHeight - taskbarH;
 
@@ -119,6 +116,32 @@ function getCenteredGeometry(params: {
 
 function getTaskbarHeight(isMobile: boolean) {
   return isMobile ? 48 : 42;
+}
+
+function getPreferredWindowSize(isMobile: boolean): WindowSize {
+  if (isMobile) {
+    return {
+      w: window.innerWidth,
+      h: window.innerHeight - getTaskbarHeight(true),
+    };
+  }
+
+  const viewportW = window.innerWidth;
+  const viewportH = window.innerHeight - getTaskbarHeight(false);
+  const viewportClass =
+    viewportW < 1100 ? "tablet" : viewportW < 1440 ? "laptop" : "monitor";
+
+  const sizes: Record<typeof viewportClass, WindowSize> = {
+    tablet: { w: 860, h: 620 },
+    laptop: { w: 980, h: 660 },
+    monitor: { w: 1080, h: 700 },
+  };
+
+  const size = sizes[viewportClass];
+  return {
+    w: Math.min(size.w, Math.max(320, viewportW - 24)),
+    h: Math.min(size.h, Math.max(240, viewportH - 24)),
+  };
 }
 
 function getMaximizedGeometry(isMobile: boolean): WindowGeometry {
@@ -412,12 +435,6 @@ export default function WindowManager({ children }: { children: ReactNode }) {
   }, [isMobile]);
 
   useEffect(() => {
-    const sessionKey = "portfolio-about-autoloaded";
-
-    if (sessionStorage.getItem(sessionKey)) return;
-
-    sessionStorage.setItem(sessionKey, "true");
-
     const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
     const nextZ = nextZRef.current + 1;
     nextZRef.current = nextZ;

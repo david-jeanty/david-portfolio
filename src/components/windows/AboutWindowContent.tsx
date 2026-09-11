@@ -6,10 +6,12 @@ import { portfolioData } from "@/data/portfolio";
 import styles from "./WindowApps.module.css";
 
 export default function AboutWindowContent() {
-  const [activeTab, setActiveTab] = useState<"academia" | "personal">("academia");
+  const [activeTab, setActiveTab] = useState<"background" | "how-i-work" | "personal">(
+    "background"
+  );
 
   return (
-    <div>
+    <div className={styles.aboutApp}>
       <div className={styles.menuBar}>
         {["File", "Edit", "View", "Help"].map((item) => (
           <span key={item} className={styles.menuItem}>
@@ -21,8 +23,8 @@ export default function AboutWindowContent() {
       <section className={styles.dialogCard}>
         <div className={styles.dialogHeader}>Profile Properties</div>
         <div className={styles.dialogBody}>
-          <section className={styles.onboardingNote} aria-label="Navigation guidance">
-            <div className={styles.onboardingIntro}>
+          <section className={styles.heroPanel} aria-label="Profile snapshot">
+            <div className={styles.heroContentGrid}>
               <div className={styles.onboardingPhotoFrame}>
                 <Image
                   src="/david-headshot.JPG"
@@ -34,19 +36,25 @@ export default function AboutWindowContent() {
               </div>
 
               <div className={styles.onboardingCopy}>
-                <p className={styles.onboardingTitle}>Welcome</p>
-                <p>
-                  Hi, I&apos;m David. I built this portfolio like a desktop
-                  because I like work that feels organized, easy to navigate,
-                  and a little tactile. I&apos;m a BTM student at uOttawa, and
-                  I&apos;m usually most useful where there are moving parts,
-                  unclear follow-up, or reporting that needs to be cleaned up.
-                </p>
-                <p>
-                  You can open, move, resize, minimize, and restore each
-                  window. Good places to start are Resume, Experience, About
-                  Me, and Contact.
-                </p>
+                <p className={styles.heroEyebrow}>Welcome</p>
+                <h3 className={styles.heroTitle}>{portfolioData.identity.title}</h3>
+                <p>{portfolioData.identity.tagline}</p>
+                <p>{portfolioData.about.paragraph}</p>
+              </div>
+            </div>
+
+            <div className={styles.heroStatsGrid}>
+              <div className={styles.statCard}>
+                <span className={styles.statLabel}>Based in</span>
+                <strong className={styles.statValue}>{portfolioData.identity.location}</strong>
+              </div>
+              <div className={styles.statCard}>
+                <span className={styles.statLabel}>Studying</span>
+                <strong className={styles.statValue}>{portfolioData.identity.degree}</strong>
+              </div>
+              <div className={styles.statCard}>
+                <span className={styles.statLabel}>Working in</span>
+                <strong className={styles.statValue}>AI Enablement, CRM, Strategy, and Operations</strong>
               </div>
             </div>
           </section>
@@ -55,13 +63,24 @@ export default function AboutWindowContent() {
             <button
               type="button"
               className={`${styles.tabButton} ${
-                activeTab === "academia" ? styles.tabButtonActive : ""
+                activeTab === "background" ? styles.tabButtonActive : ""
               }`}
-              onClick={() => setActiveTab("academia")}
+              onClick={() => setActiveTab("background")}
               role="tab"
-              aria-selected={activeTab === "academia"}
+              aria-selected={activeTab === "background"}
             >
               Background
+            </button>
+            <button
+              type="button"
+              className={`${styles.tabButton} ${
+                activeTab === "how-i-work" ? styles.tabButtonActive : ""
+              }`}
+              onClick={() => setActiveTab("how-i-work")}
+              role="tab"
+              aria-selected={activeTab === "how-i-work"}
+            >
+              How I Work
             </button>
             <button
               type="button"
@@ -76,13 +95,7 @@ export default function AboutWindowContent() {
             </button>
           </div>
 
-          <p>
-            I tend to do my best work in the middle of moving parts: keeping
-            workflows clear, noticing what needs attention, and making the
-            next step obvious to the people involved.
-          </p>
-
-          {activeTab === "academia" ? (
+          {activeTab === "background" ? (
             <div className={`${styles.fieldGrid} ${styles.aboutGrid}`}>
               <div className={styles.fieldLabel}>Program</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
@@ -94,17 +107,16 @@ export default function AboutWindowContent() {
                 {portfolioData.identity.institution}
               </div>
 
-              <div className={styles.fieldLabel}>Languages</div>
-              <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                {portfolioData.identity.languages.join(" / ")}
-              </div>
-
               <div className={styles.fieldLabel}>Involvement</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                {portfolioData.about.extracurriculars.join(", ")}
+                <ul className={styles.rowList}>
+                  {portfolioData.about.extracurriculars.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
               </div>
 
-              <div className={styles.fieldLabel}>Where I’m most interested in contributing</div>
+              <div className={styles.fieldLabel}>Where I am most interested in contributing</div>
               <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
                 <ul className={styles.rowList}>
                   {portfolioData.about.professionalGoals.map((goal) => (
@@ -113,37 +125,65 @@ export default function AboutWindowContent() {
                 </ul>
               </div>
             </div>
+          ) : activeTab === "how-i-work" ? (
+            <div className={styles.splitPanelGrid}>
+              <section className={styles.infoPanel}>
+                <p className={styles.sectionLabel}>Core strengths</p>
+                <ul className={styles.rowList}>
+                  {portfolioData.about.strengths.map((strength) => (
+                    <li key={strength}>{strength}</li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className={styles.infoPanel}>
+                <p className={styles.sectionLabel}>What I optimize for</p>
+                <ul className={styles.rowList}>
+                  {portfolioData.about.headlineLines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className={styles.infoPanel}>
+                <p className={styles.sectionLabel}>Current focus</p>
+                <ul className={styles.rowList}>
+                  {portfolioData.about.currentFocus.map((focus) => (
+                    <li key={focus}>{focus}</li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className={styles.calloutCard}>
+                <p className={styles.sectionLabel}>Best fit</p>
+                <p className={styles.calloutText}>
+                  Teams working across AI enablement, CRM, strategy, or operations that need someone
+                  curious, organized, and comfortable turning ambiguity into clearer next steps.
+                </p>
+              </section>
+            </div>
           ) : (
-            <div className={`${styles.fieldGrid} ${styles.aboutGrid}`}>
-              <div className={styles.fieldLabel}>How I think</div>
-              <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                Structured in fast-paced environments
-                <br />
-                Curious about systems, workflows, and people
-                <br />
-                Focused on practical communication and follow-through
-              </div>
+            <div className={styles.splitPanelGrid}>
+              <section className={styles.infoPanel}>
+                <p className={styles.sectionLabel}>Outside of work</p>
+                <p>{portfolioData.about.personal.summary}</p>
+              </section>
 
-              <div className={styles.fieldLabel}>Outside of work</div>
-              <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                {portfolioData.about.personal.summary}
-              </div>
+              <section className={styles.infoPanel}>
+                <p className={styles.sectionLabel}>Interests</p>
+                <div className={styles.hobbyRow}>
+                  {portfolioData.about.personal.hobbies.map((hobby) => (
+                    <span key={hobby} className={styles.hobbyChip}>
+                      {hobby}
+                    </span>
+                  ))}
+                </div>
+              </section>
 
-              <div className={styles.fieldLabel}>Top interests right now</div>
-              <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                Outside of school and work, I&apos;m into guitar, baking,
-                running, travel, and eating delicious food. If you have a
-                place to eat I should try, a song I should learn, something I
-                should bake next, or advice on how to get faster at running
-                (I&apos;m a slowpoke), send it my way :)
-              </div>
-
-              <div className={styles.fieldLabel}>Baking note</div>
-              <div className={`${styles.fieldValue} ${styles.infoPanel}`}>
-                I recently bought the Sweet Tooth dessert book from Broma
-                Bakery, so I&apos;m especially open to dessert recommendations
-                right now.
-              </div>
+              <section className={styles.calloutCard}>
+                <p className={styles.sectionLabel}>Ask me about</p>
+                <p className={styles.calloutText}>{portfolioData.about.personal.askMeAbout}</p>
+              </section>
             </div>
           )}
         </div>

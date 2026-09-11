@@ -103,24 +103,40 @@ export default function ResumeWindowContent() {
 
         <div className={styles.documentMetaRow}>
           <span className={styles.documentMetaChip}>File: {resumeFileName}</span>
+          <span className={styles.documentMetaChip}>Location: {portfolioData.contact.location}</span>
+          <span className={styles.documentMetaChip}>Focus: BA / operations / CRM workflow</span>
           <span className={styles.documentMetaChip}>
             {resumeState === "ready" ? "Status: ready to view" : "Status: waiting for file"}
           </span>
         </div>
 
+        <div className={styles.documentSummaryBand}>
+          <div>
+            <p className={styles.sectionLabel}>Best for</p>
+            <p className={styles.calloutText}>
+              Recruiters or hiring managers who want the fast PDF version first, then a portfolio
+              they can click through for context.
+            </p>
+          </div>
+
+          <div>
+            <p className={styles.sectionLabel}>What to expect</p>
+            <p className={styles.calloutText}>
+              Experience across reporting, workflow organization, stakeholder communication, and
+              operational follow-through.
+            </p>
+          </div>
+        </div>
+
         <div className={styles.documentCanvas}>
           {resumeState === "ready" ? (
             <p className={styles.mobileDocumentHint}>
-              On smaller screens, opening in a new tab or downloading is usually
-              easier than scrolling the preview.
+              On smaller screens, opening in a new tab or downloading is usually easier than
+              scrolling the preview.
             </p>
           ) : null}
           {resumeState === "ready" ? (
-            <iframe
-              src={resumeUrl}
-              title="Resume PDF"
-              className={styles.resumeFrame}
-            />
+            <iframe src={resumeUrl} title="Resume PDF" className={styles.resumeFrame} />
           ) : (
             <div className={styles.resumeFallbackCard}>
               <div className={styles.resumeSheet}>

@@ -97,9 +97,18 @@
   padding: 2px 6px;
 }
 
+.aboutApp {
+  container: about-window / inline-size;
+  min-width: 0;
+}
+
+.experienceApp {
+  container: experience-window / inline-size;
+}
+
 .explorerLayout {
   display: grid;
-  grid-template-columns: 210px 1fr;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
   min-height: 280px;
   border: 1px solid #b9b9b9;
   background: #fff;
@@ -120,6 +129,18 @@
   font-size: 12px;
 }
 
+.folderButtonInner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.folderButtonInner svg {
+  flex: 0 0 auto;
+}
+
 .folderButton:hover {
   background: #e9f1ff;
 }
@@ -132,6 +153,62 @@
 .detailPane {
   padding: 10px 12px;
   overflow: auto;
+  min-width: 0;
+}
+
+.detailHeroRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.detailHeroRow > div:first-child {
+  min-width: 0;
+}
+
+.metricShowcase {
+  flex: 0 0 210px;
+  min-width: 190px;
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid #9db7da;
+  background: linear-gradient(180deg, #ffffff 0%, #edf5ff 100%);
+}
+
+.metricShowcaseValue {
+  color: #18437d;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.metricShowcaseLabel {
+  color: #48627f;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tagChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border: 1px solid #b7cae2;
+  background: #eef5ff;
+  color: #20406b;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .detailSectionIntro {
@@ -163,11 +240,13 @@
   margin: 0 0 10px;
   font-size: 12px;
   color: #333;
+  overflow-wrap: anywhere;
 }
 
 .detailHeader {
   font-size: 15px;
   margin: 0 0 8px;
+  overflow-wrap: anywhere;
 }
 
 .sectionLabel {
@@ -215,6 +294,65 @@
   padding: 12px;
   font-size: 13px;
   line-height: 1.45;
+}
+
+.heroPanel {
+  margin-bottom: 14px;
+  padding: 12px;
+  border: 1px solid #c4d5ee;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.heroContentGrid {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.heroEyebrow {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1d365a;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.heroTitle {
+  margin: 0 0 8px;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+.heroStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.statCard {
+  border: 1px solid #cad8ea;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 9px 10px;
+}
+
+.statLabel {
+  display: block;
+  margin-bottom: 4px;
+  color: #4b5f7a;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statValue {
+  display: block;
+  color: #173760;
+  font-size: 13px;
+  line-height: 1.35;
 }
 
 .onboardingNote {
@@ -303,6 +441,10 @@
   background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
 }
 
+.sectionLead {
+  margin-bottom: 12px;
+}
+
 .fieldGrid {
   display: grid;
   grid-template-columns: 140px 1fr;
@@ -323,16 +465,110 @@
   color: #111;
 }
 
+.fieldValue .rowList {
+  list-style: none;
+  padding-left: 0;
+}
+
 .infoPanel {
   border: 1px solid #d7dce4;
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   padding: 8px 10px;
 }
 
+.splitPanelGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.calloutCard {
+  border: 1px solid #c5d4ea;
+  background: linear-gradient(180deg, #fefefe 0%, #eef5ff 100%);
+  padding: 10px 12px;
+}
+
+.calloutText {
+  margin: 0;
+  color: #23364f;
+  line-height: 1.5;
+}
+
+.hobbyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hobbyChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border: 1px solid #c8d7ea;
+  background: #f3f8ff;
+  color: #21426f;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .simpleListSurface {
   border: 1px solid #b9b9b9;
   background: #fff;
   padding: 10px 12px;
+}
+
+.sectionIntroCard {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid #c8d6ea;
+  border-bottom: 0;
+  background: linear-gradient(180deg, #fdfefe 0%, #eaf2fd 100%);
+}
+
+.sectionIntroEyebrow {
+  margin: 0 0 4px;
+  color: #365b92;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sectionIntroTitle {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.sectionIntroCopy {
+  margin: 0;
+  color: #334155;
+}
+
+.metricCardCompact {
+  min-width: 120px;
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid #9db7da;
+  background: linear-gradient(180deg, #ffffff 0%, #edf5ff 100%);
+  text-align: center;
+}
+
+.metricCardValue {
+  font-size: 26px;
+  font-weight: 800;
+  color: #18437d;
+  line-height: 1;
+}
+
+.metricCardLabel {
+  color: #48627f;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .workbenchList {
@@ -478,6 +714,13 @@
   font-size: 11px;
 }
 
+.documentSummaryBand {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px 12px 0;
+}
+
 .resumeFrame {
   width: 100%;
   height: 440px;
@@ -598,6 +841,63 @@
   align-items: center;
   gap: 6px;
   line-height: 1.4;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.contactCard {
+  border: 1px solid #d7dce4;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 10px 12px;
+}
+
+.contactCardTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  color: #365b92;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.contactCardValue {
+  margin: 0;
+  color: #1f2937;
+  line-height: 1.45;
+}
+
+.contactAvailabilityCard {
+  max-width: 280px;
+  border: 1px solid #a9c1e0;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px 12px;
+}
+
+.contactAvailabilityLabel {
+  display: block;
+  margin-bottom: 4px;
+  color: #4b5f7a;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.contactAvailabilityValue {
+  color: #18437d;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .gamePanel {
@@ -841,6 +1141,84 @@
   }
 }
 
+@container experience-window (max-width: 860px) {
+  .sectionIntroCard,
+  .detailHeroRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .metricCardCompact,
+  .metricShowcase {
+    width: 100%;
+    max-width: none;
+  }
+
+  .metricShowcase {
+    flex-basis: auto;
+  }
+
+  .splitPanelGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container experience-window (max-width: 680px) {
+  .explorerLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .folderPane {
+    border-right: 0;
+    border-bottom: 1px solid #d1d1d1;
+    max-height: 168px;
+  }
+
+  .folderButton {
+    min-height: 40px;
+    padding: 9px 10px;
+  }
+}
+
+@container about-window (max-width: 760px) {
+  .heroContentGrid,
+  .heroStatsGrid,
+  .splitPanelGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fieldGrid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .tabRow {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tabButton {
+    min-height: 38px;
+    padding: 8px 12px;
+  }
+}
+
+@container about-window (max-width: 520px) {
+  .dialogBody,
+  .heroPanel {
+    padding: 9px;
+  }
+
+  .heroTitle {
+    font-size: 16px;
+  }
+
+  .onboardingPhotoFrame {
+    width: 84px;
+    height: 84px;
+  }
+}
+
 @media (max-width: 768px) {
   .menuBar {
     gap: 12px;
@@ -902,6 +1280,27 @@
   .fieldGrid {
     grid-template-columns: 1fr;
     gap: 6px;
+  }
+
+  .heroContentGrid,
+  .heroStatsGrid,
+  .splitPanelGrid,
+  .contactGrid,
+  .documentSummaryBand {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionIntroCard,
+  .detailHeroRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .metricCardCompact,
+  .metricShowcase,
+  .contactAvailabilityCard {
+    width: 100%;
+    max-width: none;
   }
 
   .notepadIntro {
@@ -1055,6 +1454,11 @@
   .detailPane,
   .simpleListSurface,
   .documentCanvas {
+    padding: 9px;
+  }
+
+  .heroPanel,
+  .sectionIntroCard {
     padding: 9px;
   }
 

@@ -57,12 +57,9 @@ export default function WorkbenchWindowContent() {
         <article className={styles.detailPane} aria-label="Selected workbench details">
           <div className={`${styles.workbenchHeader} ${styles.detailSectionIntro}`}>
             <div>
+              <p className={styles.sectionIntroEyebrow}>{portfolioData.workbench.title}</p>
               <h3 className={styles.detailHeader}>{selectedSection.label}</h3>
-              <p className={styles.metaLine}>
-                This is the part of the portfolio that shows how I like to
-                work: clear reporting, organized follow-up, and systems that
-                make the next step easier to see.
-              </p>
+              <p className={styles.metaLine}>{selectedSection.summary}</p>
             </div>
 
             {selectedSection.id === "projects-in-progress" ? (
@@ -86,7 +83,11 @@ export default function WorkbenchWindowContent() {
 
                 <div className={styles.infoPanel}>
                   <p className={styles.sectionLabel}>
-                    {selectedSection.id === "currently-learning" ? "What I’m learning" : "Current use"}
+                    {selectedSection.id === "currently-learning"
+                      ? "What I am learning"
+                      : selectedSection.id === "recent-builds"
+                        ? "What I built"
+                        : "Current use"}
                   </p>
                   <p>{item.summary}</p>
                 </div>
@@ -100,6 +101,20 @@ export default function WorkbenchWindowContent() {
                   <p className={styles.sectionLabel}>What it supports</p>
                   <p>{item.roleConnection}</p>
                 </div>
+
+                {item.link ? (
+                  <div className={styles.actionRow}>
+                    <a
+                      href={item.link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${styles.actionButton} ${styles.actionButtonPrimary}`}
+                      aria-label={`${item.link.label} in a new tab`}
+                    >
+                      {item.link.label}
+                    </a>
+                  </div>
+                ) : null}
               </section>
             ))}
           </div>
@@ -108,7 +123,7 @@ export default function WorkbenchWindowContent() {
 
       <div className={styles.statusBar}>
         <span>{selectedSection.items.length} items</span>
-        <span>Honest status: using / learning / in progress / planned</span>
+        <span>Honest status: using / learning / built / in progress / planned</span>
       </div>
     </div>
   );
