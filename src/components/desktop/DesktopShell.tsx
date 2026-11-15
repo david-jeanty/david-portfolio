@@ -74,10 +74,10 @@ function StartMenu({
 }) {
   const publicItems = portfolioData.desktop.icons.filter((item) => !item.hidden);
   const primaryItems = publicItems.filter(
-    (item) => item.id !== "games" && item.id !== "internal-only"
+    (item) => item.id !== "internal-only"
   );
   const secondaryItems = publicItems.filter(
-    (item) => item.id === "games" || item.id === "internal-only"
+    (item) => item.id === "internal-only"
   );
   const handleWindowLaunch = (id: DesktopIconId) => () => {
     onClose();

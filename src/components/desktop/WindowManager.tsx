@@ -18,7 +18,6 @@ import ExperienceContent from "@/components/windows/ExperienceWindowContent";
 import WorkbenchContent from "@/components/windows/WorkbenchWindowContent";
 import ResumeContent from "@/components/windows/ResumeWindowContent";
 import ContactContent from "@/components/windows/ContactWindowContent";
-import GamesContent from "@/components/windows/GamesWindowContent";
 import InternalOnlyContent from "@/components/windows/InternalOnlyWindowContent";
 import InternalMediaContent from "@/components/windows/InternalMediaWindowContent";
 
@@ -215,8 +214,6 @@ function WindowContentById({ id }: { id: WindowId }) {
       return <WorkbenchContent />;
     case "contact":
       return <ContactContent />;
-    case "games":
-      return <GamesContent />;
     case "internal-only":
       return <InternalOnlyContent />;
     case "internal-media":

@@ -100,7 +100,6 @@ export function DesktopIconArt({ id, size = 38 }: { id: DesktopIconId; size?: nu
     case "experience":         return <RasterIcon src="/experience-icon.png" size={size} />;
     case "workbench":          return <RasterIcon src="/workbench-icon.png" size={size} />;
     case "contact":            return <RasterIcon src="/contact-icon.png" size={size} />;
-    case "games":              return <RasterIcon src="/games-icon.png" size={size} />;
     case "internal-only":      return <RasterIcon src="/internal-alert-icon.png" size={size} />;
     case "internal-media":     return <RasterIcon src="/internal-alert-icon.png" size={size} />;
   }
@@ -116,7 +115,6 @@ export function TitleBarIcon({ id }: { id: DesktopIconId }) {
     case "experience":         return <RasterIcon src="/experience-icon.png" size={14} />;
     case "workbench":          return <RasterIcon src="/workbench-icon.png" size={14} />;
     case "contact":            return <RasterIcon src="/contact-icon.png" size={14} />;
-    case "games":              return <RasterIcon src="/games-icon.png" size={14} />;
     case "internal-only":      return <RasterIcon src="/internal-alert-icon.png" size={14} />;
     case "internal-media":     return <RasterIcon src="/internal-alert-icon.png" size={14} />;
   }

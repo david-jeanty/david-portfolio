@@ -3,21 +3,20 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
-  title: "David Jeanty | Portfolio",
+  title: "David Jeanty — Portfolio",
   description:
-    "Business Technology Management student at uOttawa with interests in business analysis, product operations, and tech consulting.",
+    "David Jeanty's portfolio: experience, Interndex, résumé, and a weather-responsive archive of the work behind them.",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
   },
   keywords: [
     "David Jeanty",
-    "Business Analyst",
-    "Product Operations",
-    "Technology Consulting",
+    "Interndex",
+    "Business Technology Management",
     "uOttawa",
     "Ottawa",
-    "Kanata North",
+    "Portfolio",
   ],
 };
 

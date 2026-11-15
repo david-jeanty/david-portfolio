@@ -4,7 +4,6 @@ export type DesktopIconId =
   | "experience"
   | "workbench"
   | "contact"
-  | "games"
   | "internal-only"
   | "internal-media";
 
@@ -411,7 +410,6 @@ export const portfolioData: PortfolioData = {
       { id: "about", label: "About Me" },
       { id: "contact", label: "Contact" },
       { id: "workbench", label: "Workbench" },
-      { id: "games", label: "Games" },
       { id: "internal-only", label: "Internal" },
       { id: "internal-media", label: "Internal Media", hidden: true },
     ],
