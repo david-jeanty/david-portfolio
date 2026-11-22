@@ -14,14 +14,20 @@ const navigation = [
   { href: "/resume", label: "Résumé" },
 ];
 
-export default function ModernPortfolioFrame({ children }: { children: React.ReactNode }) {
+export default function ModernPortfolioFrame({
+  children,
+  reportFooter,
+}: {
+  children: React.ReactNode;
+  reportFooter?: React.ReactNode;
+}) {
   const pathname = usePathname();
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className={styles.siteFrame}>
+      <div className={reportFooter ? `${styles.siteFrame} ${styles.reportFrame}` : styles.siteFrame}>
         <header className={styles.siteHeader}>
-          <Link href="/" className={styles.nameLink} aria-label="David Jeanty — home">
+          <Link href="/" className={styles.nameLink} aria-label={`${modernPortfolio.identity.name}, home`}>
             {modernPortfolio.identity.name}
           </Link>
 
@@ -58,12 +64,14 @@ export default function ModernPortfolioFrame({ children }: { children: React.Rea
           </AnimatePresence>
         </main>
 
-        <footer className={styles.footer}>
-          <Link href={modernPortfolio.archive.href} className={styles.archiveLink}>
-            {modernPortfolio.archive.label} <span aria-hidden="true">↗</span>
-          </Link>
-          <OttawaClock />
-        </footer>
+        {reportFooter ?? (
+          <footer className={styles.footer}>
+            <Link href={modernPortfolio.archive.href} className={styles.archiveLink}>
+              {modernPortfolio.archive.label} <span aria-hidden="true">↗</span>
+            </Link>
+            <OttawaClock />
+          </footer>
+        )}
       </div>
     </MotionConfig>
   );

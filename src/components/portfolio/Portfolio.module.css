@@ -95,6 +95,14 @@
 
 .routeSheet { height: 100%; }
 
+.reportFrame .main {
+  height: auto;
+  min-height: 0;
+  padding-bottom: 0;
+}
+
+.reportFrame .routeSheet { height: auto; }
+
 .homeStage {
   height: 100%;
   display: grid;
