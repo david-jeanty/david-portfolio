@@ -10,7 +10,7 @@ export default function InterndexPage() {
     <div className={styles.workGrid}>
       <div className={styles.workIntro}><p className={styles.label}>Independent project</p></div>
       <div className={styles.workIntro}>
-        <h1>{project.name}</h1>
+        <h1 className={styles.pageTitle}>{project.name}</h1>
         <p className={styles.workDescription}>{project.description}</p>
         <p className={styles.workMeta}>{project.role} · {project.period}</p>
         <div className={styles.workStack}><ToolStack tools={project.tools} label="Interndex stack" /></div>

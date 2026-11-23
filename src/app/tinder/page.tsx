@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import ModernPortfolioFrame from "@/components/portfolio/ModernPortfolioFrame";
+import portfolio from "@/components/portfolio/Portfolio.module.css";
 import { modernPortfolio } from "@/data/modern-portfolio";
 import styles from "./tinder.module.css";
 
@@ -167,7 +168,7 @@ export default function TinderPage() {
             preload
           />
           <div>
-            <h1>{title}</h1>
+            <h1 className={portfolio.pageTitle}>{title}</h1>
             <p className={styles.heroSummary}>
               I’m a Business Technology Management student at uOttawa applying for Tinder’s Technical Program Management internship in Los Angeles.
             </p>

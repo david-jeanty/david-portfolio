@@ -9,7 +9,7 @@ export default function ResumePage() {
     <div className={styles.resumeSheet}>
       <div className={styles.resumeIntro}><p className={styles.label}>Résumé</p></div>
       <div className={styles.resumeIntro}>
-        <h1>{modernPortfolio.identity.name}</h1>
+        <h1 className={styles.pageTitle}>{modernPortfolio.identity.name}</h1>
         <p>{modernPortfolio.identity.program}</p>
         <p className={styles.metaLine}>
           {modernPortfolio.identity.location} · Updated {resume.updated}

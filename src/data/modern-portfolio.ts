@@ -5,8 +5,8 @@ export type ExperienceRecord = {
   company: string;
   role: string;
   period: string;
-  summary: string;
   details: string[];
+  tools?: string[];
 };
 
 export type PersonalRecord = {
@@ -161,9 +161,8 @@ export const modernPortfolio = {
       company: "IBM Consulting",
       role: "Incoming Business Transformation Consulting Intern",
       period: "Jan. — Apr. 2027",
-      summary: "I’ll join IBM Consulting’s Federal Practice in January 2027.",
       details: [
-        "Selected to support business transformation engagements for Canadian federal government clients.",
+        "Joining IBM Consulting’s Federal Practice to support business transformation projects for Canadian federal government clients.",
       ],
     },
     {
@@ -171,55 +170,55 @@ export const modernPortfolio = {
       company: "Immigration and Refugee Board of Canada",
       role: "Information Management Analyst Intern",
       period: "Sep. — Dec. 2026",
-      summary: "I helped the IT team choose a service-request platform and give leadership a clearer view of incoming work.",
       details: [
-        "Compared ServiceNow and Azure DevOps on cost, retraining, and Microsoft 365 dependencies. The director approved my recommendation, and the team uses Azure DevOps to track 250+ requests a month.",
-        "Built the IT director’s first Power BI operations dashboard using 5M+ records across 50+ sites. It surfaced SharePoint as the top request category and informed staffing and training decisions.",
+        "Recommended Azure DevOps after comparing it with ServiceNow on cost, retraining, and Microsoft 365 dependencies. The IT director approved the switch, and the team now tracks 250+ requests a month in Azure DevOps.",
+        "Built the IT director’s first Power BI operations dashboard using 5M+ records across 50+ sites. It showed that SharePoint generated the most requests and helped the director plan staffing and training.",
       ],
+      tools: ["Azure DevOps", "Power BI", "SharePoint"],
     },
     {
       id: "fidus",
       company: "Fidus Systems",
       role: "Marketing Analyst Intern",
       period: "May 2026 — Sep. 2026",
-      summary: "I built audit workflows to help the marketing team understand how buyers discover Fidus online.",
       details: [
-        "Built a Claude-assisted audit for 130+ website pages and the YouTube channel. The team adopted it as its standard, and tracked issues fell 95% over eight runs.",
-        "Reviewed 46 YouTube videos and found technical webinars were rarely surfaced to buyers. The team adopted new standards for titles, descriptions, and transcripts.",
+        "Built a Claude-assisted audit for 130+ website pages and the YouTube channel. The team made it part of its workflow, and tracked issues fell 95% over eight runs.",
+        "Reviewed 46 YouTube videos and found that search results rarely surfaced technical webinars. The team adopted new standards for titles, descriptions, and transcripts.",
       ],
+      tools: ["Claude", "Python", "HubSpot", "YouTube"],
     },
     {
       id: "stranexus",
       company: "StraNexus Inc.",
       role: "Business Development & Strategy Intern",
       period: "Jan. 2026 — Apr. 2026",
-      summary: "I turned recruiting goals into a university outreach plan and built the tools to manage it.",
       details: [
-        "Built a workflow to evaluate 30+ university programs, cutting a week of research to one day. The firm adopted all 16 recommendations.",
+        "Cut a week of research to one day by building a Claude-assisted workflow to evaluate 30+ university programs. The firm adopted all 16 recommendations.",
         "Built a tracker with automated follow-ups for 31 institutions and led outreach to 15 priority programs across three regions.",
       ],
+      tools: ["Claude"],
     },
     {
       id: "aritzia",
       company: "Aritzia",
       role: "Risk Associate",
       period: "Apr. 2024 — Aug. 2025",
-      summary: "I used reporting and pattern recognition to support a high-volume retail team.",
       details: [
-        "Used reporting to surface anomalies and support faster follow-up.",
+        "Tracked store KPIs in Excel, compared results against benchmarks, and flagged anomalies for follow-up.",
         "Contributed to a $50K+ reduction in shrink.",
       ],
+      tools: ["Excel"],
     },
     {
       id: "uottawa",
       company: "University of Ottawa",
       role: "Student Ambassador",
       period: "Sep. 2023 — Apr. 2024",
-      summary: "I helped prospective students and families navigate the university clearly.",
       details: [
-        "Delivered 75+ information sessions for prospective students and families.",
-        "Managed high-volume follow-up through the university CRM.",
+        "Led 75+ information sessions for prospective students and families.",
+        "Tracked inquiries and follow-ups in the university CRM.",
       ],
+      tools: ["University CRM"],
     },
   ] satisfies ExperienceRecord[],
   resume: {

@@ -6,17 +6,11 @@
   --catalog-link: #2547ab;
 }
 
-.heading {
-  margin: 0 0 clamp(24px, 5vh, 48px);
-  font-size: clamp(2.25rem, 5vw, 3.875rem);
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.06em;
-}
+.page .heading { margin-bottom: clamp(24px, 5vh, 48px); }
 
 .sectionTitle {
   margin: 0 0 16px;
-  font-size: 1.125rem;
+  font-size: var(--portfolio-section-size);
   font-weight: 600;
   letter-spacing: -0.025em;
 }
@@ -38,7 +32,7 @@
 .project h3,
 .involvement h2 {
   margin: 0;
-  font-size: clamp(1.25rem, 2.1vw, 1.625rem);
+  font-size: var(--portfolio-item-size);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.038em;

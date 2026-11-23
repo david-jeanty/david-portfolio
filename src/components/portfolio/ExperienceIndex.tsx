@@ -1,17 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { modernPortfolio, type ExperienceRecord } from "@/data/modern-portfolio";
+import ToolStack from "./ToolStack";
 import styles from "./Portfolio.module.css";
 
 function RoleDetail({ role }: { role: ExperienceRecord }) {
   return (
     <>
-      <p className={styles.detailLead}>{role.summary}</p>
       <ul className={styles.detailList}>
         {role.details.map((detail) => <li key={detail}>{detail}</li>)}
       </ul>
+      {role.tools && role.tools.length > 0 && (
+        <div className={styles.roleTools}>
+          <p className={styles.label}>Tools used</p>
+          <ToolStack tools={role.tools} label={`Tools at ${role.company}`} />
+        </div>
+      )}
     </>
   );
 }
@@ -24,40 +29,32 @@ export default function ExperienceIndex() {
 
   return (
     <div className={styles.experienceComposition}>
+      <h1 className={styles.pageTitle}>Experience</h1>
       <aside className={styles.experienceDetail} aria-live="polite">
-        <p className={styles.label}>Selected role</p>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selected.id}
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -3 }}
-            transition={{ duration: 0.2 }}
-          >
-            <p className={styles.detailCompany}>{selected.company}</p>
-            <p className={styles.detailRole}>{selected.role}</p>
-            <p className={styles.detailPeriod}>{selected.period}</p>
-            <RoleDetail role={selected} />
-          </motion.div>
-        </AnimatePresence>
+        <h2 className={styles.detailCompany}>{selected.company}</h2>
+        <p className={styles.detailRole}>{selected.role}</p>
+        <p className={styles.detailPeriod}>{selected.period}</p>
+        <RoleDetail role={selected} />
       </aside>
 
       <section className={styles.experienceIndex} aria-label="Experience index">
-        <h1>Experience</h1>
         <ol>
-          {modernPortfolio.experience.map((item, index) => {
+          {modernPortfolio.experience.map((item) => {
             const selectedRow = item.id === selected.id;
             return (
               <li key={item.id}>
                 <button
                   type="button"
                   className={selectedRow ? styles.experienceRowActive : ""}
-                  onMouseEnter={() => setSelectedId(item.id)}
+                  onMouseEnter={() => {
+                    if (window.matchMedia("(width > 620px) and (hover: hover)").matches) {
+                      setSelectedId(item.id);
+                    }
+                  }}
                   onFocus={() => setSelectedId(item.id)}
                   onClick={() => setSelectedId(item.id)}
                   aria-pressed={selectedRow}
                 >
-                  <span className={styles.experienceNumber}>{String(index + 1).padStart(2, "0")}</span>
                   <span className={styles.experienceTitle}>
                     <strong>{item.company}</strong>
                     <small>{item.role}</small>

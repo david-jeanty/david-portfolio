@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ToolStack from "@/components/portfolio/ToolStack";
 import styles from "@/components/portfolio/PortfolioCatalog.module.css";
+import portfolio from "@/components/portfolio/Portfolio.module.css";
 import { modernPortfolio } from "@/data/modern-portfolio";
 
 export const metadata: Metadata = {
@@ -24,7 +25,7 @@ export default function WorkPage() {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.heading}>Work</h1>
+      <h1 className={`${portfolio.pageTitle} ${styles.heading}`}>Work</h1>
 
       <section aria-labelledby="projects-heading">
         <h2 id="projects-heading" className={styles.sectionTitle}>Projects</h2>

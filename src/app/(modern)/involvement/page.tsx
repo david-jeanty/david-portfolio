@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import styles from "@/components/portfolio/PortfolioCatalog.module.css";
+import portfolio from "@/components/portfolio/Portfolio.module.css";
 import { modernPortfolio } from "@/data/modern-portfolio";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 export default function InvolvementPage() {
   return (
     <div className={styles.page}>
-      <h1 className={styles.heading}>Involvement</h1>
+      <h1 className={`${portfolio.pageTitle} ${styles.heading}`}>Involvement</h1>
 
       {modernPortfolio.involvement.map((item) => (
         <section key={item.id} className={styles.involvement} aria-labelledby={item.id}>

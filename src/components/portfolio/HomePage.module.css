@@ -6,15 +6,15 @@
 
 .row {
   display: grid;
-  grid-template-columns: var(--home-columns);
-  gap: var(--home-gap);
+  grid-template-columns: var(--portfolio-columns);
+  gap: var(--portfolio-column-gap);
   align-items: start;
 }
 
 .row h2 {
   margin: 0;
   color: var(--home-muted);
-  font-size: 0.9375rem;
+  font-size: var(--portfolio-label-size);
   font-weight: 400;
   line-height: 1.55;
 }

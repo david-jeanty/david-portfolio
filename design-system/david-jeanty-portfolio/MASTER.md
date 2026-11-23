@@ -15,17 +15,18 @@ Minimal editorial brutalism: calm, direct, slightly unconventional, and delibera
 ## Typography and colour
 
 - Use neutral sans-serif for headings, copy, and navigation. Use monospace for short contextual labels.
+- Share page-title, label, and tab sizes across the modern portfolio. Use the same header layout on every page.
 - Use scale, position, and spacing to establish type hierarchy.
 - Pair off-white and near-black with muted section labels and blue text links.
 - Links use underlines or a precise directional cue; do not turn navigation into generic pill buttons.
 
 ## Motion
 
-- Navigation and content transitions are short and quiet; no typing effect, elastic bounce, scroll-jacking, automatic carousel, or decorative particle field.
+- Render route content immediately when navigation completes. Keep the shared header and tab selection states static.
 - Keep the homepage summary and screenshot static.
 - Project imagery uses one restrained hover/focus response: a slight image scale and inset lift. There is no dragging interaction.
 - Experience rows reveal a substantial selected-role panel on focus, hover, or tap without changing pages.
-- The About page includes a React-driven personal index. Native buttons select Guitar, Running, Films, Training, or Baking and crossfade a shared data panel. External sources are displayed only after verified public links are provided.
+- The About page pairs the introduction with a personal photo. Native buttons select Guitar, Running, Films, Training, or Baking and update a shared data panel. External sources are displayed only after verified public links are provided.
 - Respect `prefers-reduced-motion`; present the same readable final state without transforms.
 - Interior pages show Ottawa local time in the footer. The homepage footer gives visitors direct contact links.
 
