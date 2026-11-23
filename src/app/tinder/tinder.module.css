@@ -30,6 +30,16 @@
 
 .hero {
   padding-block: clamp(34px, 6vw, 94px);
+  gap: 20px;
+}
+
+.headshot {
+  display: block;
+  width: min(100%, 120px);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 30%;
 }
 
 .hero h1 {
@@ -46,10 +56,6 @@
   font-size: clamp(1.125rem, 2vw, 1.375rem);
   line-height: 1.45;
   letter-spacing: -0.025em;
-}
-
-.runCost {
-  margin-top: 12px;
 }
 
 .prose,
@@ -333,8 +339,13 @@ ul.list {
     font-size: 1rem;
   }
 
-  .hero > div {
-    grid-column: 2;
+  .hero {
+    align-items: center;
+    gap: clamp(20px, 4.5vw, 65px);
+  }
+
+  .headshot {
+    width: min(100%, 180px);
   }
 }
 

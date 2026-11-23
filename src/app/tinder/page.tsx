@@ -1,17 +1,26 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
+import Image from "next/image";
 import ModernPortfolioFrame from "@/components/portfolio/ModernPortfolioFrame";
 import { modernPortfolio } from "@/data/modern-portfolio";
-import styles from "./decision-brief.module.css";
+import styles from "./tinder.module.css";
+
+const title = "David Jeanty for Tinder";
 
 export const metadata: Metadata = {
-  title: "AI Decision Brief Writer | David Jeanty",
-  description: "A project case study on turning synthetic tickets and Slack messages into a decision brief.",
+  title,
+  description: "David Jeanty's application for Tinder's Technical Program Manager Intern role in Los Angeles, with an AI decision brief project.",
   robots: { index: false, follow: false },
 };
 
 const demoVideo = "/decision-brief-demo.mp4";
+
+const applicantSections = [
+  { id: "about-me", title: "About me", text: "" },
+  { id: "why-tinder", title: "Why Tinder", text: "" },
+  { id: "why-los-angeles", title: "Why Los Angeles", text: "" },
+];
 
 const decisions = [
   { issue: "The Android deck still reads attendees v1, which the R4 build removes.", deadline: "Before the R4 build cut." },
@@ -141,7 +150,7 @@ function SampleBrief() {
   );
 }
 
-export default function DecisionBriefPage() {
+export default function TinderPage() {
   const { name, email, linkedin } = modernPortfolio.identity;
   const hasDemo = existsSync(join(process.cwd(), "public", demoVideo));
 
@@ -161,14 +170,20 @@ export default function DecisionBriefPage() {
     >
       <article className={styles.article}>
         <header className={`${styles.row} ${styles.hero}`}>
+          <Image
+            src="/david-headshot.JPG"
+            alt={name}
+            width={280}
+            height={350}
+            sizes="(min-width: 760px) 180px, 120px"
+            className={styles.headshot}
+            preload
+          />
           <div>
-            <h1>AI Decision Brief Writer</h1>
+            <h1>{title}</h1>
             <p className={styles.heroSummary}>
-              I built an AI tool that reads a program&apos;s tickets and Slack and tells leaders what they need to decide.
-              The AI lays out the risks and options. The TPM makes the call.
-            </p>
-            <p className={`${styles.meta} ${styles.runCost}`}>
-              Built in one week with Python and the Claude API. All program data is made up.
+              I&apos;m a Business Technology Management student at the University of Ottawa, applying for Tinder&apos;s
+              Technical Program Manager Intern role in Los Angeles. Instead of just applying, I built something.
             </p>
           </div>
         </header>
@@ -179,6 +194,13 @@ export default function DecisionBriefPage() {
             <video className={styles.video} src={demoVideo} controls preload="metadata" aria-label="Decision brief walkthrough" />
           </section>
         )}
+
+        {applicantSections.filter(({ text }) => text.trim()).map(({ id, title, text }) => (
+          <section key={id} className={styles.row} aria-labelledby={id}>
+            <h2 id={id} className={styles.label}>{title}</h2>
+            <div className={styles.prose}><p>{text}</p></div>
+          </section>
+        ))}
 
         <section className={styles.row} aria-labelledby="short-version">
           <h2 id="short-version" className={styles.label}>The short version</h2>
