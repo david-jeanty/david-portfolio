@@ -59,7 +59,6 @@
 }
 
 .prose > p,
-.prose > ol,
 .list {
   max-width: 68ch;
 }
@@ -68,7 +67,11 @@
   margin-top: 14px;
 }
 
-.prose h3,
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .sample h4 {
   font-size: clamp(1.125rem, 2vw, 1.35rem);
   font-weight: 500;
@@ -76,11 +79,7 @@
   letter-spacing: -0.025em;
 }
 
-.prose h3 {
-  margin-top: 28px;
-}
-
-.criteria summary {
+.disclosure > summary {
   width: fit-content;
   min-height: 44px;
   padding-block: 10px;
@@ -89,13 +88,18 @@
   text-underline-offset: 4px;
 }
 
-.criteria summary:focus-visible {
+.disclosure > summary:focus-visible,
+.prose a:focus-visible {
   outline: 1px solid currentColor;
   outline-offset: 4px;
 }
 
-.criteria h3 {
-  margin-block: 8px 12px;
+.disclosure > .list {
+  margin-block: 4px 12px;
+}
+
+.limits {
+  grid-column: 1 / -1;
 }
 
 .list,
@@ -175,6 +179,18 @@ ul.list {
   border-top: 1px solid var(--rule);
 }
 
+.sampleDisclosure {
+  margin-top: 24px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+}
+
+.sampleDisclosure > .sampleSection {
+  margin-top: 0;
+  padding-top: 12px;
+  border-top: 0;
+}
+
 .sampleSection > p,
 .recommendation > p {
   max-width: 68ch;
@@ -193,20 +209,13 @@ ul.list {
   overflow-wrap: anywhere;
 }
 
-.decisions,
-.mismatches {
+.decisions {
   display: grid;
   gap: 10px;
 }
 
-.decisions .meta,
-.mismatches .meta {
+.decisions .meta {
   display: block;
-}
-
-.mismatches {
-  padding-inline-start: 1.25em;
-  list-style: disc;
 }
 
 .evidence {
@@ -324,8 +333,8 @@ ul.list {
     font-size: 1rem;
   }
 
-  .hero .label {
-    padding-top: 8px;
+  .hero > div {
+    grid-column: 2;
   }
 }
 
@@ -372,6 +381,10 @@ ul.list {
 
   .table td:nth-of-type(odd) {
     border-inline-start: 0;
+  }
+
+  .table td:last-child:nth-of-type(odd) {
+    grid-column: 1 / -1;
   }
 
   .cellLabel {

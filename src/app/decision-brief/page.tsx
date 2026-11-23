@@ -38,16 +38,10 @@ const riskOptions = [
   ],
 ];
 
-const statusMismatches = [
-  { issue: "Leads were told R4 holds for Android while the staggered launch is unresolved.", confidence: "Medium" },
-  { issue: "Leads were told iOS had nothing changing dates while the deck was already paused.", confidence: "High" },
-  { issue: "Leads were told backend has nothing open for R4 while work marked ready is still in progress.", confidence: "High" },
-];
-
 const results = [
-  ["Post-Event Matching", "10 of 14", "79% to 93%", "1 of 4", "4 to 5"],
-  ["Ledgerline", "6 of 6", "78% to 89%", "0 of 3", "5 to 6"],
-  ["Courier", "8 of 8", "75% to 91%", "1 of 4", "5 to 6"],
+  ["Post-Event Matching (main test)", "10 of 14", "79% to 93%", "0"],
+  ["Ledgerline (never seen)", "6 of 6", "78% to 89%", "0"],
+  ["Courier (never seen)", "8 of 8", "75% to 91%", "0"],
 ];
 
 function BriefTable({
@@ -107,49 +101,40 @@ function SampleBrief() {
         </p>
       </div>
 
-      <div className={styles.sampleSection}>
-        <p className={styles.meta}>Lead risk 1</p>
-        <h4>The Android deck still reads attendees v1, which the R4 build removes</h4>
-        <p>
-          The Android deck, the screen that shows attendees, is in review for release R4. Its ticket
-          (PEM-117) still calls for <code>GET /v1</code> with the <code>attendees</code> field.
-          The backend switched to a new interface, v2, which returns consenting attendees only in{" "}
-          <code>visible_attendees</code>, and will remove v1 in the R4 build. The backend handoff
-          went only to iOS, and Android&apos;s sync used the kickoff document. The Android deck could fail
-          at launch or show attendees who did not consent.
-        </p>
-        <dl className={styles.evidence}>
-          <div><dt>Impact</dt><dd>High. Android is the only deck in R4, and v1 goes away in the same build.</dd></div>
-          <div><dt>Confidence</dt><dd>High. The tickets directly contradict each other, and the only recorded handoff went to iOS.</dd></div>
-          <div><dt>Evidence</dt><dd>PEM-117, PEM-104, MSG-012, MSG-039, MSG-040, MSG-041, MSG-042, MSG-103, MSG-104, MSG-134</dd></div>
-        </dl>
-        <h5>Decision needed</h5>
-        <p>Before the R4 build cut, who moves Android to v2, or does v1 removal wait until Android is confirmed on v2?</p>
-        <BriefTable label="Options for the Android deck" columns={["Option", "Upside", "Downside"]} rows={riskOptions} />
-        <div className={styles.recommendation}>
-          <h5>My TPM recommendation</h5>
+      <details className={`${styles.disclosure} ${styles.sampleDisclosure}`}>
+        <summary>See one risk in full</summary>
+        <div className={styles.sampleSection}>
+          <p className={styles.meta}>Lead risk 1</p>
+          <h4>The Android deck still reads attendees v1, which the R4 build removes</h4>
           <p>
-            I recommend A, with C as the fallback. Make the decision at the Nov 19, 2 p.m. launch review.
-            The Android lead owns the switch to v2, asks the release manager for a freeze exception, and
-            must pass a retest with consent data by end of day Friday, Nov 20, ahead of the Nov 23 release.
-            If the retest fails or misses the deadline, pull the Android deck from R4 (C). Rule out B.
-            The privacy review led to v2, and keeping v1 would bypass that decision.
+            The Android deck, the screen that shows attendees, is in review for release R4. Its ticket
+            (PEM-117) still calls for <code>GET /v1</code> with the <code>attendees</code> field.
+            The backend switched to a new interface, v2, which returns consenting attendees only in{" "}
+            <code>visible_attendees</code>, and will remove v1 in the R4 build. The backend handoff
+            went only to iOS, and Android&apos;s sync used the kickoff document. The Android deck could fail
+            at launch or show attendees who did not consent.
           </p>
-          <p className={styles.meta}>David Jeanty</p>
+          <dl className={styles.evidence}>
+            <div><dt>Impact</dt><dd>High. Android is the only deck in R4, and v1 goes away in the same build.</dd></div>
+            <div><dt>Confidence</dt><dd>High. The tickets directly contradict each other, and the only recorded handoff went to iOS.</dd></div>
+            <div><dt>Evidence</dt><dd>PEM-117, PEM-104, MSG-012, MSG-039, MSG-040, MSG-041, MSG-042, MSG-103, MSG-104, MSG-134</dd></div>
+          </dl>
+          <h5>Decision needed</h5>
+          <p>Before the R4 build cut, who moves Android to v2, or does v1 removal wait until Android is confirmed on v2?</p>
+          <BriefTable label="Options for the Android deck" columns={["Option", "Upside", "Downside"]} rows={riskOptions} />
+          <div className={styles.recommendation}>
+            <h5>My TPM recommendation</h5>
+            <p>
+              I recommend A, with C as the fallback. Make the decision at the Nov 19, 2 p.m. launch review.
+              The Android lead owns the switch to v2, asks the release manager for a freeze exception, and
+              must pass a retest with consent data by end of day Friday, Nov 20, ahead of the Nov 23 release.
+              If the retest fails or misses the deadline, pull the Android deck from R4 (C). Rule out B.
+              The privacy review led to v2, and keeping v1 would bypass that decision.
+            </p>
+            <p className={styles.meta}>David Jeanty</p>
+          </div>
         </div>
-      </div>
-
-      <div className={styles.sampleSection}>
-        <h4>Where status and the record disagree</h4>
-        <ul className={styles.mismatches}>
-          {statusMismatches.map(({ issue, confidence }) => (
-            <li key={issue}>
-              {issue}
-              <span className={styles.meta}>Worth watching · Medium impact · {confidence} confidence</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      </details>
 
       <a className={styles.download} href="/brief_v2.pdf" download>Download the full synthetic brief (PDF)</a>
     </div>
@@ -176,24 +161,57 @@ export default function DecisionBriefPage() {
     >
       <article className={styles.article}>
         <header className={`${styles.row} ${styles.hero}`}>
-          <p className={styles.label}>Project case study · Synthetic data</p>
           <div>
             <h1>AI Decision Brief Writer</h1>
             <p className={styles.heroSummary}>
-              An AI tool that turns a program&apos;s tickets and Slack messages into a decision-ready brief for
-              leaders. The AI lays out risks, evidence and options. The technical program manager (TPM) makes the call.
+              I built an AI tool that reads a program&apos;s tickets and Slack and tells leaders what they need to decide.
+              The AI lays out the risks and options. The TPM makes the call.
             </p>
             <p className={`${styles.meta} ${styles.runCost}`}>
-              Built with Python and the Claude API. Each brief costs about 15 to 30 cents to run.
+              Built in one week with Python and the Claude API. About 15 to 30 cents per brief. All program data is made up.
             </p>
           </div>
         </header>
 
-        <section className={styles.row} aria-labelledby="problem">
-          <h2 id="problem" className={styles.label}>The problem</h2>
+        {hasDemo && (
+          <section className={styles.row} aria-labelledby="demo">
+            <h2 id="demo" className={styles.label}>Demo video</h2>
+            <video className={styles.video} src={demoVideo} controls preload="metadata" aria-label="Decision brief walkthrough" />
+          </section>
+        )}
+
+        <section className={styles.row} aria-labelledby="short-version">
+          <h2 id="short-version" className={styles.label}>The short version</h2>
+          <ul className={`${styles.prose} ${styles.list}`}>
+            <li><strong>The problem:</strong> Leaders get status updates. What they need is the decision, and what each option costs.</li>
+            <li><strong>What it does:</strong> Finds risks across tickets and Slack, including &quot;watermelon status&quot;: an update that says green while the team&apos;s own messages say red.</li>
+            <li><strong>The result:</strong> It caught every planted problem in two test programs it had never seen (6 of 6 and 8 of 8), and 10 of 14 on the main test.</li>
+            <li><strong>The call I&apos;m proudest of:</strong> I built a bigger version, set the bar before testing it, and didn&apos;t ship it. It made the brief longer without catching more.</li>
+          </ul>
+        </section>
+
+        <section className={styles.row} aria-labelledby="why">
+          <h2 id="why" className={styles.label}>Why I built it</h2>
           <div className={styles.prose}>
-            <p>Leaders get status updates. When a release is at risk, they need to know what to decide and what each option costs.</p>
-            <p>“Watermelon status” is green outside and red inside. The update says the work is on track, while the team&apos;s own tickets or Slack messages show a problem.</p>
+            <p>Before writing any code, I spent a day studying how Tinder builds.</p>
+            <ul className={styles.list}>
+              <li>
+                <strong>Tinder&apos;s <a href="https://www.lifeattinder.com/blog/agents-that-prove-their-work-inside-agentis-tinders-ai-agent-platform">engineering blog</a>.</strong>{" "}
+                Tinder runs about 200 internal AI agents, and one already writes a PM&apos;s weekly report. So I skipped status reports and built the next step: turning status into a decision.
+              </li>
+              <li>
+                <strong><a href="https://jobs.lever.co/matchgroup/38a680c1-07a6-438e-9448-b677b5f044e0">Tinder&apos;s TPM job postings</a>.</strong>{" "}
+                One asks for &quot;recommendations that shape decisions, not just status updates.&quot; That line became my spec.
+              </li>
+              <li>
+                <strong>Tinder&apos;s own AI rules.</strong> From <a href="https://www.lifeattinder.com/blog/llm-features-you-can-bet-on">&quot;LLM Features You Can Bet On&quot;</a>: define what a right answer looks like before building, choose precision or recall on purpose, and study the failures. I followed all three.
+              </li>
+              <li>
+                <strong><a href="https://www.lifeattinder.com/positions/107da1ee-5b8a-4a1b-9d75-5ba3d597116c-losangelescalifornia">The intern role itself</a>.</strong>{" "}
+                Escalate risks early, and help figure out how AI fits into building product.
+              </li>
+              <li><strong>Coffee chats with working TPMs</strong> about what actually slows a program down.</li>
+            </ul>
           </div>
         </section>
 
@@ -215,86 +233,58 @@ export default function DecisionBriefPage() {
           </ol>
         </section>
 
+        <section className={styles.row} aria-labelledby="decisions">
+          <h2 id="decisions" className={styles.label}>Decisions I made</h2>
+          <ul className={`${styles.prose} ${styles.list}`}>
+            <li><strong>Recall over precision.</strong> A missed risk can sink a launch. A false alarm costs a few minutes. To keep the noise down, only high-impact risks go to the top.</li>
+            <li><strong>The AI never picks.</strong> It lays out options and tradeoffs. The recommendation is mine, like the human approval step in Tinder&apos;s own agent tools.</li>
+            <li><strong>I checked whether my score was rigged.</strong> I wrote the test data, so I rebuilt the tool&apos;s rules from public sources only. Same score.</li>
+            <li><strong>I tested on programs I&apos;d never seen.</strong> A separate AI wrote two more fake programs, and I never read their answer keys.</li>
+            <li>
+              <strong>I didn&apos;t ship v4.</strong> It added a fact-checker. It connected one problem v2 missed, but briefs grew from about 13 risks to about 21 and got less precise. I kept the simpler version.
+              <details className={styles.disclosure}>
+                <summary>Show the six criteria</summary>
+                <ol className={styles.list}>
+                  <li>Find at least 10 of 14 problems in every main-program run.</li>
+                  <li>Connect the six-hour job to the “all green” update in at least two of three main-program runs, and make it a lead risk in at least two.</li>
+                  <li>Keep a headline that names the iOS status mismatch in at least two of three main-program runs.</li>
+                  <li>Keep precision at 75% or higher in every main-program run.</li>
+                  <li>On Courier, match v2&apos;s total for status mismatches across three runs, or beat it by at least one if v2 leaves room to improve.</li>
+                  <li>Keep every flagged decoy out of the lead risks on both programs.</li>
+                </ol>
+              </details>
+            </li>
+          </ul>
+        </section>
+
         <section className={styles.row} aria-labelledby="sample">
           <h2 id="sample" className={styles.label}>Sample brief</h2>
           <SampleBrief />
         </section>
 
-        <section className={styles.row} aria-labelledby="testing">
-          <h2 id="testing" className={styles.label}>How I tested it honestly</h2>
+        <section className={styles.row} aria-labelledby="results">
+          <h2 id="results" className={styles.label}>Results</h2>
           <div className={styles.prose}>
-            <p>
-              I built a synthetic program with 14 hidden problems and 4 decoys (things that look like problems but aren&apos;t).
-              I kept the answer key with the grader. Before every AI call, a guard blocked prompts containing the
-              answer key&apos;s labels, field names or text.
-            </p>
-            <p>
-              To check whether the original rubric gave away the answers, I compared it with a second version whose
-              risk patterns came only from public sources. The rubric is the brief writer&apos;s guide to spotting risks.
-              Both versions scored in the same range, 10 to 12 of 14. A keyword search found 0 of 14 and a neutral
-              summary found 2 of 14.
-            </p>
-            <p>
-              Two separate AI agents each wrote another synthetic program without seeing my original program, its
-              answer key or the brief writer&apos;s prompts. The grader scored both tests without anyone reading their keys.
-            </p>
-            <h3>Version 2 results</h3>
-            <p className={styles.meta}>Three runs per synthetic program. Problems credited stayed the same across all three runs for each program. Precision is the share of findings the grader counted as valid.</p>
+            <p className={styles.meta}>3 runs each</p>
             <BriefTable
-              label="Version 2 results across the three synthetic programs"
-              columns={["Program", "Problems credited", "Precision", "Decoys flagged", "Lead risks per brief"]}
+              label="Results across the three test programs"
+              columns={["Program", "Problems found", "Findings that were real", "Decoys raised as top risks"]}
               rows={results}
             />
-            <p className={styles.meta}>
-              On Post-Event Matching, the tool caught all three problems it was built for (status that hides trouble,
-              and a decision nobody made) in every run. Every flagged decoy stayed in “Worth watching.”
-            </p>
-          </div>
-        </section>
-
-        <section className={styles.row} aria-labelledby="ship">
-          <h2 id="ship" className={styles.label}>What I chose not to ship</h2>
-          <div className={styles.prose}>
-            <p>The v4 fact-checker compared each positive update given to leaders with the team&apos;s earlier records. It added about 30 AI calls per run.</p>
-            <details className={styles.criteria}>
-              <summary>Show the six criteria</summary>
-              <h3>The criteria I set before the test</h3>
-              <ol className={styles.list}>
-                <li>Find at least 10 of 14 problems in every main-program run.</li>
-                <li>Connect the six-hour job to the “all green” update in at least two of three main-program runs, and make it a lead risk in at least two.</li>
-                <li>Keep a headline that names the iOS status mismatch in at least two of three main-program runs.</li>
-                <li>Keep precision at 75% or higher in every main-program run.</li>
-                <li>On Courier, match v2&apos;s total for status mismatches across three runs, or beat it by at least one if v2 leaves room to improve.</li>
-                <li>Keep every flagged decoy out of the lead risks on both programs.</li>
-              </ol>
-            </details>
-            <p>
-              V4 met four of the six criteria. It connected the six-hour job to the green update and kept the iOS
-              mismatch as a lead in all three main-program runs. The six-hour job stayed in “Worth watching” every
-              time. Precision fell to 74% and 71% in two runs. V4 briefs had 19 to 23 findings, up from 12 to 14 in v2.
-            </p>
-            <p>
-              I kept v2. It already found every planted problem in both outside test programs. The extra checks
-              made the main brief longer and less precise, and the new six-hour finding still stayed off the lead list.
-            </p>
+            <p className={styles.meta}>10 of 14 is close to the ceiling: 2 problems leave no trace in tickets or Slack.</p>
           </div>
         </section>
 
         <section className={styles.row} aria-labelledby="limits">
-          <h2 id="limits" className={styles.label}>Known limits</h2>
-          <ul className={`${styles.prose} ${styles.list}`}>
-            <li><strong>AI-written data.</strong> All three programs are synthetic. The main program and its key were written in the same sessions. The status mismatch rule came after I saw the main-program scores, and the other two tests were too easy to show which version worked better.</li>
-            <li><strong>12 of 14 is the main test&apos;s ceiling.</strong> Two hidden problems have no evidence the grader can credit from tickets or Slack, the tool&apos;s only inputs.</li>
-            <li><strong>One finding earns credit for one problem.</strong> If the brief combines two problems, the grader credits one. The second can show up as a miss even when the brief describes it.</li>
-          </ul>
+          <details className={`${styles.disclosure} ${styles.limits}`}>
+            <summary id="limits">Limits</summary>
+            <ul className={`${styles.prose} ${styles.list}`}>
+              <li>All three programs are made up, and AI wrote them. Real Slack is messier.</li>
+              <li>I wrote the main test myself. That&apos;s why I added the outside tests.</li>
+              <li>When a status update and the problem it hides sit in different threads, the tool doesn&apos;t always connect them. That&apos;s what I&apos;d fix next.</li>
+            </ul>
+          </details>
         </section>
-
-        {hasDemo && (
-          <section className={styles.row} aria-labelledby="demo">
-            <h2 id="demo" className={styles.label}>Demo video</h2>
-            <video className={styles.video} src={demoVideo} controls preload="metadata" aria-label="Decision brief walkthrough" />
-          </section>
-        )}
       </article>
     </ModernPortfolioFrame>
   );
