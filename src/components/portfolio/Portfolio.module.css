@@ -112,12 +112,14 @@
 .reportFrame {
   --ink: #1b1817;
   --muted: #665850;
-  background: #fbf4ee;
+  background: #070707;
 }
 
 .reportFrame::before { content: none; }
-.reportFrame .navLink { color: var(--muted); }
-.reportFrame .navLinkActive { color: #bb261c; }
+.reportFrame .siteHeader { color: #fff; }
+.reportFrame .navLink { color: #c4c0bf; }
+.reportFrame .navLinkActive { color: #fff; }
+.reportFrame .siteHeader a:focus-visible { outline-color: #fff; }
 
 .reportFrame .main {
   height: auto;
@@ -126,6 +128,11 @@
 }
 
 .reportFrame .routeSheet { height: auto; }
+
+@media (max-width: 620px) {
+  .reportFrame .siteHeader { display: none; }
+  .reportFrame .main { padding-inline: 0; }
+}
 
 .detailFrame {
   display: flex;

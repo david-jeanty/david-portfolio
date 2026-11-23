@@ -4,8 +4,9 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import ModernPortfolioFrame from "@/components/portfolio/ModernPortfolioFrame";
-import portfolio from "@/components/portfolio/Portfolio.module.css";
+import ToolStack from "@/components/portfolio/ToolStack";
 import { modernPortfolio } from "@/data/modern-portfolio";
+import ProfileDeck from "./ProfileDeck";
 import styles from "./tinder.module.css";
 
 const title = "David Jeanty for Tinder";
@@ -32,12 +33,12 @@ function SourceRef({ number }: { number: number }) {
   return <a className={styles.sourceRef} href={`#source-${number}`} aria-label={`Source ${number}`}>[{number}]</a>;
 }
 
-function ReportSection({ id, heading, children }: { id: string; heading: string; children: ReactNode }) {
+function ProfileDisclosure({ id, heading, children }: { id: string; heading: string; children: ReactNode }) {
   return (
-    <section className={styles.row} aria-labelledby={id}>
-      <h2 id={id} className={styles.label}>{heading}</h2>
-      <div className={styles.prose}>{children}</div>
-    </section>
+    <details id={id} className={styles.disclosure}>
+      <summary>{heading}</summary>
+      <div className={styles.disclosureBody}>{children}</div>
+    </details>
   );
 }
 
@@ -89,207 +90,168 @@ function SampleBrief() {
         </p>
       </div>
 
-      <details className={`${styles.disclosure} ${styles.sampleDisclosure}`}>
-        <summary>See one risk in full</summary>
-        <div className={styles.sampleSection}>
-          <p className={styles.meta}>Lead risk 1</p>
-          <h4>The Android deck still reads attendees v1, which the R4 build removes</h4>
+      <div className={styles.sampleSection}>
+        <p className={styles.meta}>Lead risk 1</p>
+        <h4>The Android deck still reads attendees v1, which the R4 build removes</h4>
+        <p>
+          The Android deck, the screen that shows attendees, is in review for release R4. Its ticket
+          (PEM-117) still calls for <code>GET /v1</code> with the <code>attendees</code> field.
+          The backend switched to a new interface, v2, which returns consenting attendees only in{" "}
+          <code>visible_attendees</code>, and will remove v1 in the R4 build. The backend handoff
+          went only to iOS, and Android&apos;s sync used the kickoff document. The Android deck could fail
+          at launch or show attendees who did not consent.
+        </p>
+        <dl className={styles.evidence}>
+          <div><dt>Impact</dt><dd>High. Android is the only deck in R4, and v1 goes away in the same build.</dd></div>
+          <div><dt>Confidence</dt><dd>High. The tickets directly contradict each other, and the only recorded handoff went to iOS.</dd></div>
+          <div><dt>Evidence</dt><dd>PEM-117, PEM-104, MSG-012, MSG-039, MSG-040, MSG-041, MSG-042, MSG-103, MSG-104, MSG-134</dd></div>
+        </dl>
+        <h5>Decision needed</h5>
+        <p>Before the R4 build cut, who moves Android to v2, or does v1 removal wait until Android is confirmed on v2?</p>
+        <ul className={styles.options} aria-label="Options for the Android deck">
+          {riskOptions.map(([option, upside, downside]) => (
+            <li key={option}>
+              <p><strong>{option}</strong></p>
+              <dl>
+                <div><dt>Upside</dt><dd>{upside}</dd></div>
+                <div><dt>Downside</dt><dd>{downside}</dd></div>
+              </dl>
+            </li>
+          ))}
+        </ul>
+        <div className={styles.recommendation}>
+          <h5>What I’d recommend as the TPM</h5>
           <p>
-            The Android deck, the screen that shows attendees, is in review for release R4. Its ticket
-            (PEM-117) still calls for <code>GET /v1</code> with the <code>attendees</code> field.
-            The backend switched to a new interface, v2, which returns consenting attendees only in{" "}
-            <code>visible_attendees</code>, and will remove v1 in the R4 build. The backend handoff
-            went only to iOS, and Android&apos;s sync used the kickoff document. The Android deck could fail
-            at launch or show attendees who did not consent.
+            I recommend A, with C as the fallback. Make the decision at the Nov 19, 2 p.m. launch review.
+            The Android lead owns the switch to v2, asks the release manager for a freeze exception, and
+            must pass a retest with consent data by end of day Friday, Nov 20, ahead of the Nov 23 release.
+            If the retest fails or misses the deadline, pull the Android deck from R4 (C). Rule out B.
+            The privacy review led to v2, and keeping v1 would bypass that decision.
           </p>
-          <dl className={styles.evidence}>
-            <div><dt>Impact</dt><dd>High. Android is the only deck in R4, and v1 goes away in the same build.</dd></div>
-            <div><dt>Confidence</dt><dd>High. The tickets directly contradict each other, and the only recorded handoff went to iOS.</dd></div>
-            <div><dt>Evidence</dt><dd>PEM-117, PEM-104, MSG-012, MSG-039, MSG-040, MSG-041, MSG-042, MSG-103, MSG-104, MSG-134</dd></div>
-          </dl>
-          <h5>Decision needed</h5>
-          <p>Before the R4 build cut, who moves Android to v2, or does v1 removal wait until Android is confirmed on v2?</p>
-          <ul className={styles.options} aria-label="Options for the Android deck">
-            {riskOptions.map(([option, upside, downside]) => (
-              <li key={option}>
-                <p><strong>{option}</strong></p>
-                <dl>
-                  <div><dt>Upside</dt><dd>{upside}</dd></div>
-                  <div><dt>Downside</dt><dd>{downside}</dd></div>
-                </dl>
-              </li>
-            ))}
-          </ul>
-          <div className={styles.recommendation}>
-            <h5>What I’d recommend as the TPM</h5>
-            <p>
-              I recommend A, with C as the fallback. Make the decision at the Nov 19, 2 p.m. launch review.
-              The Android lead owns the switch to v2, asks the release manager for a freeze exception, and
-              must pass a retest with consent data by end of day Friday, Nov 20, ahead of the Nov 23 release.
-              If the retest fails or misses the deadline, pull the Android deck from R4 (C). Rule out B.
-              The privacy review led to v2, and keeping v1 would bypass that decision.
-            </p>
-          </div>
         </div>
-      </details>
-
-      <a className={styles.download} href="/brief_v2.pdf" download>Download the full synthetic brief (PDF)</a>
+      </div>
     </div>
   );
 }
 
 export default function TinderPage() {
   const { name, email, linkedin } = modernPortfolio.identity;
+  const { tools } = modernPortfolio.tinderProject;
   const hasDemo = existsSync(join(process.cwd(), "public", demoVideo));
 
   return (
     <ModernPortfolioFrame
       reportFooter={(
         <footer className={styles.footer}>
-          <div className={styles.row}>
-            <p>{name}</p>
-            <address>
-              <a href={`mailto:${email}`}>Email</a>
-              <a href={linkedin}>LinkedIn</a>
-            </address>
-          </div>
+          <p>{name}</p>
+          <a href={linkedin}>LinkedIn ↗</a>
         </footer>
       )}
     >
-      <article className={styles.article}>
-        <header className={`${styles.row} ${styles.hero}`}>
-          <Image
-            src="/tinder-headshot.jpg"
-            alt={name}
-            width={280}
-            height={500}
-            sizes="(min-width: 760px) 138px, 96px"
-            className={styles.headshot}
-            preload
-          />
-          <div>
-            <h1 className={portfolio.pageTitle}>{title}</h1>
-            <p className={styles.heroSummary}>
-              I’m a Business Technology Management student at uOttawa applying for Tinder’s Technical Program Management internship in Los Angeles.
-            </p>
-          </div>
-        </header>
+      <article className={styles.profile} aria-labelledby="profile-name">
+        <ProfileDeck name={name} linkedin={linkedin} email={email} />
 
         {hasDemo && (
-          <ReportSection id="video" heading="Video">
-            <video
-              className={styles.video}
-              src={demoVideo}
-              controls
-              playsInline
-              preload="metadata"
-              aria-label="Brief Writer project walkthrough"
-            />
-          </ReportSection>
+          <section className={styles.section} aria-labelledby="video">
+            <h2 id="video">Project walkthrough</h2>
+            <video className={styles.video} src={demoVideo} controls playsInline preload="metadata" />
+          </section>
         )}
 
-        <ReportSection id="research" heading="The research">
-          <p>
-            I used the internship and senior TPM postings to figure out what the tool should help someone do.
-            The internship calls for early risk escalation. The Recs posting pairs reporting automation with a recommended
-            path forward. Events asks TPMs to turn trade-offs into recommendations, and Trust &amp; Safety asks
-            them to make technical risks actionable for people outside engineering.{" "}
-            <SourceRef number={1} /> <SourceRef number={2} /> <SourceRef number={3} /> <SourceRef number={4} />
-          </p>
-          <p>
-            Merlin takes a ticket, posts a plan in Slack, and waits for someone to approve it before it starts
-            editing code. That gave me a model for where the tool should live and where it should stop. <SourceRef number={6} />
-          </p>
-          <p>
-            My first idea was a weekly status writer. Then I read that Agentis already assembles a PM’s weekly report
-            from team conversations and documentation. I built a tool for the step after the report arrives. It
-            works out what needs a decision, what evidence matters, and what the team can do next. <SourceRef number={5} /> <SourceRef number={2} />
-          </p>
-        </ReportSection>
+        <section className={styles.section} aria-labelledby="why-me">
+          <h2 id="why-me">Why me</h2>
+          <dl className={styles.highlights}>
+            <div>
+              <dt>I make the trade-offs clear.</dt>
+              <dd>At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.</dd>
+            </div>
+            <div>
+              <dt>I build and revise.</dt>
+              <dd>I built <a href="/interndex">Interndex</a>, an internship tracker, and revised it based on feedback from students.</dd>
+            </div>
+            <div>
+              <dt>I keep work moving.</dt>
+              <dd>On an IBM pro bono project, I track the team’s deadlines and help a nonprofit review how it handles donor and participant data.</dd>
+            </div>
+          </dl>
+        </section>
 
-        <ReportSection id="built" heading="What I built">
-          <p>
-            After Party is a fictional dating app launching Post-Event Matching, with synthetic tickets, release dates,
-            and Slack threads across its teams.
-          </p>
-          <p>
-            Brief Writer reads the tickets and messages and posts a brief in the leads’ channel. It shows what needs
-            deciding, when, and what each option would cost the team, with the records behind each finding.
+        <section className={styles.section} aria-labelledby="built">
+          <div className={styles.projectHeader}>
+            <h2 id="built">Brief Writer</h2>
+            <ToolStack tools={tools} />
+          </div>
+          <p className={styles.lede}>
+            I built a Slack tool that reads tickets and messages, flags decisions that need attention, and gives leads a deadline, options, and the evidence behind them.
           </p>
 
-          <section className={styles.mismatch} aria-labelledby="mismatch">
-            <h3 id="mismatch">When status and the record disagree</h3>
-            <dl className={styles.evidence}>
-              <div>
-                <dt>What leads heard</dt>
-                <dd>iOS reported “nothing that changes dates yet.” <span className={styles.meta}>MSG-087</span></dd>
-              </div>
-              <div>
-                <dt>What the records showed</dt>
-                <dd>The day before, App Review had rejected the build. The iOS attendee deck was paused and later moved to the next release. <span className={styles.meta}>MSG-075, PEM-111</span></dd>
-              </div>
-            </dl>
-            <p>Brief Writer surfaced the mismatch so leads could revisit what the release would actually include.</p>
-          </section>
+          <div className={styles.projectGrid}>
+            <figure>
+              <Image
+                src="/brief-writer-slack.webp"
+                alt="Brief Writer’s Slack message listing decisions and conflicting status updates for Post-Event Matching"
+                width={1112}
+                height={772}
+                sizes="(min-width: 1040px) 525px, (min-width: 760px) 52vw, 88vw"
+                className={styles.briefImage}
+              />
+              <figcaption>Slack output for After Party, a fictional dating app.</figcaption>
+            </figure>
 
-          <SampleBrief />
-        </ReportSection>
+            <div className={styles.mismatch}>
+              <h3 id="mismatch">The status looked fine.</h3>
+              <dl className={styles.evidence}>
+                <div>
+                  <dt>What leads heard <span className={styles.meta}>MSG-087</span></dt>
+                  <dd>iOS reported “nothing that changes dates yet.”</dd>
+                </div>
+                <div>
+                  <dt>What the records showed <span className={styles.meta}>MSG-075, PEM-111</span></dt>
+                  <dd>App Review had rejected the build the day before. The attendee deck was paused and moved to the next release.</dd>
+                </div>
+              </dl>
+              <p>Brief Writer put both updates side by side so leads could revisit the release scope.</p>
+            </div>
+          </div>
+          <a className={styles.pdfLink} href="/brief_v2.pdf" download>Download the full sample brief (PDF) <span aria-hidden="true">↓</span></a>
 
-        <ReportSection id="workflow" heading="Built the way Tinder builds">
-          <p>
-            The brief lands in Slack, where the teams are already talking. I followed Merlin’s example of keeping
-            the plan and evidence available in the same workspace where people review the work. <SourceRef number={6} />
-          </p>
-          <p>
-            Brief Writer lays out the options and their trade-offs. A person reviews the evidence and decides
-            what to do. Agentis’s approval gates gave me a model for that handoff. <SourceRef number={5} />
-          </p>
-        </ReportSection>
+          <div className={styles.disclosures}>
+            <ProfileDisclosure id="sample-brief" heading="Read the sample brief">
+              <SampleBrief />
+            </ProfileDisclosure>
 
-        <ReportSection id="evaluation" heading="How I know it works">
-          <p>
-            Tinder’s Photo Feedback team needed examples with known answers to test a new feature. I used the
-            same approach and wrote an answer key first. I planted delivery risks in After Party and added
-            decoys that looked worrying but had an explanation elsewhere in the record. <SourceRef number={7} />
-          </p>
-          <p>
-            I then tested Brief Writer on Ledgerline and Courier, synthetic programs created separately from
-            After Party. I kept their answer keys out of the tool and scored the briefs against those keys afterward.
-            It found every planted problem in those two programs.
-          </p>
-          <p>
-            I also wanted to see whether writing the main test had influenced its rules. I rebuilt the risk patterns
-            using public sources. A separate agent drafted the patterns without seeing the test or the answer key.
-            The tool found about as many problems on the main test with those rules.
-          </p>
-        </ReportSection>
+            <ProfileDisclosure id="research" heading="Research and design decisions">
+              <p>
+                The TPM postings pointed to early escalation, clear trade-offs, and recommendations people can act on.{" "}
+                <SourceRef number={1} /> <SourceRef number={2} /> <SourceRef number={3} /> <SourceRef number={4} />
+              </p>
+              <p>
+                I planned to build a status writer. When I read that Agentis already writes a weekly PM report, I shifted to what happens after the report arrives. <SourceRef number={5} />
+              </p>
+              <p id="workflow">
+                Merlin made Slack the natural place for review. Brief Writer posts the options there, cites the records, and leaves the decision to a person. <SourceRef number={6} /> <SourceRef number={5} />
+              </p>
+            </ProfileDisclosure>
 
-        <ReportSection id="recall" heading="Recall over precision">
-          <p>
-            I’d rather have a lead review an extra warning than find out after launch that a dependency was missed.
-            Brief Writer looks broadly for risks, then reserves the top of the brief for high-impact issues with
-            enough evidence to discuss. Lower-confidence findings go on the watch list. <SourceRef number={7} />
-          </p>
-        </ReportSection>
+            <ProfileDisclosure id="evaluation" heading="Testing, trade-offs, and limits">
+              <p>
+                Following Tinder’s Photo Feedback evaluation, I wrote an answer key first and planted risks alongside decoys. Brief Writer found every planted problem in two previously unseen synthetic programs, Ledgerline and Courier. <SourceRef number={7} />
+              </p>
+              <p>
+                For a bias check, a separate agent rebuilt the risk rules from public sources without seeing my main test or answer key. It surfaced about as many issues on that test.
+              </p>
+              <p id="recall">
+                <strong>Why I prioritized recall.</strong> A missed dependency can derail a launch. I kept well-supported, high-impact issues at the top of the brief and routed weaker signals to a watch list.
+              </p>
+              <p id="limits">
+                <strong>Where it fell short.</strong> In the main test, Brief Writer missed some risks with sparse records or evidence spread across threads. A live program would be the next test.
+              </p>
+            </ProfileDisclosure>
+          </div>
+        </section>
 
-        <ReportSection id="limits" heading="Limits">
-          <p>
-            On my main test, Brief Writer missed some problems. Some left almost no trace in the tickets or Slack,
-            and the tool can miss a connection when the pieces sit in separate threads.
-          </p>
-          <p>
-            All of the tests used synthetic records. The next check I’d want is whether the same process holds up
-            with the noise and missing context of a live program.
-          </p>
-        </ReportSection>
-
-        <ReportSection id="interview" heading="Let’s talk">
-          <p>I’d love to interview for the Technical Program Management internship in LA this summer.</p>
-          <p><a href={`mailto:${email}`}>Email me</a></p>
-        </ReportSection>
-
-        <ReportSection id="sources" heading="Sources">
-          <p className={styles.meta}>The same sources as the video end card, captured in November 2026.</p>
+        <section className={styles.section} aria-labelledby="sources">
+          <h2 id="sources">Sources</h2>
           <ol className={styles.sources}>
             {sources.map((source, index) => (
               <li id={`source-${index + 1}`} key={source.url}>
@@ -298,7 +260,15 @@ export default function TinderPage() {
               </li>
             ))}
           </ol>
-        </ReportSection>
+        </section>
+
+        <section className={`${styles.section} ${styles.interview}`} aria-labelledby="interview">
+          <div>
+            <h2 id="interview">Let’s talk</h2>
+            <p>I’d love to interview for the Technical Program Management internship in LA this summer.</p>
+          </div>
+          <a className={styles.contactLink} href={`mailto:${email}`}>Email me <span aria-hidden="true">↗</span></a>
+        </section>
       </article>
     </ModernPortfolioFrame>
   );
