@@ -2,8 +2,19 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { modernPortfolio } from "@/data/modern-portfolio";
+import { modernPortfolio, type ExperienceRecord } from "@/data/modern-portfolio";
 import styles from "./Portfolio.module.css";
+
+function RoleDetail({ role }: { role: ExperienceRecord }) {
+  return (
+    <>
+      <p className={styles.detailLead}>{role.summary}</p>
+      <ul className={styles.detailList}>
+        {role.details.map((detail) => <li key={detail}>{detail}</li>)}
+      </ul>
+    </>
+  );
+}
 
 export default function ExperienceIndex() {
   const [selectedId, setSelectedId] = useState("irb");
@@ -26,10 +37,7 @@ export default function ExperienceIndex() {
             <p className={styles.detailCompany}>{selected.company}</p>
             <p className={styles.detailRole}>{selected.role}</p>
             <p className={styles.detailPeriod}>{selected.period}</p>
-            <p className={styles.detailLead}>{selected.summary}</p>
-            <ul className={styles.detailList}>
-              {selected.details.map((detail) => <li key={detail}>{detail}</li>)}
-            </ul>
+            <RoleDetail role={selected} />
           </motion.div>
         </AnimatePresence>
       </aside>
@@ -56,6 +64,11 @@ export default function ExperienceIndex() {
                   </span>
                   <span className={styles.experiencePeriod}>{item.period}</span>
                 </button>
+                {selectedRow && (
+                  <div className={styles.mobileRoleDetail} aria-live="polite">
+                    <RoleDetail role={item} />
+                  </div>
+                )}
               </li>
             );
           })}

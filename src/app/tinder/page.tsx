@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Image from "next/image";
 import ModernPortfolioFrame from "@/components/portfolio/ModernPortfolioFrame";
 import { modernPortfolio } from "@/data/modern-portfolio";
@@ -10,17 +11,34 @@ const title = "David Jeanty for Tinder";
 
 export const metadata: Metadata = {
   title,
-  description: "David Jeanty's application for Tinder's Technical Program Manager Intern role in Los Angeles, with an AI decision brief project.",
+  description: "David Jeanty’s Technical Program Management internship application and the decisions behind Brief Writer.",
   robots: { index: false, follow: false },
 };
 
 const demoVideo = "/decision-brief-demo.mp4";
 
-const applicantSections = [
-  { id: "about-me", title: "About me", text: "" },
-  { id: "why-tinder", title: "Why Tinder", text: "" },
-  { id: "why-los-angeles", title: "Why Los Angeles", text: "" },
-];
+const sources = [
+  { title: "Technical Program Management Intern", url: "https://jobs.lever.co/matchgroup/107da1ee-5b8a-4a1b-9d75-5ba3d597116c" },
+  { title: "Senior TPM, Recs, Revenue, and Engagement", url: "https://jobs.lever.co/matchgroup/4a1ba25e-109a-44b8-b330-6f6ef31e9171" },
+  { title: "Senior TPM, Events (IRL)", url: "https://lifeattinder.com/positions/38a680c1-07a6-438e-9448-b677b5f044e0-losangelescalifornia", note: "Role filled" },
+  { title: "Senior TPM, Trust & Safety", url: "https://lifeattinder.com/positions/b263e3b8-adc5-4b7c-aceb-28aae688b9d3-losangelescalifornia" },
+  { title: "Agents That Prove Their Work: Inside Agentis", url: "https://lifeattinder.com/blog/agents-that-prove-their-work-inside-agentis-tinders-ai-agent-platform" },
+  { title: "Merlin: The Tinder Harness Around AI Coding Agents", url: "https://lifeattinder.com/blog/merlin-the-tinder-harness" },
+  { title: "When Your Model Hates Helicopters", url: "https://lifeattinder.com/blog/llm-features-you-can-bet-on" },
+] as const;
+
+function SourceRef({ number }: { number: number }) {
+  return <a className={styles.sourceRef} href={`#source-${number}`} aria-label={`Source ${number}`}>[{number}]</a>;
+}
+
+function ReportSection({ id, heading, children }: { id: string; heading: string; children: ReactNode }) {
+  return (
+    <section className={styles.row} aria-labelledby={id}>
+      <h2 id={id} className={styles.label}>{heading}</h2>
+      <div className={styles.prose}>{children}</div>
+    </section>
+  );
+}
 
 const decisions = [
   { issue: "The Android deck still reads attendees v1, which the R4 build removes.", deadline: "Before the R4 build cut." },
@@ -47,45 +65,6 @@ const riskOptions = [
   ],
 ];
 
-const results = [
-  ["Post-Event Matching (main test)", "10 of 14", "79% to 93%", "0"],
-  ["Ledgerline (never seen)", "6 of 6", "78% to 89%", "0"],
-  ["Courier (never seen)", "8 of 8", "75% to 91%", "0"],
-];
-
-function BriefTable({
-  label,
-  columns,
-  rows,
-}: {
-  label: string;
-  columns: string[];
-  rows: string[][];
-}) {
-  return (
-    <table className={styles.table} aria-label={label} role="table">
-      <thead role="rowgroup">
-        <tr role="row">
-          {columns.map((title) => <th key={title} scope="col" role="columnheader">{title}</th>)}
-        </tr>
-      </thead>
-      <tbody role="rowgroup">
-        {rows.map(([heading, ...values]) => (
-          <tr key={heading} role="row">
-            <th scope="row" role="rowheader">{heading}</th>
-            {values.map((value, index) => (
-              <td key={columns[index + 1]} role="cell">
-                <span className={styles.cellLabel} aria-hidden="true">{columns[index + 1]}</span>
-                {value}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
-
 function SampleBrief() {
   return (
     <div className={styles.sample}>
@@ -105,8 +84,7 @@ function SampleBrief() {
           ))}
         </ol>
         <p className={styles.meta}>
-          As the tool wrote them. Where the record gives no clear deadline, the TPM sets one; my recommendation
-          for risk 1 sets Fri, Nov 20.
+          Where the record gives no clear deadline, the TPM sets one.
         </p>
       </div>
 
@@ -130,9 +108,19 @@ function SampleBrief() {
           </dl>
           <h5>Decision needed</h5>
           <p>Before the R4 build cut, who moves Android to v2, or does v1 removal wait until Android is confirmed on v2?</p>
-          <BriefTable label="Options for the Android deck" columns={["Option", "Upside", "Downside"]} rows={riskOptions} />
+          <ul className={styles.options} aria-label="Options for the Android deck">
+            {riskOptions.map(([option, upside, downside]) => (
+              <li key={option}>
+                <p><strong>{option}</strong></p>
+                <dl>
+                  <div><dt>Upside</dt><dd>{upside}</dd></div>
+                  <div><dt>Downside</dt><dd>{downside}</dd></div>
+                </dl>
+              </li>
+            ))}
+          </ul>
           <div className={styles.recommendation}>
-            <h5>My TPM recommendation</h5>
+            <h5>What I’d recommend as the TPM</h5>
             <p>
               I recommend A, with C as the fallback. Make the decision at the Nov 19, 2 p.m. launch review.
               The Android lead owns the switch to v2, asks the release manager for a freeze exception, and
@@ -140,7 +128,6 @@ function SampleBrief() {
               If the retest fails or misses the deadline, pull the Android deck from R4 (C). Rule out B.
               The privacy review led to v2, and keeping v1 would bypass that decision.
             </p>
-            <p className={styles.meta}>David Jeanty</p>
           </div>
         </div>
       </details>
@@ -171,143 +158,146 @@ export default function TinderPage() {
       <article className={styles.article}>
         <header className={`${styles.row} ${styles.hero}`}>
           <Image
-            src="/david-headshot.JPG"
+            src="/tinder-headshot.jpg"
             alt={name}
             width={280}
-            height={350}
-            sizes="(min-width: 760px) 180px, 120px"
+            height={500}
+            sizes="(min-width: 760px) 138px, 96px"
             className={styles.headshot}
             preload
           />
           <div>
             <h1>{title}</h1>
             <p className={styles.heroSummary}>
-              I&apos;m a Business Technology Management student at the University of Ottawa, applying for Tinder&apos;s
-              Technical Program Manager Intern role in Los Angeles. Instead of just applying, I built something.
+              I’m a Business Technology Management student at uOttawa applying for Tinder’s Technical Program Management internship in Los Angeles.
             </p>
           </div>
         </header>
 
         {hasDemo && (
-          <section className={styles.row} aria-labelledby="demo">
-            <h2 id="demo" className={styles.label}>Demo video</h2>
-            <video className={styles.video} src={demoVideo} controls preload="metadata" aria-label="Decision brief walkthrough" />
-          </section>
+          <ReportSection id="video" heading="Video">
+            <video
+              className={styles.video}
+              src={demoVideo}
+              controls
+              playsInline
+              preload="metadata"
+              aria-label="Brief Writer project walkthrough"
+            />
+          </ReportSection>
         )}
 
-        {applicantSections.filter(({ text }) => text.trim()).map(({ id, title, text }) => (
-          <section key={id} className={styles.row} aria-labelledby={id}>
-            <h2 id={id} className={styles.label}>{title}</h2>
-            <div className={styles.prose}><p>{text}</p></div>
+        <ReportSection id="research" heading="The research">
+          <p>
+            I used the internship and senior TPM postings to figure out what the tool should help someone do.
+            The internship calls for early risk escalation. The Recs posting pairs reporting automation with a recommended
+            path forward. Events asks TPMs to turn trade-offs into recommendations, and Trust &amp; Safety asks
+            them to make technical risks actionable for people outside engineering.{" "}
+            <SourceRef number={1} /> <SourceRef number={2} /> <SourceRef number={3} /> <SourceRef number={4} />
+          </p>
+          <p>
+            Merlin takes a ticket, posts a plan in Slack, and waits for someone to approve it before it starts
+            editing code. That gave me a model for where the tool should live and where it should stop. <SourceRef number={6} />
+          </p>
+          <p>
+            My first idea was a weekly status writer. Then I read that Agentis already assembles a PM’s weekly report
+            from team conversations and documentation. I built a tool for the step after the report arrives. It
+            works out what needs a decision, what evidence matters, and what the team can do next. <SourceRef number={5} /> <SourceRef number={2} />
+          </p>
+        </ReportSection>
+
+        <ReportSection id="built" heading="What I built">
+          <p>
+            After Party is a fictional dating app launching Post-Event Matching, with synthetic tickets, release dates,
+            and Slack threads across its teams.
+          </p>
+          <p>
+            Brief Writer reads the tickets and messages and posts a brief in the leads’ channel. It shows what needs
+            deciding, when, and what each option would cost the team, with the records behind each finding.
+          </p>
+
+          <section className={styles.mismatch} aria-labelledby="mismatch">
+            <h3 id="mismatch">When status and the record disagree</h3>
+            <dl className={styles.evidence}>
+              <div>
+                <dt>What leads heard</dt>
+                <dd>iOS reported “nothing that changes dates yet.” <span className={styles.meta}>MSG-087</span></dd>
+              </div>
+              <div>
+                <dt>What the records showed</dt>
+                <dd>The day before, App Review had rejected the build. The iOS attendee deck was paused and later moved to the next release. <span className={styles.meta}>MSG-075, PEM-111</span></dd>
+              </div>
+            </dl>
+            <p>Brief Writer surfaced the mismatch so leads could revisit what the release would actually include.</p>
           </section>
-        ))}
 
-        <section className={styles.row} aria-labelledby="short-version">
-          <h2 id="short-version" className={styles.label}>The short version</h2>
-          <ul className={`${styles.prose} ${styles.list}`}>
-            <li><strong>The problem:</strong> Leaders get status updates. What they need is the decision, and what each option costs.</li>
-            <li><strong>What it does:</strong> Finds risks across tickets and Slack, including &quot;watermelon status&quot;: an update that says green while the team&apos;s own messages say red.</li>
-            <li><strong>The result:</strong> It caught every planted problem in two test programs it had never seen (6 of 6 and 8 of 8), and 10 of 14 on the main test.</li>
-            <li><strong>The call I&apos;m proudest of:</strong> I built a bigger version, set the bar before testing it, and didn&apos;t ship it. It made the brief longer without catching more.</li>
-          </ul>
-        </section>
-
-        <section className={styles.row} aria-labelledby="why">
-          <h2 id="why" className={styles.label}>Why I built it</h2>
-          <div className={styles.prose}>
-            <p>Before writing any code, I spent a day studying how Tinder builds.</p>
-            <ul className={styles.list}>
-              <li>
-                <strong>Tinder&apos;s <a href="https://www.lifeattinder.com/blog/agents-that-prove-their-work-inside-agentis-tinders-ai-agent-platform">engineering blog</a>.</strong>{" "}
-                Tinder runs about 200 internal AI agents, and one already writes a PM&apos;s weekly report. So I skipped status reports and built the next step: turning status into a decision.
-              </li>
-              <li>
-                <strong>Tinder&apos;s TPM job postings.</strong>{" "}
-                One, for the Events team, asks for &quot;recommendations that shape decisions, not just status updates.&quot;
-                That line became my spec.
-              </li>
-              <li>
-                <strong>Tinder&apos;s own AI rules.</strong> From <a href="https://www.lifeattinder.com/blog/llm-features-you-can-bet-on">&quot;LLM Features You Can Bet On&quot;</a>: define what a right answer looks like before building, choose precision or recall on purpose, and study the failures. I followed all three.
-              </li>
-              <li>
-                <strong><a href="https://www.lifeattinder.com/positions/107da1ee-5b8a-4a1b-9d75-5ba3d597116c-losangelescalifornia">The intern role itself</a>.</strong>{" "}
-                Escalate risks early, and help figure out how AI fits into building product.
-              </li>
-              <li><strong>Coffee chats with working TPMs</strong> about what actually slows a program down.</li>
-            </ul>
-          </div>
-        </section>
-
-        <section className={styles.row} aria-labelledby="workflow">
-          <h2 id="workflow" className={styles.label}>How it works</h2>
-          <ol className={styles.workflow} aria-label="Steps from program records to a recommendation" role="list">
-            <li>Tickets and Slack</li>
-            <li>AI brief writer</li>
-            <li>
-              Decision brief
-              <ul>
-                <li>Decisions needed</li>
-                <li>Lead risks</li>
-                <li>Where status and the record disagree</li>
-                <li>Worth watching</li>
-              </ul>
-            </li>
-            <li>TPM adds a recommendation</li>
-          </ol>
-        </section>
-
-        <section className={styles.row} aria-labelledby="decisions">
-          <h2 id="decisions" className={styles.label}>Decisions I made</h2>
-          <ul className={`${styles.prose} ${styles.list}`}>
-            <li><strong>Recall over precision.</strong> A missed risk can sink a launch. A false alarm costs a few minutes. To keep the noise down, only high-impact risks go to the top.</li>
-            <li><strong>The AI never picks.</strong> It lays out options and tradeoffs. The recommendation is mine, like the human approval step in Tinder&apos;s own agent tools.</li>
-            <li><strong>I checked whether my score was rigged.</strong> I wrote the test data, so I rebuilt the tool&apos;s rules from public sources only. Same score.</li>
-            <li><strong>I tested on programs I&apos;d never seen.</strong> A separate AI wrote two more fake programs, and I never read their answer keys.</li>
-            <li>
-              <strong>I didn&apos;t ship v4.</strong> It added a fact-checker. It connected one problem v2 missed, but briefs grew from about 13 risks to about 21 and got less precise. I kept the simpler version.
-              <details className={styles.disclosure}>
-                <summary>Show the six criteria</summary>
-                <ol className={styles.list}>
-                  <li>Find at least 10 of 14 problems in every main-program run.</li>
-                  <li>Connect the six-hour job to the “all green” update in at least two of three main-program runs, and make it a lead risk in at least two.</li>
-                  <li>Keep a headline that names the iOS status mismatch in at least two of three main-program runs.</li>
-                  <li>Keep precision at 75% or higher in every main-program run.</li>
-                  <li>On Courier, match v2&apos;s total for status mismatches across three runs, or beat it by at least one if v2 leaves room to improve.</li>
-                  <li>Keep every flagged decoy out of the lead risks on both programs.</li>
-                </ol>
-              </details>
-            </li>
-          </ul>
-        </section>
-
-        <section className={styles.row} aria-labelledby="sample">
-          <h2 id="sample" className={styles.label}>Sample brief</h2>
           <SampleBrief />
-        </section>
+        </ReportSection>
 
-        <section className={styles.row} aria-labelledby="results">
-          <h2 id="results" className={styles.label}>Results</h2>
-          <div className={styles.prose}>
-            <p className={styles.meta}>3 runs each</p>
-            <BriefTable
-              label="Results across the three test programs"
-              columns={["Program", "Problems found", "Findings that were real", "Decoys raised as top risks"]}
-              rows={results}
-            />
-            <p className={styles.meta}>10 of 14 is close to the ceiling: 2 problems leave no trace in tickets or Slack.</p>
-          </div>
-        </section>
+        <ReportSection id="workflow" heading="Built the way Tinder builds">
+          <p>
+            The brief lands in Slack, where the teams are already talking. I followed Merlin’s example of keeping
+            the plan and evidence available in the same workspace where people review the work. <SourceRef number={6} />
+          </p>
+          <p>
+            Brief Writer lays out the options and their trade-offs. A person reviews the evidence and decides
+            what to do. Agentis’s approval gates gave me a model for that handoff. <SourceRef number={5} />
+          </p>
+        </ReportSection>
 
-        <section className={styles.row} aria-labelledby="limits">
-          <details className={`${styles.disclosure} ${styles.limits}`}>
-            <summary id="limits">Limits</summary>
-            <ul className={`${styles.prose} ${styles.list}`}>
-              <li>All three programs are made up, and AI wrote them. Real Slack is messier.</li>
-              <li>I wrote the main test myself. That&apos;s why I added the outside tests.</li>
-              <li>When a status update and the problem it hides sit in different threads, the tool doesn&apos;t always connect them. That&apos;s what I&apos;d fix next.</li>
-            </ul>
-          </details>
-        </section>
+        <ReportSection id="evaluation" heading="How I know it works">
+          <p>
+            Tinder’s Photo Feedback team needed examples with known answers to test a new feature. I used the
+            same approach and wrote an answer key first. I planted delivery risks in After Party and added
+            decoys that looked worrying but had an explanation elsewhere in the record. <SourceRef number={7} />
+          </p>
+          <p>
+            I then tested Brief Writer on Ledgerline and Courier, synthetic programs created separately from
+            After Party. I kept their answer keys out of the tool and scored the briefs against those keys afterward.
+            It found every planted problem in those two programs.
+          </p>
+          <p>
+            I also wanted to see whether writing the main test had influenced its rules. I rebuilt the risk patterns
+            using public sources. A separate agent drafted the patterns without seeing the test or the answer key.
+            The tool found about as many problems on the main test with those rules.
+          </p>
+        </ReportSection>
+
+        <ReportSection id="recall" heading="Recall over precision">
+          <p>
+            I’d rather have a lead review an extra warning than find out after launch that a dependency was missed.
+            Brief Writer looks broadly for risks, then reserves the top of the brief for high-impact issues with
+            enough evidence to discuss. Lower-confidence findings go on the watch list. <SourceRef number={7} />
+          </p>
+        </ReportSection>
+
+        <ReportSection id="limits" heading="Limits">
+          <p>
+            On my main test, Brief Writer missed some problems. Some left almost no trace in the tickets or Slack,
+            and the tool can miss a connection when the pieces sit in separate threads.
+          </p>
+          <p>
+            All of the tests used synthetic records. The next check I’d want is whether the same process holds up
+            with the noise and missing context of a live program.
+          </p>
+        </ReportSection>
+
+        <ReportSection id="interview" heading="Let’s talk">
+          <p>I’d love to interview for the Technical Program Management internship in LA this summer.</p>
+          <p><a href={`mailto:${email}`}>Email me</a></p>
+        </ReportSection>
+
+        <ReportSection id="sources" heading="Sources">
+          <p className={styles.meta}>The same sources as the video end card, captured in November 2026.</p>
+          <ol className={styles.sources}>
+            {sources.map((source, index) => (
+              <li id={`source-${index + 1}`} key={source.url}>
+                <a href={source.url}>{source.title}</a>
+                {"note" in source && <span className={styles.meta}> · {source.note}</span>}
+              </li>
+            ))}
+          </ol>
+        </ReportSection>
       </article>
     </ModernPortfolioFrame>
   );

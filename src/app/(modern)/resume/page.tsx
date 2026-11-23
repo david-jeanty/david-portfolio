@@ -26,8 +26,8 @@ export default function ResumePage() {
       <div className={styles.resumePreview}>
         <Image
           className={styles.resumeImage}
-          src="/david-resume-preview.png"
-          alt="First page of David Jeanty's résumé"
+          src={resume.preview}
+          alt="Preview of David Jeanty’s résumé"
           fill
           sizes="(max-width: 900px) 70vw, 54vw"
           priority

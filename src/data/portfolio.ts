@@ -124,7 +124,6 @@ export const portfolioData: PortfolioData = {
       "Keep getting better at making execution simpler, clearer, and more dependable.",
     ],
     extracurriculars: [
-      "Founder & President of the Claude Builder Club, University of Ottawa",
       "Vice President, Internal Affairs at the Telfer Business Technology Association",
       "Director, Marketing (Social Media) at the Telfer Business Technology Association",
       "Student Ambassador supporting campus tours and CRM-based student follow-up",
@@ -372,14 +371,6 @@ export const portfolioData: PortfolioData = {
         summary:
           "Projects that show where my curiosity is going right now and how I like to turn ideas into systems.",
         items: [
-          {
-            name: "Claude Builder Club @ uOttawa",
-            status: "in-progress",
-            summary: "Founder & President of uOttawa's first bilingual FR/EN AI education student organization, focused on responsible digital adoption, workflow experimentation, prompt development, and practical business use cases.",
-            rationale: "I like the community side of AI just as much as the tools themselves, especially when it creates momentum for people who want to make things together.",
-            roleConnection: "Supports community building, event coordination, and turning interest into something tangible on campus.",
-            featured: true,
-          },
           {
             name: "University workflow / grade tracker",
             status: "in-progress",

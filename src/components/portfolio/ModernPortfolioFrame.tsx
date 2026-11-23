@@ -9,9 +9,11 @@ import styles from "./Portfolio.module.css";
 
 const navigation = [
   { href: "/about", label: "About" },
-  { href: "/interndex", label: "Interndex" },
+  { href: "/work", label: "Work" },
   { href: "/experience", label: "Experience" },
+  { href: "/involvement", label: "Involvement" },
   { href: "/resume", label: "Résumé" },
+  { href: "/tinder", label: "Tinder TPM" },
 ];
 
 export default function ModernPortfolioFrame({
@@ -22,10 +24,12 @@ export default function ModernPortfolioFrame({
   reportFooter?: React.ReactNode;
 }) {
   const pathname = usePathname();
-
+  const isHome = pathname === "/";
+  const isDetailPage = ["/work", "/interndex", "/experience", "/involvement"].includes(pathname);
+  const frameClass = isHome ? styles.homeFrame : reportFooter ? styles.reportFrame : isDetailPage ? styles.detailFrame : "";
   return (
     <MotionConfig reducedMotion="user">
-      <div className={reportFooter ? `${styles.siteFrame} ${styles.reportFrame}` : styles.siteFrame}>
+      <div className={`${styles.siteFrame} ${frameClass}`}>
         <header className={styles.siteHeader}>
           <Link href="/" className={styles.nameLink} aria-label={`${modernPortfolio.identity.name}, home`}>
             {modernPortfolio.identity.name}
@@ -33,13 +37,14 @@ export default function ModernPortfolioFrame({
 
           <nav className={styles.navigation} aria-label="Primary navigation">
             {navigation.map((item) => {
-              const active = pathname === item.href;
+              const isCurrentPage = pathname === item.href;
+              const active = isCurrentPage || (item.href === "/work" && pathname === "/interndex");
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
-                  aria-current={active ? "page" : undefined}
+                  aria-current={isCurrentPage ? "page" : active ? "location" : undefined}
                 >
                   {item.label}
                   {active ? <motion.span className={styles.activeRule} layoutId="active-nav" /> : null}
@@ -64,7 +69,17 @@ export default function ModernPortfolioFrame({
           </AnimatePresence>
         </main>
 
-        {reportFooter ?? (
+        {isHome ? (
+          <footer className={styles.homeFooter}>
+            <Link href={modernPortfolio.archive.href} className={styles.archiveLink}>
+              Windows XP archive
+            </Link>
+            <div className={styles.homeContact}>
+              <a href={`mailto:${modernPortfolio.identity.email}`}>Email</a>
+              <a href={modernPortfolio.identity.linkedin}>LinkedIn</a>
+            </div>
+          </footer>
+        ) : reportFooter ?? (
           <footer className={styles.footer}>
             <Link href={modernPortfolio.archive.href} className={styles.archiveLink}>
               {modernPortfolio.archive.label} <span aria-hidden="true">↗</span>
