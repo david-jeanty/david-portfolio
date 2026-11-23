@@ -168,7 +168,7 @@ export default function DecisionBriefPage() {
               The AI lays out the risks and options. The TPM makes the call.
             </p>
             <p className={`${styles.meta} ${styles.runCost}`}>
-              Built in one week with Python and the Claude API. About 15 to 30 cents per brief. All program data is made up.
+              Built in one week with Python and the Claude API. All program data is made up.
             </p>
           </div>
         </header>
@@ -200,8 +200,9 @@ export default function DecisionBriefPage() {
                 Tinder runs about 200 internal AI agents, and one already writes a PM&apos;s weekly report. So I skipped status reports and built the next step: turning status into a decision.
               </li>
               <li>
-                <strong><a href="https://jobs.lever.co/matchgroup/38a680c1-07a6-438e-9448-b677b5f044e0">Tinder&apos;s TPM job postings</a>.</strong>{" "}
-                One asks for &quot;recommendations that shape decisions, not just status updates.&quot; That line became my spec.
+                <strong>Tinder&apos;s TPM job postings.</strong>{" "}
+                One, for the Events team, asks for &quot;recommendations that shape decisions, not just status updates.&quot;
+                That line became my spec.
               </li>
               <li>
                 <strong>Tinder&apos;s own AI rules.</strong> From <a href="https://www.lifeattinder.com/blog/llm-features-you-can-bet-on">&quot;LLM Features You Can Bet On&quot;</a>: define what a right answer looks like before building, choose precision or recall on purpose, and study the failures. I followed all three.
