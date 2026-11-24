@@ -287,78 +287,28 @@
   outline-offset: 2px;
 }
 
-/* Full brief */
+/* Heading row with the link to the full brief */
 
-.fullBrief {
-  margin-top: clamp(36px, 6vw, 64px);
-  border-block: 1px solid var(--line);
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 32px;
 }
 
-.fullBrief summary {
-  display: flex;
+.briefLink {
+  display: inline-flex;
   min-height: 44px;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 0;
-  cursor: pointer;
+  flex: none;
+  font-size: 0.9375rem;
   font-weight: 600;
-  list-style: none;
 }
 
-.fullBrief summary::-webkit-details-marker { display: none; }
-
-.fullBrief summary::after {
-  content: "";
-  flex: 0 0 11px;
-  height: 11px;
-  background:
-    linear-gradient(var(--red), var(--red)) center / 11px 1px no-repeat,
-    linear-gradient(var(--red), var(--red)) center / 1px 11px no-repeat;
-}
-
-.fullBrief[open] summary::after {
-  background: linear-gradient(var(--red), var(--red)) center / 11px 1px no-repeat;
-}
-
-.fullBrief summary:hover { color: var(--red); }
-
-.fullBrief summary:focus-visible {
+.briefLink:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 3px;
-}
-
-.briefBody {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 20px;
-  padding: clamp(16px, 3vw, 28px);
-  border-radius: 12px;
-  background: #fff;
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  overflow-wrap: anywhere;
-}
-
-.briefBody :is(ul, ol) {
-  display: grid;
-  gap: 4px;
-  margin: 0;
-  padding-inline-start: 1.4em;
-}
-
-.briefBody ol { list-style: decimal; }
-.briefBody ul { list-style: disc; }
-
-.briefBody code {
-  font-size: 0.875em;
-}
-
-.briefHeading { margin-top: 8px !important; }
-.briefHeading[data-level="1"] { margin-top: 0 !important; font-size: 1.125rem; }
-
-.briefOptions {
-  display: grid;
-  gap: 10px;
 }
 
 /* Sources */

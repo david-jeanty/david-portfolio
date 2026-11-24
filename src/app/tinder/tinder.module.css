@@ -152,13 +152,6 @@
   gap: 0 14px;
 }
 
-.pdfLink {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  font-size: 0.875rem;
-}
-
 .profile .testSummary {
   margin-bottom: 12px;
   color: var(--muted);

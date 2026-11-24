@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import ModernPortfolioFrame from "@/components/portfolio/ModernPortfolioFrame";
 import { modernPortfolio } from "@/data/modern-portfolio";
 import BuildVideo from "./BuildVideo";
-import FullBrief from "./FullBrief";
 import ProfileDeck from "./ProfileDeck";
 import styles from "./tinder.module.css";
 import Walkthrough from "./Walkthrough";
@@ -20,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 const demoVideo = "/decision-brief-demo.mp4";
+const briefPdf = "/after-party-decision-brief.pdf";
 
 const sources = [
   { title: "Technical Program Management Intern", url: "https://jobs.lever.co/matchgroup/107da1ee-5b8a-4a1b-9d75-5ba3d597116c" },
@@ -196,35 +196,38 @@ export default function TinderPage() {
         </div>
 
         <section className={walkthroughStyles.walkthrough} id="walkthrough" aria-labelledby="walkthrough-title">
-          <h2 id="walkthrough-title">Inside After Party</h2>
-          <p className={walkthroughStyles.intro}>These are real screenshots from the Slack workspace I built to test Brief Writer, in the order a TPM would use it.</p>
+          <div className={walkthroughStyles.heading}>
+            <div>
+              <h2 id="walkthrough-title">Inside After Party</h2>
+              <p className={walkthroughStyles.intro}>These are real screenshots from the Slack workspace I built to test Brief Writer, in the order a TPM would use it.</p>
+            </div>
+            <a className={walkthroughStyles.briefLink} href={briefPdf} target="_blank" rel="noopener">Read the full brief (PDF) ↗</a>
+          </div>
           <Walkthrough steps={walkthroughSteps} />
-          <FullBrief />
         </section>
 
         <div className={styles.closing}>
         <section className={styles.caseStudy} aria-labelledby="case-study">
           <div className={styles.caseStudyHeading}>
             <h2 id="case-study">The case study</h2>
-            <a className={styles.pdfLink} href="/brief_v2.pdf" download>Sample brief (PDF) ↓</a>
           </div>
           <p className={styles.testSummary}>Brief Writer found every problem I planted in two made-up programs it had never seen.</p>
 
-          <details className={styles.disclosure} id="testing">
+          <details className={styles.disclosure} name="case-study" id="testing">
             <summary>Testing and limitations</summary>
             <div className={styles.disclosureBody}>
               <DecisionNotes items={testingNotes} />
             </div>
           </details>
 
-          <details className={styles.disclosure} id="design-decisions">
+          <details className={styles.disclosure} name="case-study" id="design-decisions">
             <summary>Research and design decisions</summary>
             <div className={styles.disclosureBody}>
               <DecisionNotes items={designNotes} />
             </div>
           </details>
 
-          <details className={styles.disclosure} id="why-me">
+          <details className={styles.disclosure} name="case-study" id="why-me">
             <summary>Why me</summary>
             <dl className={styles.highlights}>
               <div>
