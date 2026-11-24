@@ -22,7 +22,7 @@ function Icon({ name }: { name: keyof typeof icons }) {
   );
 }
 
-export default function ProfileDeck({ name }: { name: string }) {
+export default function ProfileDeck({ name, watchHref }: { name: string; watchHref: string }) {
   return (
     <header className={styles.hero} id="swipe">
       <div className={styles.deck}>
@@ -32,7 +32,7 @@ export default function ProfileDeck({ name }: { name: string }) {
               src="/tinder-profile-photo.webp"
               alt="David and two others wearing mouse-ear headbands and smiling for a selfie"
               fill
-              sizes="(min-width: 580px) 420px, 100vw"
+              sizes="(min-width: 900px) 320px, (min-width: 505px) 440px, 100vw"
               preload
             />
           </div>
@@ -40,7 +40,7 @@ export default function ProfileDeck({ name }: { name: string }) {
           <div className={styles.cardBottom}>
             <div className={styles.identity}>
               <div className={styles.likesYou}><Icon name="likesYou" /> Likes You <Icon name="chevron" /></div>
-              <h1 id="profile-name" className={portfolio.pageTitle}>
+              <h2 className={portfolio.pageTitle}>
                 {name}
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <polygon
@@ -51,16 +51,16 @@ export default function ProfileDeck({ name }: { name: string }) {
                   />
                   <path d="m7.7 12.2 2.8 2.8 5.8-5.8" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </h1>
+              </h2>
               <p><Icon name="pin" /> Ottawa · Looking for Tinder TPM in Los Angeles</p>
               <p><Icon name="school" /> Business Technology Management · uOttawa</p>
             </div>
-            <div className={styles.deckActions} aria-hidden="true">
+            <div className={styles.deckActions}>
               <span className={styles.rewind}><Icon name="rewind" /></span>
               <span className={styles.pass}><Icon name="pass" /></span>
               <span className={styles.superLike}><Icon name="star" /></span>
-              <span className={styles.like}>
-                <svg viewBox="0 0 24 24">
+              <a className={styles.like} href={watchHref} aria-label="Watch the build">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
                   <defs>
                     <linearGradient id="profile-like" x1="0%" y1="0%" x2="85%" y2="90%">
                       <stop stopColor="#d0eb54" />
@@ -69,7 +69,7 @@ export default function ProfileDeck({ name }: { name: string }) {
                   </defs>
                   <path fill="url(#profile-like)" d={icons.heart} />
                 </svg>
-              </span>
+              </a>
               <span className={styles.send}><Icon name="send" /></span>
             </div>
           </div>

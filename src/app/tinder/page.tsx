@@ -1,11 +1,10 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import Image from "next/image";
 import ModernPortfolioFrame from "@/components/portfolio/ModernPortfolioFrame";
-import ToolStack from "@/components/portfolio/ToolStack";
 import { modernPortfolio } from "@/data/modern-portfolio";
+import BuildVideo from "./BuildVideo";
 import ProfileDeck from "./ProfileDeck";
 import styles from "./tinder.module.css";
 
@@ -31,20 +30,6 @@ const sources = [
 
 function SourceRef({ number }: { number: number }) {
   return <a className={styles.sourceRef} href={`#source-${number}`} aria-label={`Source ${number}`}>[{number}]</a>;
-}
-
-function ProfileDisclosure({ id, heading, defaultOpen = false, children }: {
-  id: string;
-  heading: string;
-  defaultOpen?: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <details id={id} className={styles.disclosure} open={defaultOpen}>
-      <summary>{heading}</summary>
-      <div className={styles.disclosureBody}>{children}</div>
-    </details>
-  );
 }
 
 const decisions = [
@@ -139,10 +124,116 @@ function SampleBrief() {
   );
 }
 
+const rationale = [
+  {
+    id: "research",
+    heading: "Did my research before the first date",
+    text: "The TPM postings asked for recommendations, not just status. Agentis already assembles a PM’s weekly report, and the Recs posting asks a TPM to automate status reporting and still bring a recommended path forward. So I built for what comes after the report.",
+    path: "M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm5-2 5 5",
+    sources: [1, 2, 5],
+  },
+  {
+    id: "prioritization",
+    heading: "Red flags go first",
+    text: "High-impact, well-supported risks lead the brief, each with a deadline, options and evidence.",
+    path: "M5 22V3h14l-3 4 3 4H5",
+    tone: "red",
+  },
+  {
+    id: "watch-list",
+    heading: "Yellow flags get watched",
+    text: "Weaker signals go to a watch list instead of the top of the brief.",
+    path: "M5 22V3h14l-3 4 3 4H5",
+    tone: "amber",
+  },
+  {
+    id: "ownership",
+    heading: "Ghosted",
+    text: "The fraud notification due for R4 had no owner, spec or decision. Brief Writer flagged it.",
+    path: "M5 20V10a7 7 0 0 1 14 0v10l-3-3-4 3-4-3-3 3Z",
+  },
+  {
+    id: "decoys",
+    heading: "The ick, not a dealbreaker",
+    text: "I planted decoys that look scary but aren’t. None of them made it into the lead risks.",
+    path: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-2-6h4",
+  },
+  {
+    id: "workflow",
+    heading: "Wingman, not matchmaker",
+    text: "Brief Writer posts the options in Slack, cites the records, and leaves the decision to a person, like the approval steps in Tinder’s own agent tools.",
+    path: "M3 20c0-3 2-5 6-5s6 2 6 5M9 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm8-6a3 3 0 0 1 0 6m1 3c2 .4 3 2 3 5",
+    sources: [6, 5],
+  },
+  {
+    id: "recall",
+    heading: "I’d rather double-text than get ghosted",
+    text: "Recall over precision. A false alarm costs a few minutes. A missed risk can sink a launch.",
+    path: "M4 4h16v12H9l-5 4V4Z",
+  },
+  {
+    id: "evaluation",
+    heading: "Blind date",
+    text: "Following Tinder’s Photo Feedback evaluation, I wrote an answer key first, then tested Brief Writer on two programs it had never seen, Ledgerline and Courier. It found every planted problem.",
+    path: "m3 3 18 18M10 6a10 10 0 0 1 12 6m-3 3c-2 2-4 3-7 3-5 0-8-3-10-6 1-2 2-3 4-4",
+    sources: [7],
+  },
+  {
+    id: "bias-check",
+    heading: "Got a second opinion",
+    text: "A separate agent rebuilt the risk rules from public sources without seeing my main test or answer key. It surfaced about as many issues on that test.",
+    path: "M16 17h-5l-4 4v-4H3V5h14v9m2 4h2V9",
+  },
+  {
+    id: "limits",
+    heading: "Brief Writer’s toxic trait",
+    text: "It can miss a risk when the records are sparse or the evidence is spread across threads. A live program would be the next test.",
+    path: "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-14v5m0 3h.01",
+  },
+] as const;
+
+function MatchHero({ name, email, watchHref }: { name: string; email: string; watchHref: string }) {
+  return (
+    <header className={styles.matchHero}>
+      <p className={styles.matchLabel}>{title}</p>
+      <h1 id="match-title">Looks like a match.</h1>
+      <div className={styles.matchCards}>
+        <div className={`${styles.matchCard} ${styles.candidateCard}`}>
+          <Image src="/tinder-headshot.jpg" alt="" fill sizes="260px" className={styles.matchPortrait} preload />
+          <div className={styles.matchCardCopy}>
+            <strong>{name}</strong>
+            <p>Business Technology Management · uOttawa</p>
+          </div>
+        </div>
+        <span className={styles.matchHeart} aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="29" height="29" fill="none" stroke="currentColor" strokeWidth="2.15" strokeLinejoin="round">
+            <path d="M12 21 4 13a5.5 5.5 0 0 1 8-7.5 5.5 5.5 0 0 1 8 7.5Z" />
+          </svg>
+        </span>
+        <div className={`${styles.matchCard} ${styles.roleCard}`}>
+          <p>The role</p>
+          <div className={styles.matchCardCopy}>
+            <strong>Technical Program Management Intern</strong>
+            <p>Tinder · Los Angeles · Summer 2027</p>
+          </div>
+        </div>
+      </div>
+      <p className={styles.matchIntro}>
+        I&apos;m a Business Technology Management student at the University of Ottawa. Instead of just applying, I built something.
+      </p>
+      <div className={styles.matchActions}>
+        <a className={`${styles.pill} ${styles.primaryPill}`} href={watchHref}>Watch the build</a>
+        <a className={styles.pill} href={`mailto:${email}`}>Email me</a>
+      </div>
+      <p className={styles.scrollCue}>Keep scrolling <span aria-hidden="true">↓</span></p>
+    </header>
+  );
+}
+
 export default function TinderPage() {
   const { name, email, linkedin } = modernPortfolio.identity;
-  const { tools } = modernPortfolio.tinderProject;
   const hasDemo = existsSync(join(process.cwd(), "public", demoVideo));
+  const watchHref = hasDemo ? "#video" : "#built";
 
   return (
     <ModernPortfolioFrame
@@ -153,130 +244,128 @@ export default function TinderPage() {
         </footer>
       )}
     >
-      <article className={styles.profile} aria-labelledby="profile-name">
-        <ProfileDeck name={name} />
+      <article className={styles.profile} aria-labelledby="match-title">
+        <MatchHero name={name} email={email} watchHref={watchHref} />
 
-        {hasDemo && (
-          <section id="video" className={styles.section} aria-labelledby="video-heading">
-            <h2 id="video-heading">Watch the build</h2>
-            <p className={styles.videoNote}>About two and a half minutes, narrated by me.</p>
-            <video className={styles.video} src={demoVideo} controls playsInline preload="metadata" aria-labelledby="video-heading" />
-          </section>
-        )}
+        <div className={styles.split}>
+          <ProfileDeck name={name} watchHref={watchHref} />
+          <div className={styles.caseStudy}>
+            {hasDemo && (
+              <section id="video" className={styles.section} aria-labelledby="video-heading">
+                <h2 id="video-heading">Watch the build</h2>
+                <p className={styles.videoNote}>About 80 seconds.</p>
+                <BuildVideo src={demoVideo} />
+              </section>
+            )}
 
-        <section className={styles.section} aria-labelledby="why-me">
-          <h2 id="why-me">Why me</h2>
-          <dl className={styles.highlights}>
-            <div>
-              <dt>Decisions from data and research.</dt>
-              <dd>At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.</dd>
-            </div>
-            <div>
-              <dt>The big picture out of the weeds.</dt>
-              <dd>Brief Writer reads every ticket and Slack thread and pulls out the few decisions leads need to make.</dd>
-            </div>
-            <div>
-              <dt>Ruthless prioritization.</dt>
-              <dd>Brief Writer puts well-supported, high-impact risks at the top and moves weaker signals to a watch list.</dd>
-            </div>
-          </dl>
-        </section>
-
-        <section className={styles.section} aria-labelledby="built">
-          <div className={styles.projectHeader}>
-            <h2 id="built">Brief Writer</h2>
-            <ToolStack tools={tools} />
-          </div>
-          <p className={styles.lede}>
-            I built a Slack tool that reads tickets and messages, flags decisions that need attention, and gives leads a deadline, options, and the evidence behind them.
-          </p>
-
-          <div className={styles.projectGrid}>
-            <figure>
-              <Image
-                src="/brief-writer-slack.webp"
-                alt="Brief Writer’s Slack message listing decisions and conflicting status updates for Post-Event Matching"
-                width={1112}
-                height={772}
-                sizes="(min-width: 1040px) 525px, (min-width: 760px) 52vw, 88vw"
-                className={styles.briefImage}
-              />
-              <figcaption>Slack output for After Party, a fictional dating app.</figcaption>
-            </figure>
-
-            <div className={styles.mismatch}>
-              <h3 id="mismatch">The status looked fine.</h3>
-              <dl className={styles.evidence}>
+            <section className={styles.section} aria-labelledby="why-me">
+              <h2 id="why-me">My green flags</h2>
+              <dl className={styles.highlights}>
                 <div>
-                  <dt>What leads heard <span className={styles.meta}>MSG-087</span></dt>
-                  <dd>iOS reported “nothing that changes dates yet.”</dd>
+                  <dt>Decisions from data and research.</dt>
+                  <dd>At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.</dd>
                 </div>
                 <div>
-                  <dt>What the records showed <span className={styles.meta}>MSG-075, PEM-111</span></dt>
-                  <dd>App Review had rejected the build the day before. The attendee deck was paused and moved to the next release.</dd>
+                  <dt>The big picture out of the weeds.</dt>
+                  <dd>Brief Writer reads every ticket and Slack thread and pulls out the few decisions leads need to make.</dd>
+                </div>
+                <div>
+                  <dt>Ruthless prioritization.</dt>
+                  <dd>Brief Writer puts well-supported, high-impact risks at the top and moves weaker signals to a watch list.</dd>
                 </div>
               </dl>
-              <p>Brief Writer put both updates side by side so leads could revisit the release scope.</p>
-            </div>
+            </section>
+
+            <section className={styles.section} aria-labelledby="built">
+              <h2 id="built">Brief Writer</h2>
+              <p className={styles.lede}>
+                I built a Slack tool that reads tickets and messages, flags decisions that need attention, and gives leads a deadline, options, and the evidence behind them.
+              </p>
+
+              <div className={styles.projectGrid}>
+                <Image
+                  src="/brief-writer-slack.webp"
+                  alt="Brief Writer’s Slack message listing decisions and conflicting status updates for Post-Event Matching"
+                  width={1112}
+                  height={772}
+                  sizes="(min-width: 1280px) 440px, (min-width: 900px) 38vw, 100vw"
+                  className={styles.briefImage}
+                />
+                <div className={styles.mismatch}>
+                  <h3 id="mismatch">Looked like a green flag.</h3>
+                  <dl className={styles.evidence}>
+                    <div>
+                      <dt>What leads heard <span className={styles.meta}>· MSG-087</span></dt>
+                      <dd>iOS reported “nothing that changes dates yet.”</dd>
+                    </div>
+                    <div>
+                      <dt>What the records showed <span className={styles.meta}>· MSG-075, PEM-111</span></dt>
+                      <dd>App Review had rejected the build the day before. The attendee deck was paused and moved to the next release.</dd>
+                    </div>
+                  </dl>
+                  <p>It was a red flag. Brief Writer put both side by side so leads could revisit the release scope.</p>
+                </div>
+              </div>
+              <p className={styles.briefCaption}>
+                Slack output for After Party, a fictional dating app.{" "}
+                <a href="/brief_v2.pdf" download>Download the full sample brief (PDF)</a>
+              </p>
+              <details id="sample-brief" className={styles.disclosure}>
+                <summary>Read the sample brief</summary>
+                <div className={styles.disclosureBody}><SampleBrief /></div>
+              </details>
+            </section>
+
+            <section className={styles.section} aria-labelledby="design-decisions">
+              <h2 id="design-decisions">Every decision I made, and why</h2>
+              <ul className={styles.rationale}>
+                {rationale.map((item) => (
+                  <li id={item.id} key={item.id}>
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      data-tone={"tone" in item ? item.tone : undefined}
+                      aria-hidden="true"
+                    >
+                      <path d={item.path} />
+                    </svg>
+                    <div>
+                      <h3>{item.heading}</h3>
+                      <p>
+                        {item.text}
+                        {"sources" in item && item.sources.map((number) => (
+                          <span key={number}> <SourceRef number={number} /></span>
+                        ))}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section className={styles.section} aria-labelledby="sources">
+              <h2 id="sources">Receipts</h2>
+              <ol className={styles.sources}>
+                {sources.map((source, index) => (
+                  <li id={`source-${index + 1}`} key={source.url}>
+                    <a href={source.url}>{source.title}</a>
+                    {"note" in source && <span className={styles.meta}> · {source.note}</span>}
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section className={styles.interview} aria-labelledby="interview">
+              <h2 id="interview">Swipe right?</h2>
+              <p>I’d love to interview for the Technical Program Management internship in LA this summer.</p>
+              <a className={`${styles.pill} ${styles.contactLink}`} href={`mailto:${email}`}>Email me</a>
+            </section>
           </div>
-          <a className={styles.pdfLink} href="/brief_v2.pdf" download>Download the full sample brief (PDF) <span aria-hidden="true">↓</span></a>
-
-          <p className={styles.decisionsIntro}>Every decision I made, and why.</p>
-          <div className={styles.disclosures}>
-            <ProfileDisclosure id="sample-brief" heading="Read the sample brief">
-              <SampleBrief />
-            </ProfileDisclosure>
-
-            <ProfileDisclosure id="research" heading="Research and design decisions" defaultOpen>
-              <p>
-                The TPM postings pointed to early escalation, clear trade-offs, and recommendations people can act on.{" "}
-                <SourceRef number={1} /> <SourceRef number={2} /> <SourceRef number={3} /> <SourceRef number={4} />
-              </p>
-              <p>
-                I planned to build a status writer. Then I read that Agentis already assembles a PM&apos;s weekly report, and the Recs posting asks a TPM to automate status reporting and still bring a recommended path forward. So I built for what happens after the report arrives.{" "}
-                <SourceRef number={5} /> <SourceRef number={2} />
-              </p>
-              <p id="workflow">
-                Merlin made Slack the natural place for review. Brief Writer posts the options there, cites the records, and leaves the decision to a person. <SourceRef number={6} /> <SourceRef number={5} />
-              </p>
-            </ProfileDisclosure>
-
-            <ProfileDisclosure id="evaluation" heading="Testing, trade-offs, and limits" defaultOpen>
-              <p>
-                Following Tinder’s Photo Feedback evaluation, I wrote an answer key first and planted risks alongside decoys. Brief Writer found every planted problem in two previously unseen synthetic programs, Ledgerline and Courier. None of the decoys made it into the lead risks. <SourceRef number={7} />
-              </p>
-              <p>
-                For a bias check, a separate agent rebuilt the risk rules from public sources without seeing my main test or answer key. It surfaced about as many issues on that test.
-              </p>
-              <p id="recall">
-                <strong>Why I prioritized recall.</strong> A missed dependency can derail a launch. I kept well-supported, high-impact issues at the top of the brief and routed weaker signals to a watch list.
-              </p>
-              <p id="limits">
-                <strong>Where it fell short.</strong> In the main test, Brief Writer missed some risks with sparse records or evidence spread across threads. A live program would be the next test.
-              </p>
-            </ProfileDisclosure>
-          </div>
-        </section>
-
-        <section className={styles.section} aria-labelledby="sources">
-          <h2 id="sources">Sources</h2>
-          <ol className={styles.sources}>
-            {sources.map((source, index) => (
-              <li id={`source-${index + 1}`} key={source.url}>
-                <a href={source.url}>{source.title}</a>
-                {"note" in source && <span className={styles.meta}> · {source.note}</span>}
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section className={`${styles.section} ${styles.interview}`} aria-labelledby="interview">
-          <div>
-            <h2 id="interview">Let’s talk</h2>
-            <p>I’d love to interview for the Technical Program Management internship in LA this summer.</p>
-          </div>
-          <a className={styles.contactLink} href={`mailto:${email}`}>Email me <span aria-hidden="true">↗</span></a>
-        </section>
+        </div>
       </article>
     </ModernPortfolioFrame>
   );
