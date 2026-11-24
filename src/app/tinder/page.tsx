@@ -33,9 +33,14 @@ function SourceRef({ number }: { number: number }) {
   return <a className={styles.sourceRef} href={`#source-${number}`} aria-label={`Source ${number}`}>[{number}]</a>;
 }
 
-function ProfileDisclosure({ id, heading, children }: { id: string; heading: string; children: ReactNode }) {
+function ProfileDisclosure({ id, heading, defaultOpen = false, children }: {
+  id: string;
+  heading: string;
+  defaultOpen?: boolean;
+  children: ReactNode;
+}) {
   return (
-    <details id={id} className={styles.disclosure}>
+    <details id={id} className={styles.disclosure} open={defaultOpen}>
       <summary>{heading}</summary>
       <div className={styles.disclosureBody}>{children}</div>
     </details>
@@ -149,12 +154,13 @@ export default function TinderPage() {
       )}
     >
       <article className={styles.profile} aria-labelledby="profile-name">
-        <ProfileDeck name={name} linkedin={linkedin} email={email} />
+        <ProfileDeck name={name} />
 
         {hasDemo && (
-          <section className={styles.section} aria-labelledby="video">
-            <h2 id="video">Project walkthrough</h2>
-            <video className={styles.video} src={demoVideo} controls playsInline preload="metadata" />
+          <section id="video" className={styles.section} aria-labelledby="video-heading">
+            <h2 id="video-heading">Watch the build</h2>
+            <p className={styles.videoNote}>About two and a half minutes, narrated by me.</p>
+            <video className={styles.video} src={demoVideo} controls playsInline preload="metadata" aria-labelledby="video-heading" />
           </section>
         )}
 
@@ -162,16 +168,16 @@ export default function TinderPage() {
           <h2 id="why-me">Why me</h2>
           <dl className={styles.highlights}>
             <div>
-              <dt>I make the trade-offs clear.</dt>
+              <dt>Decisions from data and research.</dt>
               <dd>At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.</dd>
             </div>
             <div>
-              <dt>I build and revise.</dt>
-              <dd>I built <a href="/interndex">Interndex</a>, an internship tracker, and revised it based on feedback from students.</dd>
+              <dt>The big picture out of the weeds.</dt>
+              <dd>Brief Writer reads every ticket and Slack thread and pulls out the few decisions leads need to make.</dd>
             </div>
             <div>
-              <dt>I keep work moving.</dt>
-              <dd>On an IBM pro bono project, I track the team’s deadlines and help a nonprofit review how it handles donor and participant data.</dd>
+              <dt>Ruthless prioritization.</dt>
+              <dd>Brief Writer puts well-supported, high-impact risks at the top and moves weaker signals to a watch list.</dd>
             </div>
           </dl>
         </section>
@@ -215,27 +221,29 @@ export default function TinderPage() {
           </div>
           <a className={styles.pdfLink} href="/brief_v2.pdf" download>Download the full sample brief (PDF) <span aria-hidden="true">↓</span></a>
 
+          <p className={styles.decisionsIntro}>Every decision I made, and why.</p>
           <div className={styles.disclosures}>
             <ProfileDisclosure id="sample-brief" heading="Read the sample brief">
               <SampleBrief />
             </ProfileDisclosure>
 
-            <ProfileDisclosure id="research" heading="Research and design decisions">
+            <ProfileDisclosure id="research" heading="Research and design decisions" defaultOpen>
               <p>
                 The TPM postings pointed to early escalation, clear trade-offs, and recommendations people can act on.{" "}
                 <SourceRef number={1} /> <SourceRef number={2} /> <SourceRef number={3} /> <SourceRef number={4} />
               </p>
               <p>
-                I planned to build a status writer. When I read that Agentis already writes a weekly PM report, I shifted to what happens after the report arrives. <SourceRef number={5} />
+                I planned to build a status writer. Then I read that Agentis already assembles a PM&apos;s weekly report, and the Recs posting asks a TPM to automate status reporting and still bring a recommended path forward. So I built for what happens after the report arrives.{" "}
+                <SourceRef number={5} /> <SourceRef number={2} />
               </p>
               <p id="workflow">
                 Merlin made Slack the natural place for review. Brief Writer posts the options there, cites the records, and leaves the decision to a person. <SourceRef number={6} /> <SourceRef number={5} />
               </p>
             </ProfileDisclosure>
 
-            <ProfileDisclosure id="evaluation" heading="Testing, trade-offs, and limits">
+            <ProfileDisclosure id="evaluation" heading="Testing, trade-offs, and limits" defaultOpen>
               <p>
-                Following Tinder’s Photo Feedback evaluation, I wrote an answer key first and planted risks alongside decoys. Brief Writer found every planted problem in two previously unseen synthetic programs, Ledgerline and Courier. <SourceRef number={7} />
+                Following Tinder’s Photo Feedback evaluation, I wrote an answer key first and planted risks alongside decoys. Brief Writer found every planted problem in two previously unseen synthetic programs, Ledgerline and Courier. None of the decoys made it into the lead risks. <SourceRef number={7} />
               </p>
               <p>
                 For a bias check, a separate agent rebuilt the risk rules from public sources without seeing my main test or answer key. It surfaced about as many issues on that test.

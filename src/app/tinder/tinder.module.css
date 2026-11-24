@@ -61,180 +61,81 @@
 .slide {
   position: relative;
   display: flex;
-  min-height: clamp(500px, calc(100svh - 180px), 760px);
+  aspect-ratio: 3 / 4;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   isolation: isolate;
   overflow: hidden;
   border-radius: 34px;
-  background: #292422;
-}
-
-.swipeArea,
-.slide::after {
-  position: absolute;
-  inset: 0;
-}
-
-.swipeArea {
-  touch-action: pan-y pinch-zoom;
-  user-select: none;
-  cursor: pointer;
-}
-
-.slide::after {
-  content: "";
-  pointer-events: none;
-  background: linear-gradient(180deg, rgb(12 9 7 / 65%), transparent 24%, transparent 50%, rgb(13 10 8 / 78%) 84%, #1b1714);
-}
-
-.swipeArea img { pointer-events: none; }
-
-.photoBackdrop {
-  object-fit: cover;
-  filter: blur(12px) brightness(0.72);
-  transform: scale(1.08);
-}
-
-.photo,
-.projectSlide {
-  position: absolute;
-  inset-inline: 0;
+  background: #14110f;
 }
 
 .photo {
-  top: 10%;
-  aspect-ratio: 1;
-  mask-image: linear-gradient(transparent, #000 16% 84%, transparent);
-}
-
-.photo img { object-fit: cover; }
-
-.projectSlide {
-  top: 18%;
-  height: 47%;
-}
-
-.projectSlide img {
-  padding-inline: 12px;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 18px rgb(0 0 0 / 45%));
-}
-
-.cardTop,
-.cardBottom { z-index: 1; }
-
-.cardTop { padding: 10px 12px 0; }
-
-.topNav,
-.galleryControls,
-.deckActions,
-.deckNav {
-  display: flex;
-  align-items: center;
-}
-
-.topNav {
-  justify-content: space-between;
-  gap: 4px;
-  white-space: nowrap;
-  font-size: 0.8125rem;
-}
-
-.galleryControls { justify-content: center; flex: 1; }
-
-.topNav button,
-.topNav > a,
-.topNav summary {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  padding: 0 8px;
-  border: 1px solid transparent;
-  border-radius: 22px;
-  color: #fff;
-  font: inherit;
-  text-decoration: none;
-}
-
-.topNav button,
-.topNav summary { cursor: pointer; }
-
-.topNav button[aria-pressed="true"],
-.topNav button:hover,
-.topNav > a:hover,
-.topNav summary:hover {
-  border-color: rgb(255 255 255 / 21%);
-  background: rgb(16 12 10 / 30%);
-}
-
-.menu { position: relative; }
-.menu summary { min-width: 38px; padding: 0; list-style: none; }
-.menu summary::-webkit-details-marker { display: none; }
-
-.menuLinks {
   position: absolute;
-  z-index: 1;
-  left: 0;
-  min-width: 142px;
-  padding: 5px;
-  border: 1px solid #5e5753;
-  border-radius: 12px;
-  background: #201c1a;
+  inset: 0 0 auto;
+  aspect-ratio: 8 / 9;
+  mask-image: linear-gradient(#000 64%, transparent);
 }
 
-.menuLinks a {
-  display: flex;
-  min-height: 44px;
-  align-items: center;
-  padding: 0 10px;
-  color: #fff;
+.photo img {
+  object-fit: cover;
+  object-position: center bottom;
 }
 
-.progress {
-  display: flex;
-  justify-content: center;
-  gap: 3px;
-  margin-top: 9px;
+.cardBottom {
+  position: relative;
+  isolation: isolate;
+  padding: 6px clamp(14px, 4vw, 26px) 13px;
 }
 
-.progress span {
-  width: 16px;
-  height: 3px;
-  border-radius: 2px;
-  background: rgb(255 255 255 / 31%);
-}
-
-.progress span[data-active="true"] { background: #fff; }
-
-.srOnly {
+.cardBottom::before,
+.cardBottom::after {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+  z-index: -1;
+  inset-inline: 0;
+  bottom: 0;
+  height: 88px;
+  content: "";
 }
 
-.cardBottom { padding: 6px clamp(14px, 4vw, 26px) 20px; }
+.cardBottom::before {
+  background: #12171b;
+  clip-path: polygon(0 57%, 100% 57%, 100% 100%, 0 100%);
+}
+
+.cardBottom::after {
+  background: linear-gradient(10deg, #a9250a 53%, #bb912e 54%);
+  clip-path: polygon(0 0, 72% 57%, 0 57%);
+}
 
 .identity {
   color: #fff;
   text-shadow: 0 1px 6px #111;
 }
 
-.nameRow {
-  display: flex;
+.identity .likesYou {
+  display: inline-flex;
+  min-height: 27px;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: 5px;
+  margin-bottom: 10px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: linear-gradient(115deg, #ffe076, #f4bc36);
+  color: #181304;
+  font-size: 0.8125rem;
+  font-weight: 750;
+  line-height: 1.15;
+  text-shadow: none;
 }
 
-.nameRow h1 {
+.likesYou svg { width: 18px; height: 18px; stroke-width: 2.2; }
+.likesYou svg:last-child { width: 13px; height: 13px; }
+
+.identity h1 {
+  margin-bottom: 8px;
   font-size: clamp(1.65rem, 6vw, 2rem);
-  font-weight: 650;
+  font-weight: 700;
   letter-spacing: -0.035em;
 }
 
@@ -250,73 +151,40 @@
 
 .identity p svg { width: 16px; height: 16px; opacity: 0.85; }
 
-.profile .openProfile,
-.deckActions :is(button, a) {
-  display: inline-grid;
-  width: 48px;
-  height: 48px;
-  flex: none;
-  place-items: center;
-  border: 1px solid rgb(255 255 255 / 20%);
-  border-radius: 50%;
-  background: rgb(33 23 19 / 36%);
-  color: #fff;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.profile .openProfile { width: 44px; height: 44px; }
-.openProfile svg { width: 20px; height: 20px; }
-
 .deckActions {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 4px;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
-.deckActions :is(button, a):hover,
-.profile .openProfile:hover { background: rgb(255 255 255 / 18%); }
-
-.deckActions :is(button:nth-child(2), .projectAction) {
-  width: 58px;
-  height: 58px;
+.deckActions span {
+  display: inline-grid;
+  width: clamp(39px, 12.2vw, 51px);
+  height: clamp(39px, 12.2vw, 51px);
+  flex: none;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 7%);
+  border-radius: 50%;
+  background: #1b222a;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 37%);
 }
 
-.deckActions :is(button:nth-child(2), .projectAction) svg { width: 30px; height: 30px; }
-.deckActions .superLike,
-.deckActions .sendAction { color: #bfdbff; }
-.deckActions .projectAction { color: #ff4458; }
-
-.deckNav {
-  justify-content: space-between;
-  gap: 2px;
-  margin-top: 9px;
-  padding: 4px;
-  border: 1px solid #252323;
-  border-radius: 34px;
+.deckActions :is(.pass, .like) {
+  width: clamp(48px, 15.2vw, 64px);
+  height: clamp(48px, 15.2vw, 64px);
 }
 
-.profile .deckNav a {
-  display: grid;
-  min-height: 52px;
-  flex: 1;
-  place-content: center;
-  justify-items: center;
-  gap: 2px;
-  border-radius: 26px;
-  color: #fff;
-  font-size: 0.6875rem;
-  line-height: 1.15;
-  text-decoration: none;
-}
+.deckActions :is(.pass, .like) svg { width: 58%; height: 58%; }
 
-.deckNav a:hover,
-.deckNav a[aria-current] { background: #272626; }
-
-.hero :is(a, button, summary):focus-visible {
-  outline: 2px solid #d6e7ff;
-  outline-offset: 2px;
-}
+.rewind { color: #ffb625; }
+.rewind svg { stroke-width: 2.7; }
+.pass { color: #ff2e69; }
+.pass svg { stroke-width: 4.1; }
+.superLike { color: #22aeff; }
+.send { color: #16b1ee; }
+.deckActions :is(.superLike, .send) svg { fill: currentColor; stroke-width: 1.2; }
 
 .profile .contactLink {
   display: inline-flex;
@@ -340,30 +208,29 @@
     border-radius: 0;
     box-shadow: none;
   }
-
-  .slide { min-height: max(480px, calc(100svh - 86px - env(safe-area-inset-bottom))); }
-}
-
-@media (max-width: 360px) {
-  .cardTop { padding-inline: 8px; }
-  .topNav button,
-  .topNav > a { padding-inline: 5px; }
-  .deckActions :is(button, a) { width: 44px; height: 44px; }
-  .deckActions :is(button:nth-child(2), .projectAction) { width: 52px; height: 52px; }
 }
 
 .section {
+  --accent: #cd130a;
   padding: clamp(22px, 3.3vw, 36px) var(--section-padding);
 }
 
 .section + .section { border-top: 1px solid var(--line); }
 
+.section .videoNote {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
 .video {
   display: block;
   width: 100%;
+  aspect-ratio: 16 / 9;
   margin-top: 14px;
   border-radius: 10px;
   background: #221c1c;
+  object-fit: contain;
 }
 
 .section .highlights {
@@ -410,9 +277,11 @@
 .briefImage {
   display: block;
   width: 100%;
+  max-width: 1112px;
   height: auto;
   border: 1px solid var(--line);
   border-radius: 10px;
+  mask-image: linear-gradient(#000 calc(100% - 40px), transparent);
 }
 
 .projectGrid figcaption {
@@ -458,6 +327,8 @@
   font-size: var(--portfolio-tab-size);
   font-weight: 560;
 }
+
+.section .decisionsIntro { margin-top: 12px; }
 
 .disclosures {
   margin-top: 12px;
@@ -587,11 +458,11 @@
 .interview p { margin-top: 5px; }
 
 .profile .contactLink {
-  background: #7d2639;
-  color: #fff8f2;
+  background: var(--accent);
+  color: #fff;
 }
 
-.profile .contactLink:hover { background: #652030; }
+.profile .contactLink:hover { background: #a61008; }
 
 .footer {
   display: flex;
