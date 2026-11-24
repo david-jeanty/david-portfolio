@@ -208,10 +208,12 @@ export default function TinderPage() {
 
         <div className={styles.closing}>
         <section className={styles.caseStudy} aria-labelledby="case-study">
-          <div className={styles.caseStudyHeading}>
+          <div className={styles.caseStudyIntro}>
             <h2 id="case-study">The case study</h2>
+            <p className={styles.testSummary}>Brief Writer found every problem I planted in two made-up programs it had never seen.</p>
           </div>
-          <p className={styles.testSummary}>Brief Writer found every problem I planted in two made-up programs it had never seen.</p>
+
+          <div className={styles.casePanels}>
 
           <details className={styles.disclosure} name="case-study" id="testing">
             <summary>Testing and limitations</summary>
@@ -244,6 +246,7 @@ export default function TinderPage() {
               </div>
             </dl>
           </details>
+          </div>
         </section>
 
         <Interview name={name} email={email} />
