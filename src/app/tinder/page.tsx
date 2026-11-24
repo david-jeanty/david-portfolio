@@ -1,7 +1,6 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
-import Image from "next/image";
 import ModernPortfolioFrame from "@/components/portfolio/ModernPortfolioFrame";
 import { modernPortfolio } from "@/data/modern-portfolio";
 import BuildVideo from "./BuildVideo";
@@ -199,18 +198,6 @@ export default function TinderPage() {
           <p className={walkthroughStyles.intro}>These are real screenshots from the Slack workspace I built to test Brief Writer, in the order a TPM would use it.</p>
           <Walkthrough steps={walkthroughSteps} />
           <FullBrief />
-          <div className={walkthroughStyles.sources} id="sources">
-            <h3>Sources</h3>
-            <ol className={walkthroughStyles.sourceList}>
-              {sources.map((source, index) => (
-                <li id={`source-${index + 1}`} key={source.url}>
-                  <a href={source.url}>{source.title}</a>
-                  {"note" in source && <span className={styles.meta}> {source.note}</span>}
-                </li>
-              ))}
-            </ol>
-            <p className={walkthroughStyles.accessed}>Accessed Nov 2026</p>
-          </div>
         </section>
 
         <section className={styles.caseStudy} aria-labelledby="case-study">
@@ -219,37 +206,6 @@ export default function TinderPage() {
             <a className={styles.pdfLink} href="/brief_v2.pdf" download>Sample brief (PDF) ↓</a>
           </div>
           <p className={styles.testSummary}>Brief Writer found every problem I planted in two made-up programs it had never seen.</p>
-
-          <details className={styles.disclosure} id="built">
-            <summary>Brief Writer and sample output</summary>
-            <div className={styles.disclosureBody}>
-              <div className={styles.mismatch}>
-                <h3 id="mismatch">Looked like a green flag.</h3>
-                <dl className={styles.evidence}>
-                  <div>
-                    <dt>What leads heard <span className={styles.meta}>· MSG-087</span></dt>
-                    <dd>The iPhone team reported “nothing that changes dates yet.”</dd>
-                  </div>
-                  <div>
-                    <dt>What the records showed <span className={styles.meta}>· MSG-075, PEM-111</span></dt>
-                    <dd>Apple rejected the iPhone build, so the iPhone version of the screen that shows who else was at the event moved a week, to Nov 30.</dd>
-                  </div>
-                </dl>
-                <p>It was a red flag. Brief Writer put both side by side so leads could revisit the release scope.</p>
-              </div>
-              <figure>
-                <Image
-                  src="/brief-writer-slack.webp"
-                  alt="Brief Writer’s Slack message listing decisions and conflicting status updates for Post-Event Matching"
-                  width={1112}
-                  height={772}
-                  sizes="(min-width: 824px) 760px, 92vw"
-                  className={styles.briefImage}
-                />
-                <figcaption>Slack output for After Party, a fictional dating app.</figcaption>
-              </figure>
-            </div>
-          </details>
 
           <details className={styles.disclosure} id="testing">
             <summary>Testing and limitations</summary>
@@ -285,6 +241,19 @@ export default function TinderPage() {
         </section>
 
         <Interview name={name} email={email} />
+
+        <div className={walkthroughStyles.sources} id="sources">
+          <h3>Sources</h3>
+          <ol className={walkthroughStyles.sourceList}>
+            {sources.map((source, index) => (
+              <li id={`source-${index + 1}`} key={source.url}>
+                <a href={source.url}>{source.title}</a>
+                {"note" in source && <span className={styles.meta}> {source.note}</span>}
+              </li>
+            ))}
+          </ol>
+          <p className={walkthroughStyles.accessed}>Accessed Nov 2026</p>
+        </div>
       </article>
     </ModernPortfolioFrame>
   );
