@@ -38,66 +38,66 @@ function SourceRef({ number }: { number: number }) {
 const rationale = [
   {
     id: "research",
-    heading: "Did my research before the first date",
-    text: "The TPM postings asked for recommendations, not just status. Agentis already assembles a PM’s weekly report, and the Recs posting asks a TPM to automate status reporting and still bring a recommended path forward. So I built for what comes after the report.",
+    heading: "What Tinder’s job posts and blog asked for",
+    text: "Tinder’s TPM postings ask for recommendations, and one asks TPMs to automate status reporting and still bring a recommended path forward. Tinder’s blog shows its AI agent platform, Agentis, already writes a PM’s weekly report. So I built for the step after the report: deciding what to do.",
     path: "M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm5-2 5 5",
     sources: [1, 2, 5],
   },
   {
     id: "prioritization",
-    heading: "Red flags go first",
+    heading: "The biggest risks come first",
     text: "High-impact, well-supported risks lead the brief, each with a deadline, options and evidence.",
     path: "M5 22V3h14l-3 4 3 4H5",
     tone: "red",
   },
   {
     id: "watch-list",
-    heading: "Yellow flags get watched",
+    heading: "Smaller risks go on a watch list",
     text: "Weaker signals go to a watch list instead of the top of the brief.",
     path: "M5 22V3h14l-3 4 3 4H5",
     tone: "amber",
   },
   {
     id: "ownership",
-    heading: "Ghosted",
+    heading: "It flags work nobody owns",
     text: "The fraud alert that was supposed to ship with the Nov 23 launch had no owner, spec or decision. Brief Writer flagged it.",
     path: "M5 20V10a7 7 0 0 1 14 0v10l-3-3-4 3-4-3-3 3Z",
   },
   {
     id: "decoys",
-    heading: "Decoy checks",
-    text: "I planted decoys that look scary but aren’t. None of them made it into the lead risks.",
+    heading: "It ignored problems that only looked serious",
+    text: "I also planted fake problems that look serious at first glance. None of them showed up as top risks.",
     path: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-2-6h4",
   },
   {
     id: "workflow",
-    heading: "Wingman, not matchmaker",
+    heading: "A person makes every decision",
     text: "Brief Writer posts the options in Slack, cites the records, and leaves the decision to a person, like the approval steps in Tinder’s own agent tools.",
     path: "M3 20c0-3 2-5 6-5s6 2 6 5M9 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm8-6a3 3 0 0 1 0 6m1 3c2 .4 3 2 3 5",
     sources: [6, 5],
   },
   {
     id: "recall",
-    heading: "I’d rather double-text than get ghosted",
-    text: "Recall over precision. A false alarm costs a few minutes. A missed risk can sink a launch.",
+    heading: "It leans toward flagging too much",
+    text: "I tuned it to flag anything that might be a risk. A false alarm takes a few minutes to dismiss. A missed risk can delay a launch.",
     path: "M4 4h16v12H9l-5 4V4Z",
   },
   {
     id: "evaluation",
-    heading: "Test results",
+    heading: "Tested on programs it had never seen",
     text: "Following Tinder’s Photo Feedback evaluation, I wrote an answer key first, then tested Brief Writer on two programs it had never seen, Ledgerline and Courier. It found every planted problem.",
     path: "m3 3 18 18M10 6a10 10 0 0 1 12 6m-3 3c-2 2-4 3-7 3-5 0-8-3-10-6 1-2 2-3 4-4",
     sources: [7],
   },
   {
     id: "bias-check",
-    heading: "Got a second opinion",
-    text: "A separate agent rebuilt the risk rules from public sources without seeing my main test or answer key. It surfaced about as many issues on that test.",
+    heading: "A separate check on my own test",
+    text: "To make sure I hadn’t tuned it to my own test, a separate AI agent rebuilt the risk rules from public sources without seeing my test or answer key. Its version found about as many problems.",
     path: "M16 17h-5l-4 4v-4H3V5h14v9m2 4h2V9",
   },
   {
     id: "limits",
-    heading: "Known limits",
+    heading: "Where it can miss things",
     text: "It can miss a risk when the records are sparse or the evidence is spread across threads. A live program would be the next test.",
     path: "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-14v5m0 3h.01",
   },
@@ -209,39 +209,39 @@ export default function TinderPage() {
         <div className={styles.closing}>
         <section className={styles.caseStudy} aria-labelledby="case-study">
           <div className={styles.caseStudyIntro}>
-            <h2 id="case-study">The case study</h2>
+            <h2 id="case-study">How I built and tested it</h2>
             <p className={styles.testSummary}>Brief Writer found every problem I planted in two made-up programs it had never seen.</p>
           </div>
 
           <div className={styles.casePanels}>
 
           <details className={styles.disclosure} name="case-study" id="testing">
-            <summary>Testing and limitations</summary>
+            <summary>How I tested it, and where it falls short</summary>
             <div className={styles.disclosureBody}>
               <DecisionNotes items={testingNotes} />
             </div>
           </details>
 
           <details className={styles.disclosure} name="case-study" id="design-decisions">
-            <summary>Research and design decisions</summary>
+            <summary>The research behind it and the choices I made</summary>
             <div className={styles.disclosureBody}>
               <DecisionNotes items={designNotes} />
             </div>
           </details>
 
           <details className={styles.disclosure} name="case-study" id="why-me">
-            <summary>Why me</summary>
+            <summary>Why I’m a good fit for this internship</summary>
             <dl className={styles.highlights}>
               <div>
-                <dt>Decisions from data and research.</dt>
+                <dt>I back recommendations with research.</dt>
                 <dd>At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.</dd>
               </div>
               <div>
-                <dt>The big picture out of the weeds.</dt>
+                <dt>I pull the key decisions out of a lot of detail.</dt>
                 <dd>Brief Writer reads every ticket and Slack thread and pulls out the few decisions leads need to make.</dd>
               </div>
               <div>
-                <dt>Ruthless prioritization.</dt>
+                <dt>I put the most important risks first.</dt>
                 <dd>Brief Writer puts well-supported, high-impact risks at the top and moves weaker signals to a watch list.</dd>
               </div>
             </dl>
