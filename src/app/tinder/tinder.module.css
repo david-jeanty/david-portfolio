@@ -44,6 +44,7 @@
 }
 
 .caseHeader h1 {
+  max-width: 20ch;
   font-size: clamp(1.85rem, 3.8vw, 3rem);
   font-weight: 750;
   letter-spacing: -0.05em;
@@ -51,7 +52,7 @@
 }
 
 .caseHeader .videoSummary {
-  max-width: 55ch;
+  max-width: 64ch;
   margin-top: 8px;
   color: var(--muted);
 }

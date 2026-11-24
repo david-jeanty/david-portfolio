@@ -183,8 +183,8 @@ export default function TinderPage() {
       <article className={styles.profile} aria-labelledby="page-title">
         <header className={styles.caseHeader}>
           <p className={styles.kicker}>{title}</p>
-          <h1 id="page-title">I built Brief Writer.</h1>
-          <p className={styles.videoSummary}>A Slack tool that finds launch risks in tickets and threads, then gives leads options and the evidence to make the call.</p>
+          <h1 id="page-title">I found a gap in how Tinder’s TPMs get from status to decisions.</h1>
+          <p className={styles.videoSummary}>Tinder’s TPM job posts ask for recommendations that shape decisions, and its engineering blog shows the weekly status report is already automated. I built Brief Writer for the step after the report: a Slack tool that turns tickets and threads into decisions, with options and evidence.</p>
         </header>
 
         {hasDemo && (
