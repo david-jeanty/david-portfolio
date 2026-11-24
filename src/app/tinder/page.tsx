@@ -181,6 +181,7 @@ export default function TinderPage() {
       )}
     >
       <article className={styles.profile} aria-labelledby="page-title">
+        <div className={styles.hero}>
         <header className={styles.caseHeader}>
           <p className={styles.kicker}>{title}</p>
           <h1 id="page-title">I read Tinder’s TPM job posts and built what they ask for.</h1>
@@ -192,6 +193,7 @@ export default function TinderPage() {
             <BuildVideo src={demoVideo} />
           </section>
         )}
+        </div>
 
         <section className={walkthroughStyles.walkthrough} id="walkthrough" aria-labelledby="walkthrough-title">
           <h2 id="walkthrough-title">Inside After Party</h2>
@@ -200,6 +202,7 @@ export default function TinderPage() {
           <FullBrief />
         </section>
 
+        <div className={styles.closing}>
         <section className={styles.caseStudy} aria-labelledby="case-study">
           <div className={styles.caseStudyHeading}>
             <h2 id="case-study">The case study</h2>
@@ -241,6 +244,7 @@ export default function TinderPage() {
         </section>
 
         <Interview name={name} email={email} />
+        </div>
 
         <div className={walkthroughStyles.sources} id="sources">
           <h3>Sources</h3>

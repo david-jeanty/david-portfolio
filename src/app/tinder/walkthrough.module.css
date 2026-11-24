@@ -290,7 +290,6 @@
 /* Full brief */
 
 .fullBrief {
-  max-width: 900px;
   margin-top: clamp(36px, 6vw, 64px);
   border-block: 1px solid var(--line);
 }
@@ -381,7 +380,17 @@
   list-style: decimal;
 }
 
-.sourceList li { overflow-wrap: anywhere; }
+.sourceList li { overflow-wrap: anywhere; break-inside: avoid; }
+
+@media (min-width: 900px) {
+  .sourceList {
+    display: block;
+    columns: 2;
+    column-gap: 48px;
+  }
+
+  .sourceList li + li { margin-top: 6px; }
+}
 
 .sourceList li:target {
   border-radius: 3px;

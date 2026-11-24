@@ -9,7 +9,7 @@ import styles from "./walkthrough.module.css";
 // The viewer opens on the brief, the screenshot that shows the product best.
 const START = 3;
 // Tallest the screenshot may be on desktop, so the section fits on one screen.
-const STAGE_HEIGHT = 520;
+const STAGE_HEIGHT = 440;
 
 function pinStyle(step: WalkthroughStep, box: number[]): CSSProperties {
   const [left, top, width, height] = box;
