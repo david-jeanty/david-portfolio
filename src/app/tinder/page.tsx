@@ -61,7 +61,7 @@ const rationale = [
   {
     id: "ownership",
     heading: "Ghosted",
-    text: "The fraud notification due for R4 had no owner, spec or decision. Brief Writer flagged it.",
+    text: "The fraud alert that was supposed to ship with the Nov 23 launch had no owner, spec or decision. Brief Writer flagged it.",
     path: "M5 20V10a7 7 0 0 1 14 0v10l-3-3-4 3-4-3-3 3Z",
   },
   {
@@ -228,11 +228,11 @@ export default function TinderPage() {
                 <dl className={styles.evidence}>
                   <div>
                     <dt>What leads heard <span className={styles.meta}>· MSG-087</span></dt>
-                    <dd>iOS reported “nothing that changes dates yet.”</dd>
+                    <dd>The iPhone team reported “nothing that changes dates yet.”</dd>
                   </div>
                   <div>
                     <dt>What the records showed <span className={styles.meta}>· MSG-075, PEM-111</span></dt>
-                    <dd>App Review had rejected the build the day before. Apple rejected the iPhone build, so the iPhone version of the screen that shows who else was at the event moved a week, to Nov 30.</dd>
+                    <dd>Apple rejected the iPhone build, so the iPhone version of the screen that shows who else was at the event moved a week, to Nov 30.</dd>
                   </div>
                 </dl>
                 <p>It was a red flag. Brief Writer put both side by side so leads could revisit the release scope.</p>

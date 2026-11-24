@@ -38,7 +38,7 @@ const steps: { file: PinFile; id: string; title: string; caption: string; alt: s
     title: "The noise",
     caption:
       "A TPM reads updates like these across every channel, plus the tickets behind them. Most are routine, but some change the plan. The last one says the iPhone version of the screen that shows who else was at the event won't make the Nov 23 launch.",
-    alt: "Four messages in the post-event-matching channel from a localization specialist, a data scientist, a localization lead and a trust and safety engineer, ending with a note that the iOS deck isn't in R4.",
+    alt: "Four messages in the post-event-matching channel from a localization specialist, a data scientist, a localization lead and a trust and safety engineer, ending with a note that the iPhone version of the event screen isn't in the Nov 23 launch.",
   },
   {
     file: "slack-04-brief-top",
@@ -54,7 +54,7 @@ const steps: { file: PinFile; id: string; title: string; caption: string; alt: s
     title: "The evidence",
     caption:
       "Each decision gets its own reply in the thread. It explains the risk, rates the impact and how sure it is, and lists the exact tickets and messages it's based on, so anyone can check.",
-    alt: "Brief Writer's thread reply about the Android deck reading an API version the next release removes, followed by Impact, Confidence and Evidence lines listing ticket and message IDs.",
+    alt: "Brief Writer's thread reply about the Android version of the event screen using an old data connection that the next release removes, followed by Impact, Confidence and Evidence lines listing ticket and message IDs.",
   },
   {
     file: "slack-06-mismatch",
@@ -62,7 +62,7 @@ const steps: { file: PinFile; id: string; title: string; caption: string; alt: s
     title: "The catch",
     caption:
       "It also compares what people say in their updates with what the tickets actually show. Here, leads were told the iPhone team had nothing changing dates, but the tickets show Apple rejected the build and that screen had already slipped a week, to Nov 30. Brief Writer flags the gap.",
-    alt: "A section of the brief titled Where status and the record disagree, with two bullets, one saying leads were told iOS had nothing changing dates while the deck was already paused.",
+    alt: "A section of the brief titled Where status and the record disagree, with two bullets, one saying leads were told the iPhone team had nothing changing dates while that screen was already on hold.",
   },
   {
     file: "slack-07-options",
