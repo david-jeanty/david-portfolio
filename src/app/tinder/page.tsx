@@ -103,6 +103,30 @@ const rationale = [
   },
 ] as const;
 
+// Each part of the role, in the internship post's own words, with the evidence for it.
+const fit = [
+  {
+    part: "Keep everyone in the know",
+    role: "clear weekly status updates, with issues flagged early.",
+    did: "Brief Writer reads a week of tickets and Slack messages and writes one brief for the leads channel. It opens with the decisions leads need to make, each with a deadline.",
+  },
+  {
+    part: "Turn big ideas into real plans",
+    role: "track dependencies and call out what’s at risk before it slips.",
+    did: "In my test program, the backend team changed how the app loads event attendees and told only the iPhone team. Brief Writer caught that the Android app still used the old version, which the same release removes, and made it the top risk.",
+  },
+  {
+    part: "Partner across teams",
+    role: "chase down action items and remove blockers.",
+    did: "Legal added a requirement for an in-app fraud alert, but its ticket had no owner, spec or release date. Brief Writer flagged it, laid out the options, and asked leads to name an owner before the launch review.",
+  },
+  {
+    part: "Drive best practices, including AI",
+    role: "improve how work moves from idea to launch, including where AI fits in.",
+    did: "In Brief Writer, AI drafts the brief, and the TPM reviews it and adds a recommendation before it goes to leads. At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.",
+  },
+];
+
 function Interview({ name, email }: { name: string; email: string }) {
   return (
     <section className={styles.interview} id="interview" aria-labelledby="match-title" tabIndex={-1}>
@@ -185,7 +209,7 @@ export default function TinderPage() {
         <header className={styles.caseHeader}>
           <p className={styles.kicker}>{title}</p>
           <h1 id="page-title">What I’d bring to Tinder’s TPM internship</h1>
-          <p className={styles.videoSummary}>I research first and build fast. I read Tinder’s TPM job posts and engineering blog, then built Brief Writer for what they ask for.</p>
+          <p className={styles.videoSummary}>I keep teams informed, catch risks before they slip, get the right people to a decision, and use AI to do it faster. To show it, I studied Tinder’s TPM job posts and engineering blog, then built Brief Writer, an AI tool in Slack that reads a team’s tickets and messages and drafts a decision brief for leads.</p>
         </header>
 
         {hasDemo && (
@@ -230,21 +254,19 @@ export default function TinderPage() {
           </details>
 
           <details className={styles.disclosure} name="case-study" id="why-me">
-            <summary>Why I’m a good fit for this internship</summary>
-            <dl className={styles.highlights}>
-              <div>
-                <dt>I back recommendations with research.</dt>
-                <dd>At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.</dd>
-              </div>
-              <div>
-                <dt>I pull the key decisions out of a lot of detail.</dt>
-                <dd>Brief Writer reads every ticket and Slack thread and pulls out the few decisions leads need to make.</dd>
-              </div>
-              <div>
-                <dt>I put the most important risks first.</dt>
-                <dd>Brief Writer puts well-supported, high-impact risks at the top and moves weaker signals to a watch list.</dd>
-              </div>
-            </dl>
+            <summary>How I match each part of the role</summary>
+            <div className={styles.disclosureBody}>
+              <p className={styles.fitIntro}>The internship post describes four parts of the job. For each one, here’s what the role asks for and what I’ve done.</p>
+              <ol className={styles.fit}>
+                {fit.map(({ part, role, did }) => (
+                  <li key={part}>
+                    <h3>{part}</h3>
+                    <p><span className={styles.fitLabel}>The role:</span> {role}</p>
+                    <p><span className={styles.fitLabel}>What I did:</span> {did}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </details>
           </div>
         </section>
