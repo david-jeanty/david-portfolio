@@ -184,8 +184,8 @@ export default function TinderPage() {
         <div className={styles.hero}>
         <header className={styles.caseHeader}>
           <p className={styles.kicker}>{title}</p>
-          <h1 id="page-title">I read Tinder’s TPM job posts and built what they ask for.</h1>
-          <p className={styles.videoSummary}>Brief Writer turns team updates into decisions, with options and evidence.</p>
+          <h1 id="page-title">What I’d bring to Tinder’s TPM internship</h1>
+          <p className={styles.videoSummary}>I research first and build fast. I read Tinder’s TPM job posts and engineering blog, then built Brief Writer for what they ask for.</p>
         </header>
 
         {hasDemo && (
