@@ -40,7 +40,18 @@ export default function ProfileDeck({ name }: { name: string }) {
           <div className={styles.cardBottom}>
             <div className={styles.identity}>
               <div className={styles.likesYou}><Icon name="likesYou" /> Likes You <Icon name="chevron" /></div>
-              <h1 id="profile-name" className={portfolio.pageTitle}>{name}</h1>
+              <h1 id="profile-name" className={portfolio.pageTitle}>
+                {name}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <polygon
+                    points="12,1.3 14.4,3.2 17.3,2.7 18.4,5.6 21.3,6.7 20.8,9.6 22.7,12 20.8,14.4 21.3,17.3 18.4,18.4 17.3,21.3 14.4,20.8 12,22.7 9.6,20.8 6.7,21.3 5.6,18.4 2.7,17.3 3.2,14.4 1.3,12 3.2,9.6 2.7,6.7 5.6,5.6 6.7,2.7 9.6,3.2"
+                    fill="#108df0"
+                    stroke="#a5e6ff"
+                    strokeLinejoin="round"
+                  />
+                  <path d="m7.7 12.2 2.8 2.8 5.8-5.8" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </h1>
               <p><Icon name="pin" /> Ottawa · Looking for Tinder TPM in Los Angeles</p>
               <p><Icon name="school" /> Business Technology Management · uOttawa</p>
             </div>

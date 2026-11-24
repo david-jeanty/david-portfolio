@@ -133,6 +133,9 @@
 .likesYou svg:last-child { width: 13px; height: 13px; }
 
 .identity h1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 8px;
   font-size: clamp(1.65rem, 6vw, 2rem);
   font-weight: 700;
