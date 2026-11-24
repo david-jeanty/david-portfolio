@@ -1,0 +1,342 @@
+.walkthrough {
+  --ink: #1b1817;
+  --red: #cd130a;
+  --pink: #ff5a5e;
+  --line: #eadfd6;
+  --muted: #5e5450;
+  margin-top: clamp(36px, 6vw, 72px);
+}
+
+.intro {
+  max-width: 60ch;
+  margin-top: 8px !important;
+  color: var(--muted);
+}
+
+/* Steps */
+
+.steps {
+  display: grid;
+  gap: clamp(36px, 6vw, 72px);
+  margin: clamp(24px, 4vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: grid;
+  grid-template-areas:
+    "text"
+    "media"
+    "callouts";
+  gap: 14px;
+}
+
+.text { grid-area: text; }
+.media { grid-area: media; min-width: 0; }
+.callouts { grid-area: callouts; }
+
+.number {
+  margin-bottom: 4px !important;
+  color: var(--red);
+  font-size: 0.8125rem;
+  font-weight: 680;
+  letter-spacing: 0.02em;
+}
+
+.step h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.caption {
+  max-width: 46ch;
+  margin-top: 8px !important;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Screenshot card */
+
+.card {
+  display: flex;
+  justify-content: center;
+  padding: clamp(14px, 2vw, 22px);
+  /* Room on the left for pins that sit beside text at the image's edge. */
+  padding-inline-start: 34px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgb(27 24 23 / 6%),
+    0 10px 30px rgb(27 24 23 / 9%);
+}
+
+.shot {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--red);
+  cursor: zoom-in;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.shot:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+
+.pin {
+  position: absolute;
+  box-sizing: content-box;
+  margin: -4px 0 0 -6px;
+  padding: 4px 6px;
+  border: 2px solid var(--pink);
+  border-radius: 6px;
+  background: rgb(255 90 94 / 8%);
+  pointer-events: none;
+  transition: background-color 0.15s ease;
+}
+
+.pin[data-active] { background: rgb(255 90 94 / 24%); }
+
+.pinNumber,
+.calloutNumber {
+  display: inline-grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pinNumber {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  translate: calc(-100% - 5px) -50%;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.callouts {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.callouts li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Lightbox */
+
+.lightbox {
+  width: fit-content;
+  margin: auto;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 32px);
+  padding: 52px 16px 16px;
+  overflow: auto;
+  border: 0;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 35%);
+}
+
+.lightbox::backdrop { background: rgb(27 24 23 / 78%); }
+
+.full {
+  display: block;
+  max-width: none;
+  height: auto;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  padding: 6px 14px;
+  border: 1px solid #d9cdc5;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.close:hover { border-color: var(--red); color: var(--red); }
+
+.close:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+/* Full brief */
+
+.fullBrief {
+  max-width: 900px;
+  margin-top: clamp(36px, 6vw, 64px);
+  border-block: 1px solid var(--line);
+}
+
+.fullBrief summary {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.fullBrief summary::-webkit-details-marker { display: none; }
+
+.fullBrief summary::after {
+  content: "";
+  flex: 0 0 11px;
+  height: 11px;
+  background:
+    linear-gradient(var(--red), var(--red)) center / 11px 1px no-repeat,
+    linear-gradient(var(--red), var(--red)) center / 1px 11px no-repeat;
+}
+
+.fullBrief[open] summary::after {
+  background: linear-gradient(var(--red), var(--red)) center / 11px 1px no-repeat;
+}
+
+.fullBrief summary:hover { color: var(--red); }
+
+.fullBrief summary:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.briefBody {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: clamp(16px, 3vw, 28px);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.briefBody :is(ul, ol) {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-inline-start: 1.4em;
+}
+
+.briefBody ol { list-style: decimal; }
+.briefBody ul { list-style: disc; }
+
+.briefBody code {
+  font-size: 0.875em;
+}
+
+.briefHeading { margin-top: 8px !important; }
+.briefHeading[data-level="1"] { margin-top: 0 !important; font-size: 1.125rem; }
+
+.briefOptions {
+  display: grid;
+  gap: 10px;
+}
+
+/* Sources */
+
+.sources { margin-top: clamp(28px, 4vw, 44px); }
+
+.sources h3 { font-size: 1.0625rem !important; }
+
+.sourceList {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding-inline-start: 1.5em;
+  font-size: 0.9375rem;
+  list-style: decimal;
+}
+
+.sourceList li { overflow-wrap: anywhere; }
+
+.sourceList li:target {
+  border-radius: 3px;
+  background: #ffe4db;
+}
+
+.accessed {
+  margin-top: 10px !important;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+/* Desktop: caption on the left, screenshot on the right, wider than the text column. */
+
+@media (min-width: 900px) {
+  .walkthrough {
+    --wide: min(1280px, calc(100vw - 64px));
+    width: var(--wide);
+    margin-inline: calc((100% - var(--wide)) / 2);
+  }
+
+  .step {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 13fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "text media"
+      "callouts media";
+    column-gap: clamp(32px, 4vw, 56px);
+    row-gap: 18px;
+    align-items: start;
+  }
+
+  .callouts li { cursor: default; }
+}
+
+@media (max-width: 899px) {
+  .card { padding: 12px 12px 12px 28px; }
+
+  .pin {
+    margin: -2px 0 0 -3px;
+    padding: 2px 3px;
+    border-width: 1.5px;
+    border-radius: 4px;
+  }
+
+  .pinNumber {
+    width: 18px;
+    height: 18px;
+    font-size: 0.6875rem;
+    translate: calc(-100% - 3px) -50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin { transition: none; }
+}

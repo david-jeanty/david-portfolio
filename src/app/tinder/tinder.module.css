@@ -287,8 +287,8 @@
 .rewind svg { stroke-width: 2.7; }
 .pass { color: #ff2e69; }
 .pass svg { stroke-width: 4.1; }
-.superLike { color: #22aeff; }
-.send { color: #16b1ee; }
+.superLike { color: #ff5a5e; }
+.send { color: #ff5a5e; }
 .deckActions :is(.superLike, .send) svg { fill: currentColor; stroke-width: 1.2; }
 
 .player { position: relative; }
@@ -366,8 +366,7 @@
 
 .highlights dd,
 .rationale p,
-.disclosureBody,
-.sources { font-size: 0.9375rem; }
+.disclosureBody { font-size: 0.9375rem; }
 
 .highlights dd,
 .rationale p { color: var(--muted); }
@@ -494,73 +493,6 @@
   font-size: 0.8125rem;
 }
 
-.sample {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #fff;
-}
-
-.sampleHeader,
-.sampleSection { padding: clamp(14px, 2.5vw, 24px); }
-
-.sampleSection { border-top: 1px solid var(--line); }
-
-.sampleSection :is(h4, h5) {
-  margin-bottom: 6px;
-  font-size: 1rem;
-  font-weight: 630;
-}
-
-.decisions,
-.options {
-  display: grid;
-  gap: 12px;
-  margin: 10px 0;
-}
-
-.decisions {
-  list-style: decimal;
-  padding-inline-start: 1.25em;
-}
-
-.decisions span { display: block; }
-
-.sampleSection .evidence { margin: 16px 0; }
-
-.options {
-  padding: 0;
-  list-style: none;
-}
-
-.options dl { margin-top: 5px; }
-
-.options dt { font-weight: 600; }
-
-.options li,
-.recommendation {
-  padding: 12px;
-  border-radius: 6px;
-  background: #fcf1ec;
-}
-
-.sampleSection code { overflow-wrap: anywhere; }
-
-.sources {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 7px 28px;
-  margin: 6px 0 16px;
-  padding-inline-start: 1.35em;
-  list-style: decimal;
-}
-
-.sources li { overflow-wrap: anywhere; }
-
-.sources li:target {
-  border-radius: 3px;
-  background: #ffe4db;
-}
-
 .interview {
   margin-top: clamp(28px, 5vw, 52px);
   text-align: center;
@@ -598,8 +530,7 @@
 
 @media (max-width: 560px) {
   .disclosure .highlights,
-  .mismatch .evidence,
-  .sources { grid-template-columns: minmax(0, 1fr); }
+  .mismatch .evidence { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {

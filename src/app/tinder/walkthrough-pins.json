@@ -1,0 +1,280 @@
+{
+  "slack-01-sidebar": {
+    "width": 646,
+    "height": 1360,
+    "pins": [
+      {
+        "label": "Workspace name",
+        "anchor": "Afterparty",
+        "box": [
+          39,
+          45,
+          213,
+          40
+        ]
+      },
+      {
+        "label": "Team channels",
+        "anchor": "pem-ios",
+        "box": [
+          142,
+          935,
+          127,
+          33
+        ]
+      },
+      {
+        "label": "Leads channel",
+        "anchor": "pem-leads",
+        "box": [
+          142,
+          1004,
+          166,
+          34
+        ]
+      }
+    ]
+  },
+  "slack-02-team-channel": {
+    "width": 2017,
+    "height": 833,
+    "pins": [
+      {
+        "label": "A status update",
+        "anchor": "107 running in staging, deleting at 30d",
+        "box": [
+          125,
+          290,
+          627,
+          35
+        ]
+      },
+      {
+        "label": "Role tag",
+        "anchor": "Backend Engineer",
+        "box": [
+          747,
+          370,
+          251,
+          30
+        ]
+      },
+      {
+        "label": "Off-topic message",
+        "anchor": "who finished the cold brew",
+        "box": [
+          122,
+          81,
+          444,
+          28
+        ]
+      }
+    ]
+  },
+  "slack-03-busy-channel": {
+    "width": 2017,
+    "height": 830,
+    "pins": [
+      {
+        "label": "Localization update",
+        "anchor": "consent strings done for ES, FR, DE.",
+        "box": [
+          319,
+          69,
+          586,
+          35
+        ]
+      },
+      {
+        "label": "Item marked done",
+        "anchor": "marked our R4 item done",
+        "box": [
+          124,
+          487,
+          421,
+          33
+        ]
+      },
+      {
+        "label": "The iPhone update",
+        "anchor": "ios deck isn't in R4",
+        "box": [
+          680,
+          695,
+          302,
+          28
+        ]
+      }
+    ]
+  },
+  "slack-04-brief-top": {
+    "width": 2017,
+    "height": 660,
+    "pins": [
+      {
+        "label": "Brief Writer's post",
+        "anchor": "Brief Writer",
+        "box": [
+          124,
+          25,
+          199,
+          28
+        ]
+      },
+      {
+        "label": "Decisions needed",
+        "anchor": "Decisions needed",
+        "box": [
+          124,
+          320,
+          289,
+          28
+        ]
+      },
+      {
+        "label": "Deadline",
+        "anchor": "Deadline: before the R4 build cut.",
+        "box": [
+          1276,
+          377,
+          546,
+          28
+        ]
+      }
+    ]
+  },
+  "slack-05-brief-evidence": {
+    "width": 1270,
+    "height": 904,
+    "pins": [
+      {
+        "label": "The risk",
+        "anchor": "Android deck PEM-117 still lists",
+        "box": [
+          133,
+          212,
+          525,
+          28
+        ]
+      },
+      {
+        "label": "Impact and confidence",
+        "anchor": "Impact:",
+        "box": [
+          135,
+          571,
+          120,
+          33
+        ]
+      },
+      {
+        "label": "Tickets and messages cited",
+        "anchor": "Evidence:",
+        "box": [
+          135,
+          795,
+          156,
+          28
+        ]
+      }
+    ]
+  },
+  "slack-06-mismatch": {
+    "width": 1917,
+    "height": 288,
+    "pins": [
+      {
+        "label": "Mismatch section",
+        "anchor": "Where status and the record disagree",
+        "box": [
+          22,
+          18,
+          622,
+          35
+        ]
+      },
+      {
+        "label": "The iPhone update",
+        "anchor": "Leads were told iOS had nothing changing dates",
+        "box": [
+          56,
+          187,
+          783,
+          35
+        ]
+      },
+      {
+        "label": "Impact and confidence",
+        "anchor": "confidence high)",
+        "box": [
+          174,
+          242,
+          266,
+          36
+        ]
+      }
+    ]
+  },
+  "slack-07-options": {
+    "width": 1160,
+    "height": 860,
+    "pins": [
+      {
+        "label": "Option A",
+        "anchor": "A. Android switches PEM-117 to v2",
+        "box": [
+          22,
+          93,
+          593,
+          28
+        ]
+      },
+      {
+        "label": "Upside and downside",
+        "anchor": "Upside: Matches the privacy-approved contract",
+        "box": [
+          26,
+          205,
+          775,
+          34
+        ]
+      },
+      {
+        "label": "Option C",
+        "anchor": "C. Pull the Android deck from R4 too",
+        "box": [
+          24,
+          695,
+          608,
+          28
+        ]
+      }
+    ]
+  },
+  "slack-08-unseen-brief": {
+    "width": 2000,
+    "height": 948,
+    "pins": [
+      {
+        "label": "Unseen test program",
+        "anchor": "unseen test program",
+        "box": [
+          306,
+          98,
+          307,
+          26
+        ]
+      },
+      {
+        "label": "Decisions needed",
+        "anchor": "Decisions needed",
+        "box": [
+          106,
+          277,
+          344,
+          31
+        ]
+      }
+    ]
+  }
+}
