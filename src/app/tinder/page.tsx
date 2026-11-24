@@ -232,7 +232,7 @@ export default function TinderPage() {
                   </div>
                   <div>
                     <dt>What the records showed <span className={styles.meta}>· MSG-075, PEM-111</span></dt>
-                    <dd>App Review had rejected the build the day before. The attendee deck was paused and moved to the next release.</dd>
+                    <dd>App Review had rejected the build the day before. Apple rejected the iPhone build, so the iPhone version of the screen that shows who else was at the event moved a week, to Nov 30.</dd>
                   </div>
                 </dl>
                 <p>It was a red flag. Brief Writer put both side by side so leads could revisit the release scope.</p>
