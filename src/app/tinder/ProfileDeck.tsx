@@ -1,11 +1,8 @@
 import Image from "next/image";
 import { useId } from "react";
-import portfolio from "@/components/portfolio/Portfolio.module.css";
 import styles from "./tinder.module.css";
 
 const icons = {
-  pin: "M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0ZM12 10h.01",
-  school: "m2 9 10-5 10 5-10 5-10-5Zm5 3v5c3 3 7 3 10 0v-5M22 9v6",
   likesYou: "M14.5 19S7.8 14.8 7.8 10.5a3.8 3.8 0 0 1 6.7-2.2 3.8 3.8 0 0 1 6.7 2.2c0 4.3-6.7 8.5-6.7 8.5ZM3 8h5M2 11h5m-4 3h6m-4 3h6",
   chevron: "m9 5 7 7-7 7",
   rewind: "M11 5a7.7 7.7 0 1 1-6.6 11.6M11 1.8 6.1 5.3 11 8.2Z",
@@ -23,10 +20,7 @@ function Icon({ name }: { name: keyof typeof icons }) {
   );
 }
 
-export default function ProfileDeck({ name, watchHref }: {
-  name: string;
-  watchHref: string;
-}) {
+export default function ProfileDeck({ name }: { name: string }) {
   const heartGradient = useId();
 
   return (
@@ -37,15 +31,14 @@ export default function ProfileDeck({ name, watchHref }: {
             src="/tinder-profile-photo.webp"
             alt="David and two others wearing mouse-ear headbands and smiling for a selfie"
             fill
-            sizes="(min-width: 326px) 274px, calc(100vw - 52px)"
-            preload
+            sizes="(min-width: 900px) 202px, (min-width: 560px) 210px, 44vw"
           />
         </div>
 
         <div className={styles.cardBottom}>
           <div className={styles.identity}>
             <div className={styles.likesYou}><Icon name="likesYou" /> Likes You <Icon name="chevron" /></div>
-            <h2 className={portfolio.pageTitle}>
+            <p className={styles.cardName}>
               {name}
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <polygon
@@ -56,15 +49,13 @@ export default function ProfileDeck({ name, watchHref }: {
                 />
                 <path d="m7.7 12.2 2.8 2.8 5.8-5.8" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </h2>
-            <p><Icon name="pin" /> Ottawa · Looking for Tinder TPM in Los Angeles</p>
-            <p><Icon name="school" /> Business Technology Management · uOttawa</p>
+            </p>
           </div>
-          <div className={styles.deckActions}>
+          <div className={styles.deckActions} aria-hidden="true">
             <span className={styles.rewind}><Icon name="rewind" /></span>
             <span className={styles.pass}><Icon name="pass" /></span>
             <span className={styles.superLike}><Icon name="star" /></span>
-            <a className={styles.like} href={watchHref} aria-label="Watch the build">
+            <span className={styles.like}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <defs>
                   <linearGradient id={heartGradient} x1="0%" y1="0%" x2="85%" y2="90%">
@@ -74,7 +65,7 @@ export default function ProfileDeck({ name, watchHref }: {
                 </defs>
                 <path fill={`url(#${heartGradient})`} d={icons.heart} />
               </svg>
-            </a>
+            </span>
             <span className={styles.send}><Icon name="send" /></span>
           </div>
         </div>

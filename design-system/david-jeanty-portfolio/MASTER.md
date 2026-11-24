@@ -7,7 +7,7 @@ Minimal editorial brutalism: calm, direct, slightly unconventional, and delibera
 ## Structure
 
 - Fit the homepage into a single viewport on standard phone and desktop screens. Use a Summary row and a Featured work row with a single Interndex screenshot.
-- Use a persistent navigation frame with About, Work, Experience, Involvement, Résumé, Tinder TPM, and a quiet Archive exit.
+- Use a persistent navigation frame with About, Work, Experience, Involvement, Résumé, and a quiet Archive exit. Keep Tinder TPM available by direct link only.
 - Desktop content follows an asymmetric two-column grid. Labels and context live on the left; the primary content lives on the right.
 - On small screens the grid becomes one column and normal document scrolling is allowed for accessibility.
 - Use thin rules, generous negative space, and off-white rather than pure white.

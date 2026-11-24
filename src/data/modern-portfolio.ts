@@ -117,14 +117,6 @@ export const modernPortfolio = {
     homepageImage: "/interndex-home.png",
     demoImage: "/interndex-demo.png",
   },
-  tinderProject: {
-    name: "Brief Writer",
-    context: "Tinder TPM project",
-    year: "2026",
-    description: "A Slack-based tool that turns project tickets and messages into a decision brief with evidence and options.",
-    href: "/tinder",
-    tools: ["Python", "Claude", "Slack"],
-  },
   toolGroups: [
     { title: "Web and development", tools: ["Next.js", "React", "TypeScript", "Python", "Supabase", "GitHub", "Chrome extension", "PowerShell"] },
     { title: "Reporting and analysis", tools: ["Power BI", "Excel", "SQL", "Google Sheets"] },

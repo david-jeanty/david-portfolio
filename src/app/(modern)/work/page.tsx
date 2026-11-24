@@ -10,18 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
-  const { work, tinderProject, toolGroups } = modernPortfolio;
-  const projects = [
-    {
-      name: work.name,
-      context: "Independent project",
-      year: "2026",
-      description: work.shortDescription,
-      href: "/interndex",
-      tools: work.tools,
-    },
-    tinderProject,
-  ];
+  const { work, toolGroups } = modernPortfolio;
 
   return (
     <div className={styles.page}>
@@ -30,18 +19,16 @@ export default function WorkPage() {
       <section aria-labelledby="projects-heading">
         <h2 id="projects-heading" className={styles.sectionTitle}>Projects</h2>
         <ul className={styles.projects}>
-          {projects.map((project) => (
-            <li key={project.href}>
-              <article className={styles.project}>
-                <div>
-                  <h3><Link href={project.href}>{project.name}</Link></h3>
-                  <p className={styles.meta}>{project.context} · {project.year}</p>
-                </div>
-                <ToolStack tools={project.tools} label={`${project.name} stack`} />
-                <p>{project.description}</p>
-              </article>
-            </li>
-          ))}
+          <li>
+            <article className={styles.project}>
+              <div>
+                <h3><Link href="/interndex">{work.name}</Link></h3>
+                <p className={styles.meta}>Independent project · 2026</p>
+              </div>
+              <ToolStack tools={work.tools} label={`${work.name} stack`} />
+              <p>{work.shortDescription}</p>
+            </article>
+          </li>
         </ul>
       </section>
 

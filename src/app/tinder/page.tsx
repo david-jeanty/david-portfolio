@@ -154,7 +154,7 @@ const rationale = [
   },
   {
     id: "decoys",
-    heading: "The ick, not a dealbreaker",
+    heading: "Decoy checks",
     text: "I planted decoys that look scary but aren’t. None of them made it into the lead risks.",
     path: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-2-6h4",
   },
@@ -173,7 +173,7 @@ const rationale = [
   },
   {
     id: "evaluation",
-    heading: "Blind date",
+    heading: "Test results",
     text: "Following Tinder’s Photo Feedback evaluation, I wrote an answer key first, then tested Brief Writer on two programs it had never seen, Ledgerline and Courier. It found every planted problem.",
     path: "m3 3 18 18M10 6a10 10 0 0 1 12 6m-3 3c-2 2-4 3-7 3-5 0-8-3-10-6 1-2 2-3 4-4",
     sources: [7],
@@ -186,20 +186,19 @@ const rationale = [
   },
   {
     id: "limits",
-    heading: "Brief Writer’s toxic trait",
+    heading: "Known limits",
     text: "It can miss a risk when the records are sparse or the evidence is spread across threads. A live program would be the next test.",
     path: "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-14v5m0 3h.01",
   },
 ] as const;
 
-function MatchHero({ name, email, watchHref }: { name: string; email: string; watchHref: string }) {
+function Interview({ name, email }: { name: string; email: string }) {
   return (
-    <header className={styles.matchHero}>
-      <p className={styles.matchLabel}>{title}</p>
-      <h1 id="match-title">Looks like a match.</h1>
+    <section className={styles.interview} id="interview" aria-labelledby="match-title" tabIndex={-1}>
+      <h2 id="match-title">Is it a match?</h2>
       <div className={styles.matchCards}>
         <div className={styles.candidateCard} id="swipe">
-          <ProfileDeck name={name} watchHref={watchHref} />
+          <ProfileDeck name={name} />
         </div>
         <span className={styles.matchHeart} aria-hidden="true">
           <svg viewBox="0 0 24 24" width="29" height="29" fill="none" stroke="currentColor" strokeWidth="2.15" strokeLinejoin="round">
@@ -214,22 +213,52 @@ function MatchHero({ name, email, watchHref }: { name: string; email: string; wa
           </div>
         </div>
       </div>
-      <p className={styles.matchIntro}>
-        I&apos;m a Business Technology Management student at the University of Ottawa. Instead of just applying, I built something.
-      </p>
-      <div className={styles.matchActions}>
-        <a className={`${styles.pill} ${styles.primaryPill}`} href={watchHref}>Watch the build</a>
-        <a className={styles.pill} href={`mailto:${email}`}>Email me</a>
-      </div>
-      <p className={styles.scrollCue}>Keep scrolling <span aria-hidden="true">↓</span></p>
-    </header>
+      <p>I’d love to interview for the Technical Program Management internship in LA this summer.</p>
+      <a className={styles.contactLink} href={`mailto:${email}`}>Email me</a>
+    </section>
+  );
+}
+
+type RationaleItem = (typeof rationale)[number];
+const testingIds = ["evaluation", "decoys", "bias-check", "limits"];
+const testingNotes = testingIds.flatMap((id) => rationale.filter((item) => item.id === id));
+const designNotes = rationale.filter((item) => !testingNotes.includes(item));
+
+function DecisionNotes({ items }: { items: readonly RationaleItem[] }) {
+  return (
+    <ul className={styles.rationale}>
+      {items.map((item) => (
+        <li id={item.id} key={item.id}>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            data-tone={"tone" in item ? item.tone : undefined}
+            aria-hidden="true"
+          >
+            <path d={item.path} />
+          </svg>
+          <div>
+            <h3>{item.heading}</h3>
+            <p>
+              {item.text}
+              {"sources" in item && item.sources.map((number) => (
+                <span key={number}> <SourceRef number={number} /></span>
+              ))}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }
 
 export default function TinderPage() {
   const { name, email, linkedin } = modernPortfolio.identity;
   const hasDemo = existsSync(join(process.cwd(), "public", demoVideo));
-  const watchHref = hasDemo ? "#video" : "#built";
 
   return (
     <ModernPortfolioFrame
@@ -240,51 +269,29 @@ export default function TinderPage() {
         </footer>
       )}
     >
-      <article className={styles.profile} aria-labelledby="match-title">
-        <MatchHero name={name} email={email} watchHref={watchHref} />
+      <article className={styles.profile} aria-labelledby="page-title">
+        <header className={styles.caseHeader}>
+          <p className={styles.kicker}>{title}</p>
+          <h1 id="page-title">I built Brief Writer.</h1>
+          <p className={styles.videoSummary}>A Slack tool that finds launch risks in tickets and threads, then gives leads options and the evidence to make the call.</p>
+        </header>
 
-        <div className={styles.caseStudy}>
-          {hasDemo && (
-            <section id="video" className={styles.section} aria-labelledby="video-heading">
-              <h2 id="video-heading">Watch the build</h2>
-              <p className={styles.videoNote}>About 80 seconds.</p>
-              <BuildVideo src={demoVideo} />
-            </section>
-          )}
-
-          <section className={styles.section} aria-labelledby="why-me">
-            <h2 id="why-me">My green flags</h2>
-            <dl className={styles.highlights}>
-              <div>
-                <dt>Decisions from data and research.</dt>
-                <dd>At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.</dd>
-              </div>
-              <div>
-                <dt>The big picture out of the weeds.</dt>
-                <dd>Brief Writer reads every ticket and Slack thread and pulls out the few decisions leads need to make.</dd>
-              </div>
-              <div>
-                <dt>Ruthless prioritization.</dt>
-                <dd>Brief Writer puts well-supported, high-impact risks at the top and moves weaker signals to a watch list.</dd>
-              </div>
-            </dl>
+        {hasDemo && (
+          <section id="video" className={styles.videoSection} aria-label="Brief Writer walkthrough">
+            <BuildVideo src={demoVideo} />
           </section>
+        )}
 
-          <section className={styles.section} aria-labelledby="built">
-            <h2 id="built">Brief Writer</h2>
-            <p className={styles.lede}>
-              I built a Slack tool that reads tickets and messages, flags decisions that need attention, and gives leads a deadline, options, and the evidence behind them.
-            </p>
+        <section className={styles.caseStudy} aria-labelledby="case-study">
+          <div className={styles.caseStudyHeading}>
+            <h2 id="case-study">The case study</h2>
+            <a className={styles.pdfLink} href="/brief_v2.pdf" download>Sample brief (PDF) ↓</a>
+          </div>
+          <p className={styles.testSummary}>Brief Writer found every planted problem in two synthetic programs it had never seen.</p>
 
-            <div className={styles.projectGrid}>
-              <Image
-                src="/brief-writer-slack.webp"
-                alt="Brief Writer’s Slack message listing decisions and conflicting status updates for Post-Event Matching"
-                width={1112}
-                height={772}
-                sizes="(min-width: 1280px) 440px, (min-width: 900px) 38vw, 100vw"
-                className={styles.briefImage}
-              />
+          <details className={styles.disclosure} id="built">
+            <summary>Brief Writer and sample output</summary>
+            <div className={styles.disclosureBody}>
               <div className={styles.mismatch}>
                 <h3 id="mismatch">Looked like a green flag.</h3>
                 <dl className={styles.evidence}>
@@ -299,50 +306,42 @@ export default function TinderPage() {
                 </dl>
                 <p>It was a red flag. Brief Writer put both side by side so leads could revisit the release scope.</p>
               </div>
+              <figure>
+                <Image
+                  src="/brief-writer-slack.webp"
+                  alt="Brief Writer’s Slack message listing decisions and conflicting status updates for Post-Event Matching"
+                  width={1112}
+                  height={772}
+                  sizes="(min-width: 824px) 760px, 92vw"
+                  className={styles.briefImage}
+                />
+                <figcaption>Slack output for After Party, a fictional dating app.</figcaption>
+              </figure>
+              <details id="sample-brief" className={styles.disclosure}>
+                <summary>Read the sample brief</summary>
+                <div className={styles.disclosureBody}>
+                  <SampleBrief />
+                </div>
+              </details>
             </div>
-            <p className={styles.briefCaption}>
-              Slack output for After Party, a fictional dating app.{" "}
-              <a href="/brief_v2.pdf" download>Download the full sample brief (PDF)</a>
-            </p>
-            <details id="sample-brief" className={styles.disclosure}>
-              <summary>Read the sample brief</summary>
-              <div className={styles.disclosureBody}><SampleBrief /></div>
-            </details>
-          </section>
+          </details>
 
-          <section className={styles.section} aria-labelledby="design-decisions">
-            <h2 id="design-decisions">Every decision I made, and why</h2>
-            <ul className={styles.rationale}>
-              {rationale.map((item) => (
-                <li id={item.id} key={item.id}>
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    data-tone={"tone" in item ? item.tone : undefined}
-                    aria-hidden="true"
-                  >
-                    <path d={item.path} />
-                  </svg>
-                  <div>
-                    <h3>{item.heading}</h3>
-                    <p>
-                      {item.text}
-                      {"sources" in item && item.sources.map((number) => (
-                        <span key={number}> <SourceRef number={number} /></span>
-                      ))}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
+          <details className={styles.disclosure} id="testing">
+            <summary>Testing and limitations</summary>
+            <div className={styles.disclosureBody}>
+              <DecisionNotes items={testingNotes} />
+            </div>
+          </details>
 
-          <section className={styles.section} aria-labelledby="sources">
-            <h2 id="sources">Receipts</h2>
+          <details className={styles.disclosure} id="design-decisions">
+            <summary>Research and design decisions</summary>
+            <div className={styles.disclosureBody}>
+              <DecisionNotes items={designNotes} />
+            </div>
+          </details>
+
+          <details className={styles.disclosure} id="sources">
+            <summary>Sources</summary>
             <ol className={styles.sources}>
               {sources.map((source, index) => (
                 <li id={`source-${index + 1}`} key={source.url}>
@@ -351,14 +350,28 @@ export default function TinderPage() {
                 </li>
               ))}
             </ol>
-          </section>
+          </details>
 
-          <section className={styles.interview} aria-labelledby="interview">
-            <h2 id="interview">Swipe right?</h2>
-            <p>I’d love to interview for the Technical Program Management internship in LA this summer.</p>
-            <a className={`${styles.pill} ${styles.contactLink}`} href={`mailto:${email}`}>Email me</a>
-          </section>
-        </div>
+          <details className={styles.disclosure} id="why-me">
+            <summary>Why me</summary>
+            <dl className={styles.highlights}>
+              <div>
+                <dt>Decisions from data and research.</dt>
+                <dd>At the IRB, I compared Azure DevOps with ServiceNow and recommended the switch the IT director approved.</dd>
+              </div>
+              <div>
+                <dt>The big picture out of the weeds.</dt>
+                <dd>Brief Writer reads every ticket and Slack thread and pulls out the few decisions leads need to make.</dd>
+              </div>
+              <div>
+                <dt>Ruthless prioritization.</dt>
+                <dd>Brief Writer puts well-supported, high-impact risks at the top and moves weaker signals to a watch list.</dd>
+              </div>
+            </dl>
+          </details>
+        </section>
+
+        <Interview name={name} email={email} />
       </article>
     </ModernPortfolioFrame>
   );

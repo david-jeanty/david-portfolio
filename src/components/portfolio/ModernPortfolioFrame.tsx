@@ -12,7 +12,6 @@ const navigation = [
   { href: "/experience", label: "Experience" },
   { href: "/involvement", label: "Involvement" },
   { href: "/resume", label: "Résumé" },
-  { href: "/tinder", label: "Tinder TPM" },
 ];
 
 export default function ModernPortfolioFrame({
