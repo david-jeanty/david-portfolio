@@ -44,7 +44,8 @@
 }
 
 .caseHeader h1 {
-  max-width: 20ch;
+  max-width: 24ch;
+  text-wrap: balance;
   font-size: clamp(1.85rem, 3.8vw, 3rem);
   font-weight: 750;
   letter-spacing: -0.05em;
