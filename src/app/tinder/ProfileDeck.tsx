@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useId } from "react";
 import portfolio from "@/components/portfolio/Portfolio.module.css";
 import styles from "./tinder.module.css";
 
@@ -22,59 +23,62 @@ function Icon({ name }: { name: keyof typeof icons }) {
   );
 }
 
-export default function ProfileDeck({ name, watchHref }: { name: string; watchHref: string }) {
-  return (
-    <header className={styles.hero} id="swipe">
-      <div className={styles.deck}>
-        <div className={styles.slide}>
-          <div className={styles.photo}>
-            <Image
-              src="/tinder-profile-photo.webp"
-              alt="David and two others wearing mouse-ear headbands and smiling for a selfie"
-              fill
-              sizes="(min-width: 900px) 320px, (min-width: 505px) 440px, 100vw"
-              preload
-            />
-          </div>
+export default function ProfileDeck({ name, watchHref }: {
+  name: string;
+  watchHref: string;
+}) {
+  const heartGradient = useId();
 
-          <div className={styles.cardBottom}>
-            <div className={styles.identity}>
-              <div className={styles.likesYou}><Icon name="likesYou" /> Likes You <Icon name="chevron" /></div>
-              <h2 className={portfolio.pageTitle}>
-                {name}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <polygon
-                    points="12,1.3 14.4,3.2 17.3,2.7 18.4,5.6 21.3,6.7 20.8,9.6 22.7,12 20.8,14.4 21.3,17.3 18.4,18.4 17.3,21.3 14.4,20.8 12,22.7 9.6,20.8 6.7,21.3 5.6,18.4 2.7,17.3 3.2,14.4 1.3,12 3.2,9.6 2.7,6.7 5.6,5.6 6.7,2.7 9.6,3.2"
-                    fill="#108df0"
-                    stroke="#a5e6ff"
-                    strokeLinejoin="round"
-                  />
-                  <path d="m7.7 12.2 2.8 2.8 5.8-5.8" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </h2>
-              <p><Icon name="pin" /> Ottawa · Looking for Tinder TPM in Los Angeles</p>
-              <p><Icon name="school" /> Business Technology Management · uOttawa</p>
-            </div>
-            <div className={styles.deckActions}>
-              <span className={styles.rewind}><Icon name="rewind" /></span>
-              <span className={styles.pass}><Icon name="pass" /></span>
-              <span className={styles.superLike}><Icon name="star" /></span>
-              <a className={styles.like} href={watchHref} aria-label="Watch the build">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="profile-like" x1="0%" y1="0%" x2="85%" y2="90%">
-                      <stop stopColor="#d0eb54" />
-                      <stop offset="1" stopColor="#35c969" />
-                    </linearGradient>
-                  </defs>
-                  <path fill="url(#profile-like)" d={icons.heart} />
-                </svg>
-              </a>
-              <span className={styles.send}><Icon name="send" /></span>
-            </div>
+  return (
+    <div className={styles.deck}>
+      <div className={styles.slide}>
+        <div className={styles.photo}>
+          <Image
+            src="/tinder-profile-photo.webp"
+            alt="David and two others wearing mouse-ear headbands and smiling for a selfie"
+            fill
+            sizes="(min-width: 326px) 274px, calc(100vw - 52px)"
+            preload
+          />
+        </div>
+
+        <div className={styles.cardBottom}>
+          <div className={styles.identity}>
+            <div className={styles.likesYou}><Icon name="likesYou" /> Likes You <Icon name="chevron" /></div>
+            <h2 className={portfolio.pageTitle}>
+              {name}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polygon
+                  points="12,1.3 14.4,3.2 17.3,2.7 18.4,5.6 21.3,6.7 20.8,9.6 22.7,12 20.8,14.4 21.3,17.3 18.4,18.4 17.3,21.3 14.4,20.8 12,22.7 9.6,20.8 6.7,21.3 5.6,18.4 2.7,17.3 3.2,14.4 1.3,12 3.2,9.6 2.7,6.7 5.6,5.6 6.7,2.7 9.6,3.2"
+                  fill="#108df0"
+                  stroke="#a5e6ff"
+                  strokeLinejoin="round"
+                />
+                <path d="m7.7 12.2 2.8 2.8 5.8-5.8" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </h2>
+            <p><Icon name="pin" /> Ottawa · Looking for Tinder TPM in Los Angeles</p>
+            <p><Icon name="school" /> Business Technology Management · uOttawa</p>
+          </div>
+          <div className={styles.deckActions}>
+            <span className={styles.rewind}><Icon name="rewind" /></span>
+            <span className={styles.pass}><Icon name="pass" /></span>
+            <span className={styles.superLike}><Icon name="star" /></span>
+            <a className={styles.like} href={watchHref} aria-label="Watch the build">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <defs>
+                  <linearGradient id={heartGradient} x1="0%" y1="0%" x2="85%" y2="90%">
+                    <stop stopColor="#d0eb54" />
+                    <stop offset="1" stopColor="#35c969" />
+                  </linearGradient>
+                </defs>
+                <path fill={`url(#${heartGradient})`} d={icons.heart} />
+              </svg>
+            </a>
+            <span className={styles.send}><Icon name="send" /></span>
           </div>
         </div>
       </div>
-    </header>
+    </div>
   );
 }
