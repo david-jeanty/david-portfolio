@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title,
   description: "David Jeanty’s Technical Program Management internship application and the decisions behind Brief Writer.",
   robots: { index: false, follow: false },
+  icons: {
+    icon: "/portfolio-icon.png",
+    shortcut: "/portfolio-icon.png",
+  },
 };
 
 const demoVideo = "/tinder-film.mp4";
