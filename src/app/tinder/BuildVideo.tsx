@@ -37,7 +37,7 @@ export default function BuildVideo({ src }: { src: string }) {
             </svg>
             Watch the build
           </button>
-          <p className={styles.videoNote}>About 80 seconds</p>
+          <p className={styles.videoNote}>About 90 seconds</p>
         </div>
       )}
       {phase === "ended" && (

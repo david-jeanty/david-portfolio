@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const demoVideo = "/decision-brief-demo.mp4";
+const demoVideo = "/tinder-film.mp4";
 const briefPdf = "/after-party-decision-brief.pdf";
 
 const sources = [
